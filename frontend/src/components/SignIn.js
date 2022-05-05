@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import "../css/SignIn.css"
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -63,7 +65,7 @@ function Login() {
                             <CssTextField id="outlined-basic" className={classes.loginField} label="Password" type="password" variant="outlined" />
                         </div>
                         <Button className={classes.loginFormBtn} variant="contained">Login</Button>
-                        <p className='register-advice-text'>New here? Create an account</p>
+                        <p className='register-advice-text'>New here? <Link to={'/register'}>Create an account</Link></p>
                     </form>
 
                 </div>

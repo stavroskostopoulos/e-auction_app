@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import "../css/SignIn.css"
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -73,7 +75,7 @@ function Login() {
                         </div>
                         <Button className={classes.loginFormBtn} variant="contained">Register</Button>
 
-                        <p className='register-advice-text'>Already own an account? Sign in</p>
+                        <p className='register-advice-text'>Already own an account? <Link to={'/login'}>Sign in</Link></p>
                     </form>
 
                 </div>

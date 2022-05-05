@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './Header';
 import Signin from './SignIn';
 import Signup from './SignUp';
-
+import MainContainer from './MainContainer';
 
 import "../css/App.css"
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -22,9 +22,9 @@ function App() {
           
           <Routes>
 
-            <Route exact path="/" element={<Signin/>}/>
+            <Route exact path="/" element={<MainContainer/>}/>
+            <Route exact path="/login" element={<Signin/>}/>
             <Route exact path="/register" element={<Signup/>}/>
-
           </Routes>
           {/* login */}
           {/* <Signin/> */}
