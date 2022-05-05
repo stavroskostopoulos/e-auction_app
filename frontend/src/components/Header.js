@@ -90,7 +90,7 @@ function Header() {
                     </Link>
                     
                     {/* if logged in */}
-                    {/* <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} /> */}
+                    {/* <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} onClick={()=> setValue(false)}/> */}
 
                 </Toolbar>
             
