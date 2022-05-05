@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.profile-container {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-areas: "picture info";
+    padding: 80px;
+    height: 90%;
+}
+
+.profile-column-left {
+    grid-area: picture;
+    /* background-color: aqua; */
+    text-align: center;
+    
+
+}
+
+.profile-column-right {
+    grid-area: info;
+    /* background-color: red; */
+
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    font-weight: 600;
+    font-size: 2.3rem;
+}
+
+.profile-picture {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    
+    border-radius: 49px;
+}
+
+.name-title {
+    color: rgb(19, 19, 19);
+}
+
+@media (max-width: 1500px) {
+    .profile-container {
+      display: grid;
+      height: 100%;
+      grid-template-rows: 38% 62%;
+      grid-template-columns: 100%;
+      grid-template-areas: "picture"
+      "info";
+    }
+
+    .profile-picture {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .profile-column-right {
+            font-size: 2.1rem;
+
+    }
+    .name-title {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .profile-column-right {
+        font-size: 1.8rem;
+        overflow: auto;
+    }
+}

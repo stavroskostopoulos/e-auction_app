@@ -5,6 +5,7 @@ import Header from './Header';
 import Signin from './SignIn';
 import Signup from './SignUp';
 import MainContainer from './MainContainer';
+import Profile from './Profile';
 
 import "../css/App.css"
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -25,22 +26,10 @@ function App() {
             <Route exact path="/" element={<MainContainer/>}/>
             <Route exact path="/login" element={<Signin/>}/>
             <Route exact path="/register" element={<Signup/>}/>
+            <Route exact path="/profile" element={<Profile/>}/>
+
           </Routes>
-          {/* login */}
-          {/* <Signin/> */}
-
-          {/* register */}
-          {/* <Signup/> */}
-
-          {/* appcontains */}
-          {/* <div className='main-container'>
-            <div className="column-left" />
-            <div className="column-right"/>
-            <div className="column-middle" style={{backgroundColor: "#fff"}}>
-              <h1>O PASIOS GAMIETAI</h1>
-              
-            </div>
-          </div> */}
+          
         </Router>
 
 
