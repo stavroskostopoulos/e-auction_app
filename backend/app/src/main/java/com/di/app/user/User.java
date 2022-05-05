@@ -18,8 +18,7 @@ public class User {
 
     }
 
-    public User(Long id, String name, String pass, String email, Integer type) {
-        this.id = id;
+    public User(String name, String pass, String email, Integer type) {
         this.name = name;
         this.pass = pass;
         this.email = email;
