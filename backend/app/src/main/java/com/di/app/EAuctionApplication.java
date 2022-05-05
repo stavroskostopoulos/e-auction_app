@@ -16,21 +16,4 @@ public class EAuctionApplication {
 		SpringApplication.run(EAuctionApplication.class, args);
 
 	}
-//
-//	@GetMapping
-//	public String kk(){
-//		return "ela";
-//	}
-
-	@GetMapping
-	public List<User> kk2(){
-		return List.of(
-				new User(
-					"kwstop",
-					"nouabfa",
-					"kost@gmail.com",
-					1)
-		);
-	}
-
 }

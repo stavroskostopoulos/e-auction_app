@@ -1,20 +1,37 @@
 package com.di.app.user;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class User {
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String name;
     private String pass;
     private String email;
-    private int type;
+    private Integer type;
 
     public User() {
 
     }
 
-    public User(String name, String pass, String email, int type) {
+    public User(Long id, String name, String pass, String email, Integer type) {
+        this.id = id;
         this.name = name;
         this.pass = pass;
         this.email = email;
         this.type = type;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -41,18 +58,19 @@ public class User {
         this.email = email;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", pass='" + pass + '\'' +
                 ", email='" + email + '\'' +
                 ", type=" + type +
