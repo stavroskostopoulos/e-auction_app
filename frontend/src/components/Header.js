@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { Tabs } from '@mui/material';
 import Tab from '@mui/material/Tab';
 import StoreIcon from '@mui/icons-material/Store';
+import Avatar from '@mui/material/Avatar';
 import { makeStyles } from '@mui/styles';
 
 // ----------------------------------------------------------------------
@@ -36,22 +37,25 @@ const useStyles = makeStyles({
         '&:hover': {
             color: '#e4d9ff!important'
         }
+    },
+    avatarImg: {
+        marginLeft: 'auto!important'
+    },
+    linkPosition: {
+        marginLeft: 'auto!important'
     }
 });
 
 // ----------------------------------------------------------------------
 
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
 function Header() {
 
     const classes = useStyles();
 
-    const [value, setValue] = React.useState();
-
+    const [value, setValue] = React.useState("1");
 
     
 
@@ -68,19 +72,26 @@ function Header() {
                     <Tabs 
                         textColor="inherit"
                         value={value}
-                        onChange={(e,value) => setValue(value)}
+                        onChange={(e,value) => {setValue(value);
+                            {console.log(value)}; }}
                         TabIndicatorProps={{ sx: { backgroundColor: "#e4d9ff"} }}
                         className={classes.menuOptions}
                         >
-                        <Tab className={classes.menuOption} label="Home"/>
-                        <Tab className={classes.menuOption} label="Bids"/>
-                        <Tab className={classes.menuOption} label="Services"/>
-                        <Tab className={classes.menuOption} label="Settings"/>
-
+                        <Tab className={classes.menuOption} value="1" label="Home" component={Link} to={'/'}/>
+                        <Tab className={classes.menuOption} value="2" label="Bids" component={Link} to={'/login'}/>
+                        <Tab className={classes.menuOption} value="3" label="Services"/>
+                        <Tab className={classes.menuOption} value="4" label="Settings"/>
+                        
                     </Tabs>
 
-                    <Button className={classes.loginBtn} variant="outlined">Login</Button>
-                
+                    {/* if not logged in  */}
+                    <Link to={'/login'} className={classes.linkPosition}>
+                        <Button className={classes.loginBtn} variant="outlined" onClick={()=> setValue(false)}>Login</Button>
+                    </Link>
+                    
+                    {/* if logged in */}
+                    {/* <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} /> */}
+
                 </Toolbar>
             
             </AppBar>
