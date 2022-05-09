@@ -9,10 +9,10 @@
 
 .profile-container {
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 25% 65% 10%;
     grid-template-rows: min-content;
-    grid-template-areas: "picture info"
-                         "buttons nothing";
+    grid-template-areas: "picture info buttons"
+                         "nothing nothing buttons";
     padding: 80px;
     height: 50%;
     /* background-color: darksalmon; */
@@ -91,22 +91,39 @@
 }
 
 .edit-btn {
-    /* top: 50%;
-    float: right;
-    position: relative;
-    transform: translateY(-50%); */
-    
-    
+    color: #9966cc !important;
+
+}
+
+.cancel-btn {
+    color: #D83A56 !important;
+}
+
+.confirm-btn {
+    color: #4E944F !important;
+}
+
+.edit-btn:hover {
+    background-color: #e4d9ff !important;
+}
+
+.confirm-btn:hover {
+    background-color: #83BD75 !important;
+}
+
+.cancel-btn:hover {
+    background-color: #FF616D !important;
 }
 
 @media (max-width: 1500px) {
     .profile-container {
       display: grid;
       height: 100%;
-      grid-template-rows: 38% 62%;
+      grid-template-rows: 36% 54% 10%;
       grid-template-columns: 100%;
       grid-template-areas: "picture"
-      "info";
+      "info"
+      "buttons";
     }
 
     .profile-picture {
