@@ -1,0 +1,105 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.column-middle {
+    font-family: 'Poppins', sans-serif;
+
+}
+
+.admin-container {
+    height: 50%;
+    padding: 80px;
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: minmax(min-content, max-content);
+    grid-template-areas:    "title tabs"
+                            "content content";
+}
+
+.admin-title {
+    font-size: 2.5rem;
+    color: rgb(19, 19, 19);
+
+}
+
+.empty-msg-container{
+    margin-top: 80px;
+    text-align: center;
+}
+
+.empty-list-msg {
+    color: rgb(121, 121, 121);
+}
+
+.check-icon-admin{
+    color: #4E944F !important;
+}
+
+.check-icon-admin:hover{
+    background-color: #83bd75b4 !important;
+}
+
+.cancel-icon-admin{
+    color: #D83A56 !important;
+}
+
+.cancel-icon-admin:hover{
+    background-color: #ff616ea1 !important;
+}
+
+.list-item-admin {
+    text-decoration: none !important;
+    color: #000000 !important;
+}
+
+.list-item-button:active {
+    color: #9966ccc9 !important;
+}
+
+.list-item-button:hover {
+    background-color: #9966cc2f !important;
+}
+
+.admin-title {
+    grid-area: title;
+}
+
+.delete-icon-admin {
+    color: rgb(34, 34, 34) !important;
+}
+
+.delete-icon-admin:hover {
+    background-color:#ff616e54 !important;
+    color: #D83A56 !important;
+}
+
+.admin-menu {
+    grid-area: tabs;
+    margin-left: auto;
+}
+
+.admin-content {
+    grid-area: content;
+    margin-top: 60px;
+}
+
+@media (max-width: 1500px) {
+    .admin-container {
+      display: grid;
+      height: 100%;
+      grid-auto-rows: minmax(min-content, max-content);
+      grid-template-columns: 100%;
+      grid-template-areas: "title"
+      "tabs"
+      "content";
+    }
+
+    .admin-menu {
+        margin-top: 20px;
+        margin-left: 0;
+    }
+}

@@ -95,3 +95,9 @@ input {
 .register-advice-text{
     margin-top: 20px;
 }
+
+.location-title {
+    margin-top: 35px;
+    color: rgb(39, 39, 39);
+    font-size: 1.7rem;
+}

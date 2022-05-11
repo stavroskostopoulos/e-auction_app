@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@mui/styles';
-import Button from '@mui/material/Button';
 
+import { makeStyles } from '@mui/styles';
+import { withStyles } from "@material-ui/core/styles";
+
+import Button from '@mui/material/Button';
 import "../css/profile.css"
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -12,6 +14,25 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
+
+const CssTextField = withStyles({
+    root: {
+      '& label.Mui-focused': {
+            color: '#1e2749',
+        },
+        '& .MuiInput-underline:after': {
+            borderBottomColor: '#1e2749',
+        },
+        '& .MuiOutlinedInput-root': {
+        
+            '&.Mui-focused fieldset': {
+                borderColor: '#1e2749',
+            } 
+
+        }
+
+    }
+})(TextField);
 
 function Profile() {
     
@@ -44,7 +65,7 @@ function Profile() {
                             <div className="left-profile-info-column">
 
                                 {edit &&
-                                    <TextField
+                                    <CssTextField
                                         disabled={!edit}
                                         id="outlined-disabled"
                                         label="First name"
@@ -53,7 +74,7 @@ function Profile() {
                                         sx={{ mt: 5}} 
                                     />
                                 }
-                                <TextField
+                                <CssTextField
                                     disabled={!edit}
                                     id="outlined-disabled"
                                     label="Email"
@@ -61,11 +82,19 @@ function Profile() {
                                     className="profileinfo-tf" 
                                     sx={{ mt: 5}}
                                 />
+                                <CssTextField
+                                    disabled={!edit}
+                                    id="outlined-disabled"
+                                    label="Phone number"
+                                    defaultValue="6983892580"
+                                    className="profileinfo-tf" 
+                                    sx={{ mt: 5}}
+                                />
                             </div>
                             <div className="right-profile-info-column">
                                 {edit &&
 
-                                    <TextField
+                                    <CssTextField
                                         disabled={!edit}
                                         id="outlined-disabled"
                                         label="Last name"
@@ -76,15 +105,7 @@ function Profile() {
                                 
                                 }
 
-                                {/* <TextField
-                                    disabled={!edit}
-                                    id="outlined-disabled"
-                                    label="Type"
-                                    defaultValue="Seller"
-                                    className="profileinfo-tf"
-                                    sx={{ mt: 5}} 
-                                    /> */}
-                                <TextField
+                                <CssTextField
                                     disabled={!edit}
                                     id="outlined-select-currency"
                                     select
@@ -99,7 +120,15 @@ function Profile() {
                                         {option}
                                         </MenuItem>
                                     ))}
-                                </TextField>   
+                                </CssTextField> 
+                                <CssTextField
+                                    disabled={!edit}
+                                    id="outlined-disabled"
+                                    label="ΑΦΜ"
+                                    defaultValue="128213692134"
+                                    className="profileinfo-tf" 
+                                    sx={{ mt: 5}}
+                                />  
                             </div>
                         </div>
                         
