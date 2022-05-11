@@ -55,8 +55,8 @@ function Header() {
 
     const classes = useStyles();
 
-    const [value, setValue] = React.useState("1");
-
+    const [value, setValue] = React.useState(false);
+    const [admin, setAdmin] = React.useState(false);
     
 
     return (
@@ -81,7 +81,9 @@ function Header() {
                         <Tab className={classes.menuOption} value="2" label="Bids" component={Link} to={'/login'}/>
                         <Tab className={classes.menuOption} value="3" label="Services"/>
                         <Tab className={classes.menuOption} value="4" label="Settings"/>
-                        
+                        {!admin &&
+                            <Tab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'}/>
+                        }
                     </Tabs>
 
                     {/* if not logged in  */}

@@ -50,6 +50,7 @@
 
 .profileinfo-tf {
     width: 80%;
+    text-align: left;
 }
 
 .profile-column-left {
@@ -108,18 +109,18 @@
 }
 
 .confirm-btn:hover {
-    background-color: #83BD75 !important;
+    background-color: #83bd75b4 !important;
 }
 
 .cancel-btn:hover {
-    background-color: #FF616D !important;
+    background-color: #ff616ea1 !important;
 }
 
 @media (max-width: 1500px) {
     .profile-container {
       display: grid;
       height: 100%;
-      grid-template-rows: 36% 54% 10%;
+      grid-auto-rows: minmax(min-content, max-content);
       grid-template-columns: 100%;
       grid-template-areas: "picture"
       "info"
