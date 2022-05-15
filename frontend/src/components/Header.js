@@ -9,8 +9,17 @@ import Tab from '@mui/material/Tab';
 import StoreIcon from '@mui/icons-material/Store';
 import Avatar from '@mui/material/Avatar';
 import { makeStyles } from '@mui/styles';
+import { withStyles } from "@material-ui/core/styles";
 
 // ----------------------------------------------------------------------
+
+const CustomTab = withStyles({
+    selected: {
+      color: '#e4d9ff !important',
+    },
+})(Tab);
+
+
 
 const useStyles = makeStyles({
     root: {
@@ -77,12 +86,12 @@ function Header() {
                         TabIndicatorProps={{ sx: { backgroundColor: "#e4d9ff"} }}
                         className={classes.menuOptions}
                         >
-                        <Tab className={classes.menuOption} value="1" label="Home" component={Link} to={'/'}/>
-                        <Tab className={classes.menuOption} value="2" label="Bids" component={Link} to={'/login'}/>
-                        <Tab className={classes.menuOption} value="3" label="Services"/>
-                        <Tab className={classes.menuOption} value="4" label="Settings"/>
+                        <CustomTab className={classes.menuOption} value="1" label="Home" component={Link} to={'/'}/>
+                        <CustomTab className={classes.menuOption} value="2" label="Bids" component={Link} to={'/login'}/>
+                        <CustomTab className={classes.menuOption} value="3" label="Services"/>
+                        <CustomTab className={classes.menuOption} value="4" label="Settings"/>
                         {!admin &&
-                            <Tab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'}/>
+                            <CustomTab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'}/>
                         }
                     </Tabs>
 

@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+*,
+*::before,
+*::after {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+
+.bids-container {
+    height: 100%;
+    padding: 80px;
+    padding-bottom: 0px;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    grid-template-rows: 9% 5% 86%;
+    grid-template-areas:    "title search"
+                            "nothing filtertags"
+                            "filters products";
+
+
+    
+}
+
+.filtertags {
+    grid-area: filtertags;
+    background-color: aqua;
+}
+
+.search-bar{
+    background-color: #f1f1f1 !important;
+    border-radius: 20px !important;
+    width: 80% !important;
+    color: #f1f1f1 !important;
+    outline: none !important;
+}
+
+
+.bids-title{
+    grid-area: title;
+    /* background-color: aqua; */
+
+    /* center text horizontally and vertically */
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.bids-title > h4 {
+
+    
+    font-size: 2.5rem;
+    color: rgb(19, 19, 19);
+
+}
+
+.bids-searchbar{
+    grid-area: search;
+    /* background-color: aquamarine; */
+
+    /* center seach bar horizontally and vertically */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bids-filters{
+    grid-area: filters;
+    /* background-color: blueviolet; */
+}
+
+.bids-products{
+    grid-area: products;
+    background-color: lavender;
+}
+
+.filter-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+
+    color: rgb(19, 19, 19);
+
+}
+
+.categ-list-options{
+    margin-top: 18px !important;
+}
+
+.filter-list-box:active{
+    color: blueviolet;
+}
+
+
