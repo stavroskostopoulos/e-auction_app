@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
 
+import "../css/Profile.css"
+
 import Button from '@mui/material/Button';
-import "../css/profile.css"
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import EditIcon from '@mui/icons-material/Edit';
@@ -50,7 +51,7 @@ function Profile() {
         <div className="main-container">
             <div className="column-left" />
             <div className="column-right"/>
-            <div className="column-middle" style={{backgroundColor: "#fff"}}>
+            <div className="column-middle" style={{backgroundColor: "#f1f1f1"}}>
             
 
 

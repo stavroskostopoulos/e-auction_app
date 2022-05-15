@@ -19,14 +19,15 @@ import Tooltip from '@mui/material/Tooltip';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import Pagination from '@mui/material/Pagination';
 
 function Administration() {
   
     const [value, setValue] = React.useState("1");
 	const [request, setRequest] = React.useState(false);
 
-	const [totalUsersList, setTotalUsersList] = React.useState(["keepo"]);
-	const [usersRegisterList, setUsersRegisterList] = React.useState(["kappa"]);
+	const [totalUsersList, setTotalUsersList] = React.useState(["keepo", "keepa", "keepa", "keepa", "keepa", "keepa", "keepa", "keepa"]);
+	const [usersRegisterList, setUsersRegisterList] = React.useState(["kappa", "keepa", "keepa", "keepa", "keepa", "keepa", "keepa", "keepa"]);
 
     return (
       
@@ -36,7 +37,7 @@ function Administration() {
             <div className='main-container'>
               <div className="column-left" />
               <div className="column-right"/>
-              <div className="column-middle" style={{backgroundColor: "#fff"}}>
+              <div className="column-middle" style={{backgroundColor: "#f1f1f1"}}>
                 <div className='admin-container'>
                     <div className='admin-title-box'>
                         <h1 className='admin-title'>Administration page</h1>
@@ -61,21 +62,97 @@ function Administration() {
 							<List sx={{ width: '100%' }}>
 
 
-									<ListItem 	component={Link} to={'/profile'} >
-										<ListItemButton className='list-item-button'>
-											<ListItemAvatar>
-												<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-											</ListItemAvatar>
-											<ListItemText primary="Vasilis Pasios" className='list-item-admin'/>
-											<ListItemSecondaryAction>
-												<Tooltip title='Delete user'>
-													<IconButton edge="end" aria-label="delete" component={Link} to={'/login'} className='delete-icon-admin'>
-														<DeleteIcon />
-													</IconButton>
-												</Tooltip>
-											</ListItemSecondaryAction>
-										</ListItemButton>
-									</ListItem>
+								<ListItem 	component={Link} to={'/profile'} >
+									<ListItemButton className='list-item-button'>
+										<ListItemAvatar>
+											<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+										</ListItemAvatar>
+										<ListItemText primary="Vasilis Pasios" className='list-item-admin'/>
+										<ListItemSecondaryAction>
+											<Tooltip title='Delete user'>
+												<IconButton edge="end" aria-label="delete" component={Link} to={'/login'} className='delete-icon-admin'>
+													<DeleteIcon />
+												</IconButton>
+											</Tooltip>
+										</ListItemSecondaryAction>
+									</ListItemButton>
+								</ListItem>
+
+
+								<Divider variant="middle"  component="li"/>
+
+								<ListItem 	component={Link} to={'/profile'} >
+									<ListItemButton className='list-item-button'>
+										<ListItemAvatar>
+											<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+										</ListItemAvatar>
+										<ListItemText primary="Vasilis Pasios" className='list-item-admin'/>
+										<ListItemSecondaryAction>
+											<Tooltip title='Delete user'>
+												<IconButton edge="end" aria-label="delete" component={Link} to={'/login'} className='delete-icon-admin'>
+													<DeleteIcon />
+												</IconButton>
+											</Tooltip>
+										</ListItemSecondaryAction>
+									</ListItemButton>
+								</ListItem>
+
+
+								<Divider variant="middle"  component="li"/>
+
+								<ListItem 	component={Link} to={'/profile'} >
+									<ListItemButton className='list-item-button'>
+										<ListItemAvatar>
+											<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+										</ListItemAvatar>
+										<ListItemText primary="Vasilis Pasios" className='list-item-admin'/>
+										<ListItemSecondaryAction>
+											<Tooltip title='Delete user'>
+												<IconButton edge="end" aria-label="delete" component={Link} to={'/login'} className='delete-icon-admin'>
+													<DeleteIcon />
+												</IconButton>
+											</Tooltip>
+										</ListItemSecondaryAction>
+									</ListItemButton>
+								</ListItem>
+
+
+								<Divider variant="middle"  component="li"/>
+
+								<ListItem 	component={Link} to={'/profile'} >
+									<ListItemButton className='list-item-button'>
+										<ListItemAvatar>
+											<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+										</ListItemAvatar>
+										<ListItemText primary="Vasilis Pasios" className='list-item-admin'/>
+										<ListItemSecondaryAction>
+											<Tooltip title='Delete user'>
+												<IconButton edge="end" aria-label="delete" component={Link} to={'/login'} className='delete-icon-admin'>
+													<DeleteIcon />
+												</IconButton>
+											</Tooltip>
+										</ListItemSecondaryAction>
+									</ListItemButton>
+								</ListItem>
+
+
+								<Divider variant="middle"  component="li"/>
+
+								<ListItem 	component={Link} to={'/profile'} >
+									<ListItemButton className='list-item-button'>
+										<ListItemAvatar>
+											<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+										</ListItemAvatar>
+										<ListItemText primary="Vasilis Pasios" className='list-item-admin'/>
+										<ListItemSecondaryAction>
+											<Tooltip title='Delete user'>
+												<IconButton edge="end" aria-label="delete" component={Link} to={'/login'} className='delete-icon-admin'>
+													<DeleteIcon />
+												</IconButton>
+											</Tooltip>
+										</ListItemSecondaryAction>
+									</ListItemButton>
+								</ListItem>
 
 
 								<Divider variant="middle"  component="li"/>
@@ -104,6 +181,14 @@ function Administration() {
 								
 							</List>
 						}
+
+						{/* pagination */}
+						{!request && (totalUsersList.length > 7) &&
+							<div className='pagination-container'>
+								<Pagination className='pagination-admin' count={10} color="secondary" />
+							</div>
+						}
+						{/* if no users */}
 						{!request && (totalUsersList.length==0) && 
 							<div className='empty-msg-container'>
 								<p className='empty-list-msg'>There are no registered users yet</p>
@@ -118,29 +203,127 @@ function Administration() {
 						<List sx={{ width: '100%' }}>
 
 
-								<ListItem component={Link} to={'/profile'} >
-									<ListItemButton className='list-item-button'>
-										<ListItemAvatar>
-											<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-										</ListItemAvatar>
-										<ListItemText primary="Giorgos Koumpis" className='list-item-admin'/>
-										<ListItemSecondaryAction>
-											<Tooltip title='Reject'>
-												<IconButton edge="end" aria-label="cancel" sx={{mr: 1}} scomponent={Link} to={'/login'} className='cancel-icon-admin'>
-													<CloseOutlinedIcon />
-												</IconButton>
-											</Tooltip>
-											<Tooltip title='Approve'>	
-												<IconButton edge="end" aria-label="confirm" component={Link} to={'/login'} className='check-icon-admin'>
-													<CheckIcon />
-												</IconButton>
-											</Tooltip>	
-										</ListItemSecondaryAction>
-									</ListItemButton>
-								</ListItem>
+							<ListItem component={Link} to={'/profile'} >
+								<ListItemButton className='list-item-button'>
+									<ListItemAvatar>
+										<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+									</ListItemAvatar>
+									<ListItemText primary="Giorgos Koumpis" className='list-item-admin'/>
+									<ListItemSecondaryAction>
+										<Tooltip title='Reject'>
+											<IconButton edge="end" aria-label="cancel" sx={{mr: 1}} scomponent={Link} to={'/login'} className='cancel-icon-admin'>
+												<CloseOutlinedIcon />
+											</IconButton>
+										</Tooltip>
+										<Tooltip title='Approve'>	
+											<IconButton edge="end" aria-label="confirm" component={Link} to={'/login'} className='check-icon-admin'>
+												<CheckIcon />
+											</IconButton>
+										</Tooltip>	
+									</ListItemSecondaryAction>
+								</ListItemButton>
+							</ListItem>
 
 
-							{/* <Divider variant="middle"  component="li"/> */}
+							<Divider variant="middle"  component="li"/>
+
+							<ListItem component={Link} to={'/profile'} >
+								<ListItemButton className='list-item-button'>
+									<ListItemAvatar>
+										<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+									</ListItemAvatar>
+									<ListItemText primary="Giorgos Koumpis" className='list-item-admin'/>
+									<ListItemSecondaryAction>
+										<Tooltip title='Reject'>
+											<IconButton edge="end" aria-label="cancel" sx={{mr: 1}} scomponent={Link} to={'/login'} className='cancel-icon-admin'>
+												<CloseOutlinedIcon />
+											</IconButton>
+										</Tooltip>
+										<Tooltip title='Approve'>	
+											<IconButton edge="end" aria-label="confirm" component={Link} to={'/login'} className='check-icon-admin'>
+												<CheckIcon />
+											</IconButton>
+										</Tooltip>	
+									</ListItemSecondaryAction>
+								</ListItemButton>
+							</ListItem>
+
+
+							<Divider variant="middle"  component="li"/>
+
+							<ListItem component={Link} to={'/profile'} >
+								<ListItemButton className='list-item-button'>
+									<ListItemAvatar>
+										<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+									</ListItemAvatar>
+									<ListItemText primary="Giorgos Koumpis" className='list-item-admin'/>
+									<ListItemSecondaryAction>
+										<Tooltip title='Reject'>
+											<IconButton edge="end" aria-label="cancel" sx={{mr: 1}} scomponent={Link} to={'/login'} className='cancel-icon-admin'>
+												<CloseOutlinedIcon />
+											</IconButton>
+										</Tooltip>
+										<Tooltip title='Approve'>	
+											<IconButton edge="end" aria-label="confirm" component={Link} to={'/login'} className='check-icon-admin'>
+												<CheckIcon />
+											</IconButton>
+										</Tooltip>	
+									</ListItemSecondaryAction>
+								</ListItemButton>
+							</ListItem>
+
+
+							<Divider variant="middle"  component="li"/>
+
+							<ListItem component={Link} to={'/profile'} >
+								<ListItemButton className='list-item-button'>
+									<ListItemAvatar>
+										<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+									</ListItemAvatar>
+									<ListItemText primary="Giorgos Koumpis" className='list-item-admin'/>
+									<ListItemSecondaryAction>
+										<Tooltip title='Reject'>
+											<IconButton edge="end" aria-label="cancel" sx={{mr: 1}} scomponent={Link} to={'/login'} className='cancel-icon-admin'>
+												<CloseOutlinedIcon />
+											</IconButton>
+										</Tooltip>
+										<Tooltip title='Approve'>	
+											<IconButton edge="end" aria-label="confirm" component={Link} to={'/login'} className='check-icon-admin'>
+												<CheckIcon />
+											</IconButton>
+										</Tooltip>	
+									</ListItemSecondaryAction>
+								</ListItemButton>
+							</ListItem>
+
+
+							<Divider variant="middle"  component="li"/>
+
+							<ListItem component={Link} to={'/profile'} >
+								<ListItemButton className='list-item-button'>
+									<ListItemAvatar>
+										<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+									</ListItemAvatar>
+									<ListItemText primary="Giorgos Koumpis" className='list-item-admin'/>
+									<ListItemSecondaryAction>
+										<Tooltip title='Reject'>
+											<IconButton edge="end" aria-label="cancel" sx={{mr: 1}} scomponent={Link} to={'/login'} className='cancel-icon-admin'>
+												<CloseOutlinedIcon />
+											</IconButton>
+										</Tooltip>
+										<Tooltip title='Approve'>	
+											<IconButton edge="end" aria-label="confirm" component={Link} to={'/login'} className='check-icon-admin'>
+												<CheckIcon />
+											</IconButton>
+										</Tooltip>	
+									</ListItemSecondaryAction>
+								</ListItemButton>
+							</ListItem>
+
+
+							<Divider variant="middle"  component="li"/>
+
+							
 
 							<ListItem>
 								<ListItemButton>
@@ -151,7 +334,7 @@ function Administration() {
 								</ListItemButton>
 							</ListItem>
 
-							{/* <Divider variant="middle" component="li"/> */}
+							<Divider variant="middle" component="li"/>
 
 							<ListItem>
 								<ListItemButton>
@@ -162,16 +345,25 @@ function Administration() {
 								</ListItemButton>
 							</ListItem>
 
-							{/* <Divider  variant="middle" component="li"/> */}
+							<Divider  variant="middle" component="li"/>
 							
 						</List>
+						
 					}
+					{/* pagination */}
+					{request && (usersRegisterList.length > 7) &&
+							<div className='pagination-container'>
+								<Pagination className='pagination-admin' count={10} color="secondary" />
+							</div>
+						}
+						{/* if no users */}
 					{request && (usersRegisterList.length==0) && 
 						<div className='empty-msg-container'>
 							<p className='empty-list-msg'>You have no pending registration requests</p>
 						</div>
 					}
                     </div>
+					
                 </div>
               </div>
             </div> 
