@@ -51,7 +51,7 @@ function Profile() {
         <div className="main-container">
             <div className="column-left" />
             <div className="column-right"/>
-            <div className="column-middle" style={{backgroundColor: "#f1f1f1"}}>
+            <div className="column-middle" style={{backgroundColor: "#fff"}}>
             
 
 
@@ -161,9 +161,7 @@ function Profile() {
 
                             
                         }
-                        {/* <Button variant="contained" endIcon={<EditIcon/>} className="edit-btn" sx={{ mt: 2}} onClick={() => setEdit(false)}>
-                            Edit
-                        </Button> */}
+                        
                     </div>
                 </div> 
             
