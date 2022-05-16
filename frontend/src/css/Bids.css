@@ -25,7 +25,11 @@
 
 .filtertags {
     grid-area: filtertags;
-    background-color: aqua;
+    /* background-color: aqua; */
+
+    /* center contains vertically */
+    display: flex;
+    align-items: center;
 }
 
 .search-bar{
@@ -41,7 +45,7 @@
     grid-area: title;
     /* background-color: aqua; */
 
-    /* center text horizontally and vertically */
+    /* center text vertically */
     display: flex;
     align-items: center;
     /* justify-content: center; */
@@ -84,11 +88,39 @@
 }
 
 .categ-list-options{
-    margin-top: 18px !important;
+    margin-top: 20px !important;
 }
 
 .filter-list-box:active{
     color: blueviolet;
+    color: #3a8589;
+
 }
 
 
+.price-range-bar {
+    margin-top: 20px !important;
+    width: 85% !important;
+}
+
+.price-range-textfields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: "minprice maxprice";
+    
+    margin-top: 40px !important;
+}
+
+.minprice-textfield-container {
+    grid-area: minprice;
+}
+
+.maxprice-textfield-container {
+    grid-area: maxprice;
+    
+}
+
+.minprice-textfield,
+.maxprice-textfield {
+    width: 70%;
+}

@@ -37,7 +37,7 @@ function Administration() {
             <div className='main-container'>
               <div className="column-left" />
               <div className="column-right"/>
-              <div className="column-middle" style={{backgroundColor: "#f1f1f1"}}>
+              <div className="column-middle" style={{backgroundColor: "#fff"}}>
                 <div className='admin-container'>
                     <div className='admin-title-box'>
                         <h1 className='admin-title'>Administration page</h1>

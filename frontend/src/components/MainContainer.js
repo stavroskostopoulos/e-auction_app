@@ -18,9 +18,32 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
+import Slider from '@mui/material/Slider';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+
+const PriceTextField = withStyles({
+    root: {
+      '& label.Mui-focused': {
+            color: '#1e2749',
+        },
+        '& .MuiInput-underline:after': {
+            borderBottomColor: '#1e2749',
+        },
+        '& .MuiOutlinedInput-root': {
+        
+            '&.Mui-focused fieldset': {
+                borderColor: '#1e2749',
+            } 
+
+        }
+
+    }
+})(TextField);
 
 
-const CssTextField = withStyles({
+
+const SearchTextField = withStyles({
     root: {
       '& label.Mui-focused': {
             color: 'black',
@@ -49,6 +72,22 @@ const CssListItem = withStyles({
       
 })(ListItem);
 
+const CustomSlider = withStyles({
+    root: {
+		// backgroundColor: 'red !important',
+		color: '#9966cc !important',
+		'& .MuiSlider-thumb': {
+			height: '16px',
+			width: '16px',
+			backgroundColor: '#9966cc !important',
+		},
+		'& .MuiSlider-rail': {
+			color: '#888888 !important'
+		}
+	}
+      
+})(Slider);
+
 const CustomCheckbox = withStyles({
     root: {
 		
@@ -61,6 +100,9 @@ const CustomCheckbox = withStyles({
 })(Checkbox);
 
 
+function priceRangetext(value) {
+	return `${value}€`;
+}
 
 
 
@@ -68,12 +110,30 @@ const CustomCheckbox = withStyles({
 function MainContainer() {
 	
 
+
+	// search
 	const [searchLabel, setSearchLabel] = React.useState("Search");
 
 	// filters
 	const [checkedCateg, setCheckedCateg] = React.useState([]);
+	const [priceRange, setPriceRange] = React.useState([0, 400]);
+
+
+	const categories = ['Used', 'Unused', 'Electronics', 'Fashion', 'Health & Beauty'];
+
+	const handleDelete = (value) => {
+		const currentIndex = checkedCateg.indexOf(value);
+		const newChecked = [...checkedCateg];
+
+		newChecked.splice(currentIndex, 1);
+
+		setCheckedCateg(newChecked);
+
+	};
 
 	const handleToggle = (value) => () => {
+
+		console.log(value);
 
 		const currentIndex = checkedCateg.indexOf(value);
 		const newChecked = [...checkedCateg];
@@ -86,7 +146,11 @@ function MainContainer() {
 
 		setCheckedCateg(newChecked);
 
-	}
+	};
+
+	const handleChange = (event, newValue) => {
+		setPriceRange(newValue);
+	};
 
     return (
       
@@ -107,7 +171,7 @@ function MainContainer() {
 						</div>
 
 						<div className='bids-searchbar'>
-							<CssTextField 	label={searchLabel}
+							<SearchTextField 	label={searchLabel}
 										InputProps={{
 											endAdornment: (
 											  <InputAdornment position="start">
@@ -120,22 +184,25 @@ function MainContainer() {
 										}} 
 										size='small'
 										className='search-bar'
-										onClick={() => setSearchLabel('')}
+										onFocus={() => setSearchLabel('')}									
 										
 							/>
 						</div>
 
 
 						<div className='bids-filters'>
-							<div className='categ-list'>
+							<div className='categ-filters-container'>
 
 								<p className='filter-title'>Categories</p>
 								{/* categories list */}
 
 								<List className='categ-list-options'>
 
-									<CssListItem
-										key='used'
+
+									{categories.map((category) => (
+					
+										<CssListItem
+										key={category}
 										disablePadding
 										
 										>									
@@ -143,57 +210,87 @@ function MainContainer() {
 												<CustomCheckbox
 													className='filter-list-item'
 													edge="start"
-													onChange={handleToggle('used')}
-													checked={checkedCateg.indexOf('used') !== -1}
-													inputProps={{ 'aria-labelledby': 'checkbox-list-secondary-label-used' }}
+													onChange={handleToggle({category}.category)}
+													checked={checkedCateg.indexOf({category}.category) !== -1}
+													// inputProps={{ 'aria-labelledby': 'checkbox-list-secondary-label-used' }}
 													size='small'
 												/>
 											</ListItemIcon>
-											<ListItemText  id='checkbox-list-secondary-label-used' primary={<Typography variant="h6" style={{ color: 'rgb(19, 19, 19)', fontSize: '1rem' }}>Used</Typography>} className='list-item-text'/>	
-									</CssListItem>
-
-
-									<CssListItem
-										key='unused'
-										disablePadding
-										
-										>									
-											<ListItemIcon>
-												<CustomCheckbox
-													className='filter-list-box'
-													edge="start"
-													onChange={handleToggle('unused')}
-													checked={checkedCateg.indexOf('unused') !== -1}
-													inputProps={{ 'aria-labelledby': 'checkbox-list-secondary-label-unused' }}
-													size='small'
-												/>
-											</ListItemIcon>
-											<ListItemText  id='checkbox-list-secondary-label-unused' primary={<Typography variant="h6" style={{ color: 'rgb(19, 19, 19)', fontSize: '1rem' }}>Used</Typography>} className='list-item-text'/>	
-									</CssListItem>
+											<ListItemText  id='checkbox-list-secondary-label-used' primary={<Typography variant="h6" style={{ color: 'rgb(19, 19, 19)', fontSize: '1rem' }}>{category}</Typography>} className='list-item-text'/>	
+										</CssListItem>
+									))}
 									
+
 								</List>
 
-								<Divider sx={{ p: 2 }} />
 
 							</div>
 
+							<Divider  sx={{ mt: 3, mb: 5 }}/>
 
+							<div className='price-slider-container'>
+
+								<p className='filter-title'>Price range</p>
+
+								<div className='price-range-textfields'>
+									<div className='minprice-textfield-container'>
+										<PriceTextField
+											
+											value={`${priceRange[0]}€`}
+											className="minprice-textfield"
+											size='small'   
+										/>
+									</div>
+									<div className='maxprice-textfield-container'>
+										<PriceTextField
+											
+											value={`${priceRange[1]}€`}
+											className="maxprice-textfield"
+											size='small'   
+										/>
+									</div>
+								</div>
+
+
+
+								<CustomSlider
+									getAriaLabel={() => 'Price range'}
+									value={priceRange}
+									onChange={handleChange}
+									valueLabelDisplay="auto"
+									getAriaValueText={priceRangetext}
+									className='price-range-bar'
+									max='400'
+								/>
+								
+								
+
+							</div>
+
+							<Divider  sx={{ mt: 4, mb: 5 }}/>
+							
+							
 						</div>
 
 
 						<div className='bids-products'>
-
+							
 						</div>
 
 						<div className='filtertags'>
-
+							<Stack direction="row" spacing={1}>
+								{categories.map((category) => (
+									(checkedCateg.indexOf({category}.category)!==-1) && <Chip label={category} color="primary"  size='small' onDelete={() => handleDelete({category}.category)}/>
+								))}
+							</Stack>
 						</div>
+
 					</div>
 
               	</div>
+				
             </div> 
           
-  
   
   
         

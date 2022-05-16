@@ -101,7 +101,7 @@ function Header() {
                     </Link>
                     
                     {/* if logged in */}
-                    {/* <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} onClick={()=> setValue(false)}/> */}
+                    {/* <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} onClick={()=> setValue(false)} component={Link} to={'/profile'}/> */}
 
                 </Toolbar>
             
