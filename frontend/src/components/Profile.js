@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
 
-import "../css/Profile.css"
+import "../css/profile.css"
 
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
