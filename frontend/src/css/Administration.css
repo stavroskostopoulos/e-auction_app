@@ -10,8 +10,9 @@
 
 
 .admin-container {
-    height: 50%;
+    height: 100%;
     padding: 80px;
+    
     
     display: grid;
     grid-template-columns: 50% 50%;
