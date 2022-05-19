@@ -12,7 +12,7 @@
 .admin-container {
     height: 100%;
     padding: 80px;
-    
+    padding-bottom: 60px;
     
     display: grid;
     grid-template-columns: 50% 50%;
@@ -101,6 +101,11 @@
     margin-top: 60px;
 }
 
+.admin-list-divider{
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}
+
 @media (max-width: 1500px) {
     .admin-container {
       display: grid;
@@ -110,6 +115,8 @@
       grid-template-areas: "title"
       "tabs"
       "content";
+
+      padding-bottom: 40px;
     }
 
     .admin-menu {
@@ -118,6 +125,6 @@
     }
 
     .pagination-container {
-        margin-top: 20px;
+        margin-top: 40px;
     }
 }
