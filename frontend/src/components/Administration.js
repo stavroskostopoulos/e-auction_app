@@ -350,16 +350,16 @@ function Administration() {
 						</List>
 						
 					}
-					{/* pagination */}
-					{request && (usersRegisterList.length > 7) &&
-							<div className='pagination-container'>
-								<Pagination className='pagination-admin' count={10} color="secondary" />
-							</div>
-						}
-						{/* if no users */}
+					{/* if no users */}
 					{request && (usersRegisterList.length==0) && 
 						<div className='empty-msg-container'>
 							<p className='empty-list-msg'>You have no pending registration requests</p>
+						</div>
+					}
+					{/* pagination */}
+					{request && (usersRegisterList.length > 7) &&
+						<div className='pagination-container'>
+							<Pagination className='pagination-admin' count={10} color="secondary" />
 						</div>
 					}
                     </div>
