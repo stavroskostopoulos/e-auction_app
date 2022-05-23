@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
 import { makeStyles } from '@mui/styles';
 
-
+import BidsFilters from './individual compenents/BidsFilters';
+import ProductListItem from './individual compenents/ProductListItem';
 
 import "../css/Bids.css"
 
+
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -21,6 +24,10 @@ import Divider from '@mui/material/Divider';
 import Slider from '@mui/material/Slider';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 const PriceTextField = withStyles({
     root: {
@@ -117,9 +124,20 @@ function MainContainer() {
 	// filters
 	const [checkedCateg, setCheckedCateg] = React.useState([]);
 	const [priceRange, setPriceRange] = React.useState([0, 400]);
+	//this flag will let us know when to change between filter and delete buttons
+	const [responsiveFiltersShown, setResponsiveFiltersShown] = React.useState(false)
+
+	//useRef - References
+	const showFiltersRef = React.useRef(0);
+	const container = React.useRef(0);
 
 
+	//filters categories
 	const categories = ['Used', 'Unused', 'Electronics', 'Fashion', 'Health & Beauty'];
+
+	//products
+	const products = ["Product 1 Title", "Product 2 Title", "Product 3 Title", "Product 4 Title"];
+
 
 	const handleDelete = (value) => {
 		const currentIndex = checkedCateg.indexOf(value);
@@ -152,6 +170,23 @@ function MainContainer() {
 		setPriceRange(newValue);
 	};
 
+	const ShowOrHideFilters = () => {
+		//if it is hidden
+		if(responsiveFiltersShown===false){
+			//set the flag to true
+			setResponsiveFiltersShown(true);
+			//display it
+			showFiltersRef.current.style.display = 'block';
+		}else{
+			//if it is already displayed
+			//change button
+			setResponsiveFiltersShown(false);
+			//hide it
+			showFiltersRef.current.style.display = 'none';
+			
+		}
+	}
+
     return (
       
        
@@ -163,7 +198,7 @@ function MainContainer() {
               	<div className="column-middle" style={{backgroundColor: "#fff"}}>
 					
 					
-					<div className="bids-container">
+					<div ref={container} className="bids-container">
 
 
 						<div className='bids-title'>
@@ -188,94 +223,37 @@ function MainContainer() {
 										
 							/>
 						</div>
+						
+						<div className='filters-options-show-hide'>
+							{responsiveFiltersShown ? 
 
+								<Button  onClick={ShowOrHideFilters} startIcon={<KeyboardArrowUpIcon/>}  className='filters-show-btn'>MINIMIZE</Button>
+							:
+								<Button  onClick={ShowOrHideFilters} startIcon={<FilterListIcon/>}  className='filters-show-btn'>FILTERS</Button>
 
-						<div className='bids-filters'>
-							<div className='categ-filters-container'>
-
-								<p className='filter-title'>Categories</p>
-								{/* categories list */}
-
-								<List className='categ-list-options'>
-
-
-									{categories.map((category) => (
-					
-										<CssListItem
-										key={category}
-										disablePadding
-										
-										>									
-											<ListItemIcon>
-												<CustomCheckbox
-													className='filter-list-item'
-													edge="start"
-													onChange={handleToggle({category}.category)}
-													checked={checkedCateg.indexOf({category}.category) !== -1}
-													// inputProps={{ 'aria-labelledby': 'checkbox-list-secondary-label-used' }}
-													size='small'
-												/>
-											</ListItemIcon>
-											<ListItemText  id='checkbox-list-secondary-label-used' primary={<Typography variant="h6" style={{ color: 'rgb(19, 19, 19)', fontSize: '1rem' }}>{category}</Typography>} className='list-item-text'/>	
-										</CssListItem>
-									))}
-									
-
-								</List>
-
-
-							</div>
-
-							<Divider  sx={{ mt: 3, mb: 5 }}/>
-
-							<div className='price-slider-container'>
-
-								<p className='filter-title'>Price range</p>
-
-								<div className='price-range-textfields'>
-									<div className='minprice-textfield-container'>
-										<PriceTextField
-											
-											value={`${priceRange[0]}€`}
-											className="minprice-textfield"
-											size='small'   
-										/>
-									</div>
-									<div className='maxprice-textfield-container'>
-										<PriceTextField
-											
-											value={`${priceRange[1]}€`}
-											className="maxprice-textfield"
-											size='small'   
-										/>
-									</div>
-								</div>
-
-
-
-								<CustomSlider
-									getAriaLabel={() => 'Price range'}
-									value={priceRange}
-									onChange={handleChange}
-									valueLabelDisplay="auto"
-									getAriaValueText={priceRangetext}
-									className='price-range-bar'
-									max='400'
-								/>
-								
-								
-
-							</div>
-
-							<Divider  sx={{ mt: 4, mb: 5 }}/>
-							
-							
+							}
 						</div>
 
 
+						<div ref={showFiltersRef} className='bids-filters'>
+							<BidsFilters className='filters-component'  categories={categories} checkedCateg={checkedCateg} setCheckedCateg={setCheckedCateg}/>
+						</div>
+
+						
+						{/* Products */}
 						<div className='bids-products'>
-							
+							<Stack spacing={3} className='products-stack'>
+								{(products.length!==0) &&
+									products.map((product) =>	(
+										<ProductListItem productname={product}/>
+										
+									))
+								
+								}
+							</Stack>
 						</div>
+
+
 
 						<div className='filtertags'>
 							<Stack direction="row" spacing={1}>

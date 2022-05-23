@@ -23,14 +23,25 @@
     
 }
 
+.filters-options-show-hide {
+    display: none;
+    grid-area: filters-btn;
+}
+
+.products-stack {
+    padding: 30px;
+}
+
+
 .filtertags {
     grid-area: filtertags;
     /* background-color: aqua; */
-
+    
     /* center contains vertically */
     display: flex;
     align-items: center;
 }
+
 
 .search-bar{
     background-color: #f1f1f1 !important;
@@ -44,7 +55,7 @@
 .bids-title{
     grid-area: title;
     /* background-color: aqua; */
-
+    
     /* center text vertically */
     display: flex;
     align-items: center;
@@ -62,7 +73,7 @@
 .bids-searchbar{
     grid-area: search;
     /* background-color: aquamarine; */
-
+    
     /* center seach bar horizontally and vertically */
     display: flex;
     align-items: center;
@@ -70,6 +81,8 @@
 }
 
 .bids-filters{
+    display: block;
+
     grid-area: filters;
     /* background-color: blueviolet; */
 }
@@ -82,7 +95,7 @@
 .filter-title {
     font-size: 1.2rem;
     font-weight: 500;
-
+    
     color: rgb(19, 19, 19);
 
 }
@@ -101,12 +114,14 @@
 .price-range-bar {
     margin-top: 20px !important;
     width: 85% !important;
+    max-width: 400px !important;
 }
 
 .price-range-textfields {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas: "minprice maxprice";
+    /* i don't want this to be responsive (no percentages used) */
+    grid-template-columns: 120px 120px 10%;
+    grid-template-areas: "minprice maxprice submitbtn";
     
     margin-top: 40px !important;
 }
@@ -120,7 +135,63 @@
     
 }
 
+.price-range-button {
+    grid-area: submitbtn;
+    background-color: #9966cc;
+    /* background-color: #1e2749; */
+    
+
+    border-radius: 4px;
+    
+    /* center submit icon horizontally and vertically */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.price-range-icon{
+    color: #f1f1f1 !important;
+}
+
+.price-range-button:hover{
+    background-color: #a696cd;
+    cursor: pointer;
+}
+
 .minprice-textfield,
 .maxprice-textfield {
-    width: 70%;
+    width: 110px;
+}
+
+
+@media (max-width: 1750px) {
+    .bids-container {
+        display: grid;
+        grid-template-rows: 100px 80px min-content 40px 100px;
+        grid-template-columns: 50% 50%;
+        grid-template-areas:    "title search"
+                                "filters-btn filters-btn"
+                                "filters filters"
+                                "filtertags filtertags"
+                                "products products";
+    }
+
+    .filters-options-show-hide {
+        display: block;
+        /* background-color: #3a8589; */
+        
+        /* center contains vertically */
+        display: flex;
+        align-items: center;
+    }
+
+    .bids-filters {
+        display: none;
+        /* background-color: #9966cc; */
+    }
+
+    .products-stack {
+        padding: 0px;
+    }
+
 }
