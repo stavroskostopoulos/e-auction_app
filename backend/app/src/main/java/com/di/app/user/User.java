@@ -10,18 +10,23 @@ public class User {
 //    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String username;
     private String pass;
     private String email;
+    private String realname;
+    private String surname;
+    private String tele;
+    private String afm;
     private Integer type;
 
-    public User() {
-    }
-
-    public User(String name, String pass, String email, Integer type) {
-        this.name = name;
+    public User(String username, String pass, String email, String realname, String surname, String tele, String afm, Integer type) {
+        this.username = username;
         this.pass = pass;
         this.email = email;
+        this.realname = realname;
+        this.surname = surname;
+        this.tele = tele;
+        this.afm = afm;
         this.type = type;
     }
 
@@ -33,12 +38,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPass() {
@@ -57,6 +62,38 @@ public class User {
         this.email = email;
     }
 
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getTele() {
+        return tele;
+    }
+
+    public void setTele(String tele) {
+        this.tele = tele;
+    }
+
+    public String getAfm() {
+        return afm;
+    }
+
+    public void setAfm(String afm) {
+        this.afm = afm;
+    }
+
     public Integer getType() {
         return type;
     }
@@ -69,9 +106,13 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
                 ", pass='" + pass + '\'' +
                 ", email='" + email + '\'' +
+                ", realname='" + realname + '\'' +
+                ", surname='" + surname + '\'' +
+                ", tele='" + tele + '\'' +
+                ", afm='" + afm + '\'' +
                 ", type=" + type +
                 '}';
     }

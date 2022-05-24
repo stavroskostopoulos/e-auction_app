@@ -16,6 +16,10 @@ public class UserConfig {
                     "kwstop",
                     "nouabfa",
                     "kost@gmail.com",
+                    "Stavros",
+                    "Kwstop",
+                    "9665566",
+                    "46546546",
                     1
             );
 
@@ -23,6 +27,10 @@ public class UserConfig {
                     "nota",
                     "nouabfa",
                     "nota@gmail.com",
+                    "Noths",
+                    "Stam",
+                    "6952252",
+                    "222222",
                     1
             );
 

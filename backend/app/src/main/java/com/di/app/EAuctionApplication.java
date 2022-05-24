@@ -1,6 +1,5 @@
 package com.di.app;
 
-import com.di.app.user.User;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -10,9 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
 
 
 @SpringBootApplication
@@ -43,7 +40,6 @@ public class EAuctionApplication {
 		tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
 		return tomcat;
 	}
-
 
     // Redirect from HTTP 8080 to HTTPS 8443
 	private Connector httpToHttpsRedirectConnector() {

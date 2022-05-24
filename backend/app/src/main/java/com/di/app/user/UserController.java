@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@RequestMapping(path = "api/users");
+//@RequestMapping(path = "api/users")
 @RestController
 public class UserController {
 
@@ -16,14 +16,16 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping(path = "api/users")
     public List<User> GetUsers(){
         return service.GetUsers();
     }
 
-    @PostMapping
+    @PostMapping(path = "api/users")
     public void RegisterUser(@RequestBody User newUser){
         service.SaveUser(newUser);
     }
 
 }
+
+
