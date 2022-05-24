@@ -10,7 +10,7 @@
 
 .bids-container {
     height: 100%;
-    padding: 80px;
+    padding: 20px 80px 80px 80px;
     padding-bottom: 0px;
     display: grid;
     grid-template-columns: 25% 75%;
@@ -29,13 +29,18 @@
 }
 
 .products-stack {
-    padding: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-bottom: 100px;
+
 }
 
 
 .filtertags {
     grid-area: filtertags;
     /* background-color: aqua; */
+
+    padding-left: 30px;
     
     /* center contains vertically */
     display: flex;
@@ -89,7 +94,7 @@
 
 .bids-products{
     grid-area: products;
-    background-color: lavender;
+    /* background-color: lavender; */
 }
 
 .filter-title {
@@ -163,11 +168,19 @@
     width: 110px;
 }
 
+.pagination-container-bids {
+    /* center text horizontally and vertically */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 60px !important;
+}
 
 @media (max-width: 1750px) {
     .bids-container {
         display: grid;
-        grid-template-rows: 100px 80px min-content 40px 100px;
+        grid-template-rows: 100px 80px min-content 40px min-content;
         grid-template-columns: 50% 50%;
         grid-template-areas:    "title search"
                                 "filters-btn filters-btn"
@@ -192,6 +205,14 @@
 
     .products-stack {
         padding: 0px;
+        padding-bottom: 100px;
+        
+        
+    }
+
+    .filtertags {
+        padding-bottom: 16px;
+        padding-left: 0px;
     }
 
 }

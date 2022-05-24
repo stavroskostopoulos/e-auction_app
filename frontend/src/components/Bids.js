@@ -26,6 +26,8 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Pagination from '@mui/material/Pagination';
+
 
 import FilterListIcon from '@mui/icons-material/FilterList';
 
@@ -114,9 +116,10 @@ function priceRangetext(value) {
 
 
 
-function MainContainer() {
+function Bids() {
 	
 
+	
 
 	// search
 	const [searchLabel, setSearchLabel] = React.useState("Search");
@@ -136,7 +139,7 @@ function MainContainer() {
 	const categories = ['Used', 'Unused', 'Electronics', 'Fashion', 'Health & Beauty'];
 
 	//products
-	const products = ["Product 1 Title", "Product 2 Title", "Product 3 Title", "Product 4 Title"];
+	const products = ["Product 1 Title", "Product 2 Title", "Product 3 Title", "Product 4 Title", "Product 5 Title", "Product 6 Title", "Product 7 Title"];
 
 
 	const handleDelete = (value) => {
@@ -245,11 +248,16 @@ function MainContainer() {
 							<Stack spacing={3} className='products-stack'>
 								{(products.length!==0) &&
 									products.map((product) =>	(
-										<ProductListItem productname={product}/>
+										<ProductListItem productname={product} category='Electronics' owner='kostopez' numberOfBidders="15" price="24,50"/>
 										
 									))
 								
 								}
+							{(products.length>6) &&
+								<div className='pagination-container-bids'>
+									<Pagination className='pagination-admin' count={10} color="secondary" />
+								</div>
+							}
 							</Stack>
 						</div>
 
@@ -276,4 +284,4 @@ function MainContainer() {
     );
   }
   
-  export default MainContainer;
+  export default Bids;
