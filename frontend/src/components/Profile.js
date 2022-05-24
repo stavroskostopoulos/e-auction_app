@@ -1,6 +1,6 @@
 import React from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
-
 import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
 
@@ -45,6 +45,16 @@ function Profile() {
     const handleChange = (event) => {
         setProfiletype(event.target.value);
     };
+
+
+
+    React.useEffect(() => {
+        axios.get('https://localhost:8443/api/users')
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err))
+
+
+    }, [])
 
     return (
       
