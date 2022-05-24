@@ -71,7 +71,7 @@ function Header() {
     return (
         <React.Fragment>
 
-            <AppBar position="static" className={classes.root}>
+            <AppBar position="sticky" className={classes.root}>
                 <Toolbar>
 
                     {/* Logo */}
@@ -96,12 +96,12 @@ function Header() {
                     </Tabs>
 
                     {/* if not logged in  */}
-                    <Link to={'/login'} className={classes.linkPosition}>
+                    {/* <Link to={'/login'} className={classes.linkPosition}>
                         <Button className={classes.loginBtn} variant="outlined" onClick={()=> setValue(false)}>Login</Button>
-                    </Link>
+                    </Link> */}
                     
                     {/* if logged in */}
-                    {/* <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} onClick={()=> setValue(false)} component={Link} to={'/profile'}/> */}
+                    <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} onClick={()=> setValue(false)} component={Link} to={'/profile'}/>
 
                 </Toolbar>
             
