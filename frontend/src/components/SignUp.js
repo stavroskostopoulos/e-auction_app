@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import "../css/SignIn.css"
 import TextField from '@mui/material/TextField';
@@ -57,11 +58,42 @@ function Login() {
     const [locationpick, setLocationpick] = React.useState(false);
 
 
+
+
+    //Attributes
+    const [realname, setRealname] = React.useState('');
+    const [surname, setSurname] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [tele, setTele] = React.useState('6983892590');
+    const [afm, setAfm] = React.useState('');
+    const [type, setType] = React.useState(2);
+    const [pass, setPass] = React.useState('');
+    const [username, setUsername] = React.useState('');
+
+
+
+
     const classes = useStyles();
 
     const handleChange = (event) => {
         setProfiletype(event.target.value);
     };
+
+
+    const postUser = (e) => {
+        e.preventDefault();
+        axios.post('https://localhost:8443/api/users', {
+            username,
+            pass,
+            email,
+            realname,
+            surname,
+            tele,
+            afm,
+            type
+        }).then(res => console.log('Posting data', res))
+        .catch(error => console.log(error.response.data))
+    }
 
     return (
         <div className='signin-container signup-container'>
@@ -72,27 +104,27 @@ function Login() {
                         <h2 className='signin-title'>Sign Up</h2>
                         {!locationpick &&
                             <div className='input-field'>
-                                <CssTextField id="outlined-basic" className={classes.loginField} label="First name" variant="outlined" />
+                                <CssTextField id="outlined-basic" className={classes.loginField} label="First name" variant="outlined" value={realname} onChange={(e)=>setRealname(e.target.value)} />
                             </div>
                         }
                         {!locationpick &&
                             <div className='input-field'>
-                                <CssTextField id="outlined-basic" className={classes.loginField} label="Last name" variant="outlined" />
+                                <CssTextField id="outlined-basic" className={classes.loginField} label="Last name" variant="outlined" value={surname} onChange={(e)=>setSurname(e.target.value)} />
                             </div>
                         }
                         {!locationpick &&
                             <div className='input-field'>
-                                <CssTextField id="outlined-basic" className={classes.loginField} label="Username" variant="outlined" />
+                                <CssTextField id="outlined-basic" className={classes.loginField} label="Username" variant="outlined" value={username} onChange={(e)=>setUsername(e.target.value)} />
                             </div>
                         }
                         {!locationpick &&
                             <div className='input-field'>
-                                <CssTextField id="outlined-basic" className={classes.loginField} label="Email" type="email" variant="outlined" />
+                                <CssTextField id="outlined-basic" className={classes.loginField} label="Email" type="email" variant="outlined" value={email} onChange={(e)=>setEmail(e.target.value)} />
                             </div>
                         }
                         {!locationpick &&
                             <div className='input-field'>
-                                <CssTextField id="outlined-basic" className={classes.loginField} label="ΑΦΜ" variant="outlined" />
+                                <CssTextField id="outlined-basic" className={classes.loginField} label="ΑΦΜ" variant="outlined" value={afm} onChange={(e)=>setAfm(e.target.value)} />
                             </div>
                         }
                         {!locationpick &&
@@ -118,7 +150,7 @@ function Login() {
                         }
                         {!locationpick &&
                             <div className='input-field'>
-                                <CssTextField id="outlined-basic" className={classes.loginField} label="Password" type="password" variant="outlined" />
+                                <CssTextField id="outlined-basic" className={classes.loginField} label="Password" type="password" variant="outlined" value={pass} onChange={(e)=>setPass(e.target.value)} />
                             </div>
                         }
                         {!locationpick &&
@@ -128,7 +160,9 @@ function Login() {
                         }                        
                         
                         {!locationpick &&
-                            <Button type="button" className={classes.loginFormBtn} endIcon={<ArrowForwardIcon/>} variant="contained" onClick={() => setLocationpick(true)}>Next</Button>
+                            // <Button type="button" className={classes.loginFormBtn} endIcon={<ArrowForwardIcon/>} variant="contained" onClick={() => setLocationpick(true)}>Next</Button>
+                            <Button type="button" className={classes.loginFormBtn} endIcon={<ArrowForwardIcon/>} variant="contained" onClick={postUser}>Next</Button>
+
                         }
 
 
