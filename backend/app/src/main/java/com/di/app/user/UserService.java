@@ -1,20 +1,26 @@
 package com.di.app.user;
 
+import com.di.app.role.*;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
-@Service
+@Service @Transactional @Slf4j
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+//    @Autowired
+//    public UserService(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
 
     public List<User> GetUsers(){
         return userRepository.findAll();
@@ -36,6 +42,19 @@ public class UserService {
 
         // all good, save the user
         userRepository.save(newUser);
-        //System.out.println(newUser);
     }
+
+
+    public Role SaveRole(Role role){
+        return roleRepository.save(role);
+    }
+
+    public void GiveRole(String username, String rolename){
+        User user = userRepository.findByUsername(username);
+        Role role = roleRepository.findByName(rolename);
+
+        user.getRoles().add(role);
+    }
+
+
 }

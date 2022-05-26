@@ -8,6 +8,7 @@ import java.util.Collection;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    User findByUsername(String username);
 
     @Query(value = "SELECT * FROM user u WHERE u.email = ?1",
             nativeQuery = true)
