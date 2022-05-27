@@ -10,7 +10,8 @@ import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
-@Service @Transactional @Slf4j
+//@Slf4j
+@Service @Transactional
 @RequiredArgsConstructor
 public class UserService {
 

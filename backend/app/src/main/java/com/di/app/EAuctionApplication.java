@@ -101,10 +101,10 @@ public class EAuctionApplication {
 		return connector;
 	}
 
-//	@Bean
-//	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
