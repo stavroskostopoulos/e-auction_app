@@ -4,19 +4,20 @@ import com.di.app.role.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
-//@Slf4j
 @Service @Transactional
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
 //    @Autowired
 //    public UserService(UserRepository userRepository) {
@@ -41,7 +42,8 @@ public class UserService {
             throw new IllegalStateException("Email already in use!");
         }
 
-        // all good, save the user
+        // all good, encode the password and save the user
+        newUser.setPass(passwordEncoder.encode(newUser.getPass()));
         userRepository.save(newUser);
     }
 

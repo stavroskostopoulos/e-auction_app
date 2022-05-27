@@ -24,34 +24,9 @@ public class User {
     private String surname;
     private String tele;
     private String afm;
-//    private Integer type;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
-
-//    public User(String username, String pass, String email, String realname, String surname, String tele, String afm, Integer type) {
-//        this.username = username;
-//        this.pass = pass;
-//        this.email = email;
-//        this.realname = realname;
-//        this.surname = surname;
-//        this.tele = tele;
-//        this.afm = afm;
-//        this.type = type;
-//    }
-
-    //    public User() {}
-//
-//    public User(String username, String pass, String email, String realname, String surname, String tele, String afm, Collection<Role> roles) {
-//        this.username = username;
-//        this.pass = pass;
-//        this.email = email;
-//        this.realname = realname;
-//        this.surname = surname;
-//        this.tele = tele;
-//        this.afm = afm;
-//        this.roles = roles;
-//    }
 
 }
 
