@@ -2,24 +2,29 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import "../css/SignIn.css"
+
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
+import Stack from '@mui/material/Stack';
+
 
 const CssTextField = withStyles({
     root: {
-      '& label.Mui-focused': {
-        color: '#1e2749',
-      },
-      '& .MuiInput-underline:after': {
-        borderBottomColor: '#1e2749',
-      },
-      '& .MuiOutlinedInput-root': {
-        
-        '&.Mui-focused fieldset': {
-          borderColor: '#1e2749',
-        } 
+        '& label.Mui-focused': {
+            color: '#1e2749',
+        },
+        '& .MuiInput-underline:after': {
+            borderBottomColor: '#1e2749',
+        },
+        '& .MuiOutlinedInput-root': {
+            minWidth: '380px !important',
+            width: '100% !important',
+            textAlign: 'left',
+            '&.Mui-focused fieldset': {
+                borderColor: '#1e2749',
+            } 
 
       }
 
@@ -50,59 +55,42 @@ const useStyles = makeStyles({
 function Login() {
 
     const classes = useStyles();
+    const [username, setUsername] = React.useState('');
+    const [showEmptyUsername, setShowEmptyUsername] = React.useState(false);
+
+    const [pass, setPass] = React.useState('');
+    const [showEmptyPass, setShowEmptyPass] = React.useState(false);
+
+
+    const sendSignInCredentials = () => {
+        (!username) ? setShowEmptyUsername(true) : setShowEmptyUsername(false);
+        (!pass) ? setShowEmptyPass(true) : setShowEmptyPass(false);
+    };
 
     return (
         <div className='signin-container'>
-            <div className='signin-forms-container'>
-                <div className='signin-signup'>
+            <div className='signinart'/>
+            <div className='signform'>
                     <form className='signin-form'>
 
                         <h2 className='signin-title'>Sign in</h2>
-                        <div className='input-field'>
-                            <CssTextField id="outlined-basic" className={classes.loginField} label="Username" variant="outlined" />
-                        </div>
-                        <div className='input-field'>
-                            <CssTextField id="outlined-basic" className={classes.loginField} label="Password" type="password" variant="outlined" />
-                        </div>
-                        <Button className={classes.loginFormBtn} variant="contained">Login</Button>
-                        <p className='register-advice-text'>New here? <Link to={'/register'}>Create an account</Link></p>
+                        <Stack spacing={1.5} className='signup-stack-1'>
+
+                            
+                            <CssTextField id="outlined-basic" className={classes.loginField} label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} error={showEmptyUsername} />
+                            
+                            
+                            <CssTextField id="outlined-basic" className={classes.loginField} label="Password" type="password" variant="outlined" value={pass} onChange={(e) => setPass(e.target.value)} error={showEmptyPass} />
+                            
+                            <Button className={classes.loginFormBtn} variant="contained" onClick={sendSignInCredentials}>Login</Button>
+                            <p className='register-advice-text'>New here? <Link to={'/register'}>Create an account</Link></p>
+                        </Stack>
+
                     </form>
 
                 </div>
-            </div>
-
-        
-
         </div>
-
-        // <form className='login-form'>
-
-        //     {/* Email address */}
-        //     <div className='input-group span-2'>
-        //         {/* <label className='input-label'>Όνομα χρήστη:</label> */}
-        //         <CssTextField id="outlined-basic" className={classes.loginField} label="Username" variant="outlined" />
-        //         {/* <input type='text' className='input-text' placeholder='Όνομα χρήστη'></input> */}
-        //     </div>
-
-        //     {/* Password */}
-        //     <div className='input-group span-2'>
-        //         {/* <label className='input-label'>Κωδικός πρόσβασης:</label> */}
-        //         <CssTextField id="outlined-basic" className={classes.loginField} label="Password" type="password" variant="outlined" />
-        //         {/* <input type='password' className='input-text' placeholder='Κωδικός Πρόσβασης'></input> */}
-        //     </div>
-
-            
-
-        //     <div className='input-group'>
-        //         {/* <button className='input-button'>Εγγραφή</button> */}
-        //         <Button className={classes.registerFormBtn} variant="contained">Register</Button>
-        //     </div>
-        //     <div className='input-group'>
-        //         {/* <button className='input-button'>Login</button> */}
-        //         <Button className={classes.loginFormBtn} variant="contained">Login</Button>
-        //     </div>
-
-        // </form>
+  
         
       
     );
