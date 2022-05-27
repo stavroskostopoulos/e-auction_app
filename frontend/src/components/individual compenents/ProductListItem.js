@@ -27,13 +27,17 @@ function ProductListItem(props) {
 			
 			<div className='product-list-img-container'>
 
-				{props.category==='Electronics' && <img src={electronicImages[Math.floor(Math.random()*electronicImages.length)]} alt="This should be sth" className='product-list-image'/>}
+				{props.category==='Electronics' && <img draggable="false" src={electronicImages[Math.floor(Math.random()*electronicImages.length)]} alt="This should be sth" className='product-list-image'/>}
 			</div>
 			
-			<div className='product-list-info'>
+			<div className={(props.price > 100) ? (props.price > 1000 ? "product-list-info-large" : "product-list-info-medium") : "product-list-info-small"}>
 				<div className='product-list-title-container'>
 					<h3 className='product-list-title'>{props.productname}</h3>
 				</div>
+				<div className='product-list-price-container'>
+					<p className='product-list-price'>current price: <span className='product-list-price-number'> {props.price}€ </span></p>
+				</div>
+				
 				<div className='product-list-owner-container'>
 					<p className='product-list-owner-text'>by {props.owner}</p>
 				</div>

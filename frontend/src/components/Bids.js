@@ -248,7 +248,7 @@ function Bids() {
 							<Stack spacing={3} className='products-stack'>
 								{(products.length!==0) &&
 									products.map((product) =>	(
-										<ProductListItem productname={product} category='Electronics' owner='kostopez' numberOfBidders="15" price="24,50"/>
+										<ProductListItem productname={product} category='Electronics' owner='kostopez' numberOfBidders="15" price={2400}/>
 										
 									))
 								

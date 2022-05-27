@@ -20,80 +20,76 @@ input {
 }
 
 .signin-container {
+    background-color: #fff;
+
     font-family: 'Poppins', sans-serif;
 
-    position: relative;
     width: 100%;
     min-height: calc(100vh - 64px);
-    overflow: hidden;
 
-    background-color: #ffffff;
-}
-
-.signin-container:before{
-    content: '';
-    position: absolute;
-    width: 2000px;
-    height: 2000px;
-    border-radius: 50%;
-    background: linear-gradient(-45deg, #9966cc, #7e3fbd);
-    top: -10%;
-    right: 48%;
-    transform: translateY(-50%);
-
-}
-
-.signup-container:before {
-    background: linear-gradient(-45deg, #e4d9ff, #7e3fbd);
     
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-areas: "art signform";
 }
 
-.signin-forms-container{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+.signinart {
+    grid-area: art;
+    /* background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='1080' preserveAspectRatio='none' viewBox='0 0 1920 1080'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1133%26quot%3b)' fill='none'%3e%3crect width='1920' height='1080' x='0' y='0' fill='rgba(255%2c 255%2c 255%2c 1)'%3e%3c/rect%3e%3cpath d='M960 1077.83C1106.45 1079.59 1262.81 1049.48 1359.32 939.32 1451.99 833.57 1443.58 680.07 1431.31 540 1420.37 415.17 1382.6 294.61 1294.97 205.03 1206.36 114.43 1086.35 68.3 960 58.16 820.72 46.98 670.06 52.7 566.57 146.57 459.59 243.64 428.17 395.55 428.85 540 429.51 683.68 469.27 827.54 570.23 929.77 671.73 1032.58 815.53 1076.1 960 1077.83' fill='rgba(228%2c 217%2c 255%2c 1)'%3e%3c/path%3e%3cpath d='M960 784.47C1026.57 785.27 1097.64 771.58 1141.51 721.51 1183.63 673.44 1179.81 603.67 1174.23 540 1169.26 483.26 1152.09 428.46 1112.26 387.74 1071.98 346.56 1017.43 325.59 960 320.98 896.69 315.9 828.21 318.5 781.17 361.17 732.54 405.29 718.26 474.34 718.57 540 718.87 605.31 736.94 670.7 782.83 717.17 828.97 763.9 894.33 783.68 960 784.47' fill='rgba(166%2c 150%2c 205%2c 1)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1133'%3e%3crect width='1920' height='1080' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");     */
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='1080' preserveAspectRatio='none' viewBox='0 0 1920 1080'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1017%26quot%3b)' fill='none'%3e%3crect width='1920' height='1080' x='0' y='0' fill='rgba(255%2c 255%2c 255%2c 1)'%3e%3c/rect%3e%3cpath d='M960 1272.16C1154.68 1267.67 1330.5 1184.67 1480.64 1060.64 1650.61 920.22 1822.55 759.16 1846.24 540 1871.95 302.37 1774.71 63.32 1606.92-106.92 1438.01-278.28 1199.97-376.88 960-359.16 733.97-342.47 550.23-189.44 402.03-17.97 266.2 139.21 180.41 332.26 182.83 540 185.21 745.29 265.41 944.4 414.84 1085.16 560.23 1222.11 760.35 1276.75 960 1272.16' fill='rgba(153%2c 111%2c 196%2c 1)'%3e%3c/path%3e%3cpath d='M960 1013.75C1085.97 1010.84 1199.73 957.14 1296.89 876.89 1406.86 786.03 1518.12 681.81 1533.45 540 1550.08 386.24 1487.16 231.56 1378.59 121.41 1269.3 10.53 1115.28-53.27 960-41.81 813.74-31.01 694.86 68.01 598.96 178.96 511.07 280.66 455.56 405.58 457.12 540 458.66 672.84 510.56 801.67 607.25 892.75 701.32 981.36 830.82 1016.72 960 1013.75' fill='rgba(166%2c 150%2c 205%2c 1)'%3e%3c/path%3e%3cpath d='M960 755.34C1017.26 754.02 1068.97 729.61 1113.13 693.13 1163.12 651.83 1213.69 604.46 1220.66 540 1228.22 470.11 1199.62 399.8 1150.27 349.73 1100.59 299.33 1030.58 270.33 960 275.54 893.52 280.45 839.48 325.46 795.89 375.89 755.94 422.12 730.71 478.9 731.42 540 732.12 600.38 755.71 658.94 799.66 700.34 842.42 740.62 901.28 756.69 960 755.34' fill='rgba(166%2c 150%2c 205%2c 1)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1017'%3e%3crect width='1920' height='1080' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+    background-position: center;
+    /* background-size: contain; */
+    background-position: right 0;
+}
+
+.signupart {
+    grid-area: art;
+    /* background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='1080' preserveAspectRatio='none' viewBox='0 0 1920 1080'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1133%26quot%3b)' fill='none'%3e%3crect width='1920' height='1080' x='0' y='0' fill='rgba(255%2c 255%2c 255%2c 1)'%3e%3c/rect%3e%3cpath d='M960 1077.83C1106.45 1079.59 1262.81 1049.48 1359.32 939.32 1451.99 833.57 1443.58 680.07 1431.31 540 1420.37 415.17 1382.6 294.61 1294.97 205.03 1206.36 114.43 1086.35 68.3 960 58.16 820.72 46.98 670.06 52.7 566.57 146.57 459.59 243.64 428.17 395.55 428.85 540 429.51 683.68 469.27 827.54 570.23 929.77 671.73 1032.58 815.53 1076.1 960 1077.83' fill='rgba(228%2c 217%2c 255%2c 1)'%3e%3c/path%3e%3cpath d='M960 784.47C1026.57 785.27 1097.64 771.58 1141.51 721.51 1183.63 673.44 1179.81 603.67 1174.23 540 1169.26 483.26 1152.09 428.46 1112.26 387.74 1071.98 346.56 1017.43 325.59 960 320.98 896.69 315.9 828.21 318.5 781.17 361.17 732.54 405.29 718.26 474.34 718.57 540 718.87 605.31 736.94 670.7 782.83 717.17 828.97 763.9 894.33 783.68 960 784.47' fill='rgba(166%2c 150%2c 205%2c 1)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1133'%3e%3crect width='1920' height='1080' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");     */
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='1080' preserveAspectRatio='none' viewBox='0 0 1920 1080'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1010%26quot%3b)' fill='none'%3e%3crect width='1920' height='1080' x='0' y='0' fill='rgba(255%2c 255%2c 255%2c 1)'%3e%3c/rect%3e%3cpath d='M960 1371.2C1186.34 1373.92 1427.98 1327.37 1577.13 1157.13 1720.34 993.7 1707.35 756.48 1688.38 540 1671.48 347.08 1613.11 160.76 1477.68 22.32 1340.73-117.7 1155.26-188.99 960-204.67 744.75-221.94 511.91-213.1 351.98-68.02 186.64 81.99 138.08 316.76 139.14 540 140.16 762.05 201.6 984.38 357.62 1142.38 514.5 1301.26 736.72 1368.51 960 1371.2' fill='rgba(228%2c 217%2c 255%2c 1)'%3e%3c/path%3e%3cpath d='M960 1077.83C1106.45 1079.59 1262.81 1049.48 1359.32 939.32 1451.99 833.57 1443.58 680.07 1431.31 540 1420.37 415.17 1382.6 294.61 1294.97 205.03 1206.36 114.43 1086.35 68.3 960 58.16 820.72 46.98 670.06 52.7 566.57 146.57 459.59 243.64 428.17 395.55 428.85 540 429.51 683.68 469.27 827.54 570.23 929.77 671.73 1032.58 815.53 1076.1 960 1077.83' fill='rgba(166%2c 150%2c 205%2c 1)'%3e%3c/path%3e%3cpath d='M960 784.47C1026.57 785.27 1097.64 771.58 1141.51 721.51 1183.63 673.44 1179.81 603.67 1174.23 540 1169.26 483.26 1152.09 428.46 1112.26 387.74 1071.98 346.56 1017.43 325.59 960 320.98 896.69 315.9 828.21 318.5 781.17 361.17 732.54 405.29 718.26 474.34 718.57 540 718.87 605.31 736.94 670.7 782.83 717.17 828.97 763.9 894.33 783.68 960 784.47' fill='rgba(166%2c 150%2c 205%2c 1)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1010'%3e%3crect width='1920' height='1080' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+    background-position: center;
+    /* background-size: contain; */
+    background-position: right 0;
 }
 
 .signin-form {
+    text-align: center;
+}
+
+.signup-stack-1 {
+    /* center contains of form horizontally and vertically */
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
+
 }
 
+.signform {
+    grid-area: signform;
+    /* background-color: aqua; */
+
+    /* center the form horizontally and vertically */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 
 .signin-title{
     font-size: 2.5rem;
     color: rgb(39, 39, 39);
-    margin-bottom: 10px;
+    padding-bottom: 20px;
 }
 
-.input-field{
+.signin-signup-alert {
     max-width: 380px;
     width: 100%;
-    height: 55px;
     
-    margin: 10px 0;
-    border-radius: 55px;
-}
-
-.signin-signup{
-    position: absolute;
-    top: 50%;
-    left: 75%;
-    transform: translate(-50%, -50%);
-    width: 50%;
-    display: grid;
-    grid-template-columns: 1fr;
 }
 
 .register-advice-text{
-    margin-top: 20px;
+    margin-top: 20px !important;
 }
 
 .location-title {

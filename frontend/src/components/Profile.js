@@ -67,7 +67,7 @@ function Profile() {
 
                 <div className="profile-container">
                     <div className="profile-column-left" >
-                        <img className="profile-picture" src="/faithplusone.jpg"></img>
+                        <img draggable="false" className="profile-picture" src="/faithplusone.jpg"></img>
                     </div>
                     <div className="profile-column-right">
                         <h2 className="name-title">Stavros Kostopoulos</h2>

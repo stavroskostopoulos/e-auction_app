@@ -10,6 +10,9 @@ import StoreIcon from '@mui/icons-material/Store';
 import Avatar from '@mui/material/Avatar';
 import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +51,8 @@ const useStyles = makeStyles({
         }
     },
     avatarImg: {
-        marginLeft: 'auto!important'
+        marginLeft: 'auto!important',
+        cursor: ' pointer'
     },
     linkPosition: {
         marginLeft: 'auto!important'
@@ -64,9 +68,19 @@ function Header() {
 
     const classes = useStyles();
 
+
+
     const [value, setValue] = React.useState(false);
     const [admin, setAdmin] = React.useState(false);
-    
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const handleOpenUserMenu = (e) => {
+        setAnchorElUser(e.currentTarget);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
     return (
         <React.Fragment>
@@ -88,7 +102,7 @@ function Header() {
                         >
                         <CustomTab className={classes.menuOption} value="1" label="Home" component={Link} to={'/'}/>
                         <CustomTab className={classes.menuOption} value="2" label="Bids" component={Link} to={'/login'}/>
-                        <CustomTab className={classes.menuOption} value="3" label="Services"/>
+                        <CustomTab className={classes.menuOption} value="3" label="Services" component={Link} to={'/product'}/>
                         <CustomTab className={classes.menuOption} value="4" label="Settings"/>
                         {!admin &&
                             <CustomTab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'}/>
@@ -101,7 +115,35 @@ function Header() {
                     </Link> */}
                     
                     {/* if logged in */}
-                    <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} onClick={()=> setValue(false)} component={Link} to={'/profile'}/>
+                    
+                    <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} onClick={handleOpenUserMenu}/>
+                    <Menu
+                        sx={{ mt: '45px' }}
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                    >
+                        <MenuItem key="0" onClick={handleCloseUserMenu} className='user-menu-item' component={Link} to={'/profile'}>
+                            <Typography textAlign="center">Profile</Typography>
+                        </MenuItem>
+                        <MenuItem key="1" onClick={handleCloseUserMenu} className='user-menu-item' component={Link} to={'/login'}>
+                            <Typography textAlign="center">Log Out</Typography>
+                        </MenuItem>
+                       
+                    </Menu>
+
+
+
 
                 </Toolbar>
             

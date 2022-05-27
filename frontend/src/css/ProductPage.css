@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.product-container {
+    font-family: 'Poppins', sans-serif;
+
+    padding: 80px;
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 250px 150px calc(100% - 400px);
+    grid-template-areas:    "productpic producttitle"
+                            "productpic productactions"
+                            "whatever whatever";
+}  
+
+
+.product-image {
+    grid-area: productpic;
+    /* background-color: aqua; */
+
+    /* center img horizontally and vertically */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image > img {
+    width: 70%;
+    height: auto;
+    max-height: 400px;
+    max-width: 400px;
+}
+
+.product-title {
+    grid-area: producttitle;
+    /* background-color: blueviolet; */
+}
+
+.product-title > h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #131313;
+
+}
+
+.product-description {
+    color: #9c9c9c;
+    font-size: 1rem;
+    padding-top: 40px;
+}
+
+
+.product-actions {
+    grid-area: productactions;
+    /* background-color: blanchedalmond; */
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-areas: "currentprice newbid";
+    
+}
+
+.current-price > p {
+    color: #9c9c9c;
+    padding-top: 20px;
+}
+
+.product-price-number {
+    color: #131313;
+    font-size: 1.4rem;
+
+}
+
+.product-bid-textfield {
+    width: 150px !important;
+}
+
+.product-bid-button {
+    width: 80px !important;
+    background-color: #803cc0 !important;
+}
+
+.product-bid-button:disabled {
+    background-color: #d1d1d1 !important;
+    cursor: no-drop;
+}
+
+.product-bid-button:hover {
+    background-color: #9953db !important;
+}
+
+.new-bid-product-stack{
+    margin-left: auto;
+}
+
+.current-price {
+    grid-area: currentprice;
+}
+
+.new-bid-product-stack-container{
+    grid-area: newbid;
+}
+
+.new-bid-product-stack {
+    padding-top: 20px;
+}
+
+.bid-dialog {
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.dialog-disagree-btn{
+    color: #D83A56 !important;
+}
+
+
+.dialog-agree-btn {
+    color: #4E944F !important;
+}
+
+@media (max-width: 1050px) {
+    .product-container {
+
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 400px 250px 150px calc(100% - 800px);
+        grid-template-areas:    "productpic"
+                                "producttitle"
+                                "productactions"
+                                "whatever";
+    }
+
+
+}
+

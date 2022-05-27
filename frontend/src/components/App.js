@@ -7,6 +7,7 @@ import Signup from './SignUp';
 import Bids from './Bids';
 import Profile from './Profile';
 import Administration from './Administration';
+import ProductPage from './ProductPage';
 
 import "../css/App.css"
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -29,6 +30,7 @@ function App() {
             <Route exact path="/register" element={<Signup/>}/>
             <Route exact path="/profile" element={<Profile/>}/>
             <Route exact path="/administration" element={<Administration/>}/>
+            <Route exact path="/product" element={<ProductPage/>}/>
 
           </Routes>
           
