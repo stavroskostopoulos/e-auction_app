@@ -19,9 +19,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
-import static com.di.app.security.SecurityConstants.EXPIRATION_TIME;
-import static com.di.app.security.SecurityConstants.HEADER_STRING;
-import static com.di.app.security.SecurityConstants.SECRET;
+import static com.di.app.security.SecurityConstants.*;
 
 @Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -54,7 +52,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(HMAC512(SECRET.getBytes()));
 
-        response.addHeader(HEADER_STRING, token);
+        response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
 
         log.info("Success");
     }
