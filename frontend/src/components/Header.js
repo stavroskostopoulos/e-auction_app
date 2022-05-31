@@ -13,7 +13,10 @@ import { withStyles } from "@material-ui/core/styles";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-
+import AlarmIcon from '@mui/icons-material/Alarm';
+import FaceIcon from '@mui/icons-material/Face';
+import LogoutIcon from '@mui/icons-material/Logout';
+import Divider from '@mui/material/Divider';
 // ----------------------------------------------------------------------
 
 const CustomTab = withStyles({
@@ -134,10 +137,28 @@ function Header() {
                         onClose={handleCloseUserMenu}
                     >
                         <MenuItem key="0" onClick={handleCloseUserMenu} className='user-menu-item' component={Link} to={'/profile'}>
-                            <Typography textAlign="center">Profile</Typography>
+                            {/* <Typography textAlign="center">Profile</Typography> */}
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexWrap: 'wrap',
+                            }}>
+                                <span>Profile</span>
+							    <FaceIcon style={{ marginLeft: '8px'}}/>
+						
+                            </div>
                         </MenuItem>
+                        <Divider variant="middle" />
                         <MenuItem key="1" onClick={handleCloseUserMenu} className='user-menu-item' component={Link} to={'/login'}>
-                            <Typography textAlign="center">Log Out</Typography>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexWrap: 'wrap',
+                            }}>
+                                <span>Log out</span>
+							    <LogoutIcon style={{ marginLeft: '8px'}}/>
+						
+                            </div>
                         </MenuItem>
                        
                     </Menu>
