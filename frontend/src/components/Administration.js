@@ -22,6 +22,7 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Pagination from '@mui/material/Pagination';
+import PersonSharpIcon from '@mui/icons-material/PersonSharp';
 
 
 import UsersList from './individual compenents/UsersList';
@@ -60,8 +61,8 @@ function Administration() {
                             indicatorColor="secondary"
                             aria-label="secondary tabs example"
                             >
-                            <Tab value="1" label="All users" onClick={() => setRequest(false)} />
-                            <Tab value="2" label="Pending registration requests" onClick={() => setRequest(true)} />
+                            <Tab value="1" label="All users" onClick={() => setRequest(false)} className='admin-menu-option' />
+                            <Tab value="2" label="Pending registration requests" onClick={() => setRequest(true)} className='admin-menu-option' />
                             
                         </Tabs>
                     </div>
