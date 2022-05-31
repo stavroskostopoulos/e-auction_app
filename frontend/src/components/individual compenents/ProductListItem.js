@@ -5,6 +5,8 @@ import '../../css/ProductList.css';
 import PersonSharpIcon from '@mui/icons-material/PersonSharp';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import AlarmIcon from '@mui/icons-material/Alarm';
+import Divider from '@mui/material/Divider';
 
 //Electronics images
 import electronicImages from '../../images/image exports/ElectronicImages'
@@ -53,6 +55,19 @@ function ProductListItem(props) {
 						
 							<span className='current-bidders-text'>{props.numberOfBidders} bidders</span>
 							<PersonSharpIcon className='current-bidders-icon'/>
+						
+					</div>
+
+					<div className='current-currentprice-container' style={{
+						display: 'flex',
+						alignItems: 'center',
+						flexWrap: 'wrap',
+						// paddingLeft: '20px'
+
+					}}>
+							<Divider orientation="vertical" variant="middle" flexItem />
+							<span className='current-bidders-text' style={{ paddingLeft: '20px'}}>{props.numberOfBidders} days left</span>
+							<AlarmIcon className='current-bidders-icon' style={{ paddingLeft: '20px'}}/>
 						
 					</div>
 

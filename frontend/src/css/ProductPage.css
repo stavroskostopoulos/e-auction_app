@@ -14,12 +14,73 @@
 
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-template-rows: 250px 150px calc(100% - 400px);
+    grid-template-rows:  min-content();
     grid-template-areas:    "productpic producttitle"
                             "productpic productactions"
                             "whatever whatever";
 }  
 
+.product-data {
+    grid-area: whatever;
+    /* background-color: #D83A56; */
+
+    /* padding: 50px; */
+    padding-top: 120px;
+
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: min-content();
+    grid-template-areas:    "data-title data-tabs"
+                            "data data";
+}
+
+.data-title-container {
+    grid-area: data-title;
+    /* background-color: #4E944F; */
+}
+
+.product-data-title {
+    /* font-size: 1rem; */
+    color: #222222;
+    font-weight: 500;
+    font-size: 1.6rem;
+}
+
+.data-tablehead {
+    background-color: #a696cd41 !important;
+}
+
+.tablecell-title {
+    font-weight: 600 !important;
+}
+
+.data-menu {
+    grid-area: data-tabs;
+    /* background-color: #D83A56; */
+
+    margin-left: auto;
+    
+}
+
+.data-table {
+    box-shadow: none !important;
+}
+
+.data-table-link:hover {
+    text-decoration: underline;
+    color: #865fe9;
+    cursor: pointer;
+}
+
+.data {
+    grid-area: data;
+
+    padding-top: 35px;
+}
+
+.product-data-menu-option {
+    text-transform: unset !important;
+}
 
 .product-image {
     grid-area: productpic;
@@ -63,13 +124,15 @@
 
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-template-areas: "currentprice newbid";
-    
+    grid-template-rows: 20% min-content;
+    grid-template-areas:    "bidnum bidtime"    
+                            "currentprice newbid";
+                            
 }
 
 .current-price > p {
     color: #9c9c9c;
-    padding-top: 20px;
+    padding-top: 70px;
 }
 
 .product-price-number {
@@ -102,14 +165,26 @@
 
 .current-price {
     grid-area: currentprice;
+    /* background-color: #4E944F; */
 }
 
 .new-bid-product-stack-container{
     grid-area: newbid;
+    /* background-color:  red; */
+}
+
+.bidders-number-container {
+    grid-area: bidnum;
+    /* background-color: darkcyan; */
+}
+
+.time-left-container {
+    grid-area: bidtime;
+    /* background-color: aquamarine; */
 }
 
 .new-bid-product-stack {
-    padding-top: 20px;
+    padding-top: 70px;
 }
 
 .bid-dialog {
@@ -129,9 +204,11 @@
 @media (max-width: 1050px) {
     .product-container {
 
+        padding: 60px;
+
         display: grid;
         grid-template-columns: 100%;
-        grid-template-rows: 400px 250px 150px calc(100% - 800px);
+        grid-template-rows: 400px 200px 150px calc(100% - 800px);
         grid-template-areas:    "productpic"
                                 "producttitle"
                                 "productactions"

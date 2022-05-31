@@ -5,9 +5,13 @@ import { makeStyles } from '@mui/styles';
 
 import '../css/ProductPage.css'
 
+import BidHistory from './individual compenents/BidHistory';
+
 //Electronics images
 import electronicImages from '../images/image exports/ElectronicImages'
 
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -23,6 +27,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import AlarmIcon from '@mui/icons-material/Alarm';
+import PersonSharpIcon from '@mui/icons-material/PersonSharp';
 
 
 const CustomOutlinedInput = withStyles({
@@ -53,6 +59,11 @@ function ProductPage() {
     //FWTOGRAFIA ME INDEX PROPS
     // .TOFIXED(2)
 
+
+	const [previousBids, setPreviousBids] = React.useState(["1", "2", "3", "4", "5", "6", "7"]);
+
+    
+    const [dataMenuValue, setDataMenuValue] = React.useState("1");
 
     const currentprice = 130.20.toFixed(2);
 
@@ -124,10 +135,58 @@ function ProductPage() {
                                     </Button>
                                 </Stack>
                             </div>
+
+
+                            <div className='time-left-container' style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexWrap: 'wrap',
+                            }}>
+                                <span className='current-bidders-text' >12 days left</span>
+							    <AlarmIcon className='current-bidders-icon' />
+						
+                            </div>
+
+                            <div className='bidders-number-container' style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexWrap: 'wrap',
+                            }}>
+                                <span className='current-bidders-text' >15 bidders</span>
+							    <PersonSharpIcon className='current-bidders-icon' />
+                            </div>
+
                         </div>
 
 
+                        <div className='product-data'>
 
+                            <div className='data-title-container'>
+                                <h1 className='product-data-title'>{(dataMenuValue==1) ? "Bid History" : "Auction Location"}</h1>
+                            </div>
+
+
+                            <div className='data-menu'>
+                                <Tabs
+                                    value={dataMenuValue}
+                                    onChange={(e,value) => {setDataMenuValue(value);}}                        textColor="secondary"
+                                    indicatorColor="secondary"
+                                    aria-label="secondary tabs example"
+                                    
+                                >
+                                    <Tab value="1" label="Previous Bids" className='product-data-menu-option'/>
+                                    <Tab value="2" label="Location" className='product-data-menu-option' />
+                                    
+                                </Tabs>
+                            </div>
+
+                            <div className='data'>
+                                {(dataMenuValue==1) ? <BidHistory bids={previousBids}/> : <p>sadasdasd</p>}       
+                            </div>
+
+                        </div>
+
+                        {console.log(dataMenuValue)}
 
 
                     </div>
