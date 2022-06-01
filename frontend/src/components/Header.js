@@ -144,7 +144,7 @@ function Header() {
                                 flexWrap: 'wrap',
                             }}>
                                 <span>Profile</span>
-							    <FaceIcon style={{ marginLeft: '8px'}}/>
+							    <FaceIcon style={{ marginLeft: '14px'}}/>
 						
                             </div>
                         </MenuItem>

@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import "../css/SignIn.css"
+
+import Map from './individual compenents/Map';
+import InputMap from './individual compenents/InputMap';
+
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -10,7 +14,12 @@ import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
 import MenuItem from '@mui/material/MenuItem';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import Stack from '@mui/material/Stack';
+import InputAdornment from '@mui/material/InputAdornment';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+
 
 const CssTextField = withStyles({
     root: {
@@ -21,8 +30,6 @@ const CssTextField = withStyles({
             borderBottomColor: '#1e2749',
         },
         '& .MuiOutlinedInput-root': {
-            minWidth: '380px !important',
-            width: '100% !important',
             textAlign: 'left',
             
 
@@ -38,13 +45,20 @@ const CssTextField = withStyles({
 const useStyles = makeStyles({
     loginField: {
         maxWidth: '400px',
+        minWidth: '380px !important',
         width: '100%',
+        
+    },
+    loginFieldTele: {
+        maxWidth: '400px',
+        width: '100%',
+        marginTop: '30px!important',
         
     },
     loginFormBtn: {
         width: '150px',
         height: '49px',
-        borderRadius: '49px!important',
+        borderRadius: '25px!important',
         backgroundColor: '#7e3fbd!important',
         cursor: 'pointer',
         marginTop: '20px!important',
@@ -53,7 +67,34 @@ const useStyles = makeStyles({
             backgroundColor: '#9966cc!important'
         }
         
+    },
+    loginFormBtnFinal: {
+        width: '150px',
+        height: '49px',
+        borderRadius: '25px!important',
+        backgroundColor: '#7e3fbd!important',
+        cursor: 'pointer',
+        marginTop: '30px!important',
+        '&:hover': {
+            transition: '1s',
+            backgroundColor: '#9966cc!important'
+        }
+        
+    },
+    loginFormBtnFinalBack: {
+        width: '150px',
+        height: '49px',
+        borderRadius: '25px!important',
+        backgroundColor: '#866ca0!important',
+        cursor: 'pointer',
+        marginTop: '30px!important',
+        '&:hover': {
+            transition: '1s',
+            backgroundColor: '#9966cc!important'
+        }
+        
     }
+
 });
 
 function Login() {
@@ -79,7 +120,7 @@ function Login() {
     const [email, setEmail] = React.useState('');
     const [showEmptyEmail, setShowEmptyEmail] = React.useState(false);
 
-    const [tele, setTele] = React.useState('6983892590');
+    const [tele, setTele] = React.useState('');
     const [showEmptyTele, setShowEmptyTele] = React.useState(false);
 
     const [afm, setAfm] = React.useState('');
@@ -94,6 +135,7 @@ function Login() {
     const [pass2, setPass2] = React.useState('');
     const [showEmptyPass2, setShowEmptyPass2] = React.useState(false);
 
+    const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
 
     //Check if password contains at least one uppercase, lowercase letter and digit
     const passwordValid = (str) => {
@@ -108,16 +150,14 @@ function Login() {
         setProfiletype(event.target.value);
     };
 
-
-    const sendSignUpCredentials = (e) => {
+    const proceedtoStepTwoOfSignUp = (e) => {
         e.preventDefault();
-    
         (!email) ? setShowEmptyEmail(true) : setShowEmptyEmail(false);
         (!realname) ? setShowEmptyRealname(true) : setShowEmptyRealname(false);
         (!surname) ? setShowEmptySurname(true) : setShowEmptySurname(false);
         (!username) ? setShowEmptyUsername(true) : setShowEmptyUsername(false);
         (!afm) ? setShowEmptyAfm(true) : setShowEmptyAfm(false);
-        
+
         //Password checking
         if(!pass){
             setShowEmptyPass(true);
@@ -126,6 +166,21 @@ function Login() {
                 setShowIncorrectPass(true);
             }
         }
+
+        //Pass2 shit
+
+    }
+
+    
+
+
+    const sendSignUpCredentials = (e) => {
+        e.preventDefault();
+    
+        // (!tele) ? setShowEmptyTele(true) : setShowEmptyTele(false);
+        
+        
+        
         
     
         // axios.post('https://localhost:8443/api/users', {
@@ -143,6 +198,7 @@ function Login() {
     
     return (
         <div className='signin-container signup-container'>
+            {console.log(location)}
                 <div className='signupart'/>
                 <div className='signform'>
 
@@ -162,7 +218,7 @@ function Login() {
                             
                         
                             
-                                <CssTextField id="outlined-basic" className={classes.loginField} label="Last name" variant="outlined" value={surname} onChange={(e)=>setSurname(e.target.value)} error={showEmptySurname} />
+                                <CssTextField id="outlined-basic" className={classes.loginField} label="Last name" variant="outlined" value={surname} onChange={(e)=>setSurname(e.target.value)} error={showEmptyTele} />
                             
                         
                         
@@ -203,34 +259,47 @@ function Login() {
                                             
                         
                         
-                                {/* <Button type="button" className={classes.loginFormBtn} endIcon={<ArrowForwardIcon/>} variant="contained" onClick={() => setLocationpick(true)}>Next</Button> */}
-                                <Button type="button" className={classes.loginFormBtn} endIcon={<ArrowForwardIcon/>} variant="contained" onClick={sendSignUpCredentials}>Next</Button>
+                                <Button type="button" className={classes.loginFormBtn} endIcon={<ArrowForwardIcon/>} variant="contained" onClick={() => setLocationpick(true)}>Next</Button>
+                                {/* <Button type="button" className={classes.loginFormBtn} endIcon={<ArrowForwardIcon/>} variant="contained" onClick={sendSignUpCredentials}>Next</Button> */}
                             </Stack>
                         }
                         
 
 
                         {/* if the user clicked on "next" proceed to: .... */}
+                    
+                        {locationpick &&
+                            <Stack spacing={1.5} className='signup-stack-1'>
+
+                                <InputMap inputMapSetLocation={setLocation}/>
+
+                                <CssTextField id="outlined-basic"
+                                    InputProps={{
+
+                                        endAdornment: (
+                                        <InputAdornment position="start">
+                                            <LocalPhoneIcon />
+                                        </InputAdornment>
+                                        ),
+                            
+                                    }}
+                                    className={classes.loginFieldTele} 
+                                    label="Phone number" 
+                                    variant="outlined" 
+                                    value={tele} 
+                                    onChange={(e)=>setTele(e.target.value)} 
+                                    error={showEmptyAfm}
+                                />
+
+                                <Stack direction="row" spacing={2}>
+                                    <Button type="button" className={classes.loginFormBtnFinalBack} startIcon={<KeyboardBackspaceIcon/>} variant="contained" onClick={() => setLocationpick(false)}>Back</Button>
+                                    <Button type="button" className={classes.loginFormBtnFinal} variant="contained" onClick={sendSignUpCredentials}>Register</Button>
+                                </Stack>
+                            </Stack>
+
+
+                        }
                         
-                        {locationpick &&
-                            <h3 className="location-title">Choose your location</h3>
-                        }
-                        {locationpick &&
-                            <h3 className="location-title">Choose your location</h3>
-                        }
-                        {locationpick &&
-                            <div className='input-field'>
-                                <CssTextField id="outlined-basic" className={classes.loginField} label="Confirm password" variant="outlined" />
-                            </div>
-                        }
-                        {locationpick &&
-                            <div className='input-field'>
-                                <CssTextField id="outlined-basic" className={classes.loginField} label="Confirm password" variant="outlined" />
-                            </div>
-                        }
-                        {locationpick &&
-                            <Button className={classes.loginFormBtn} variant="contained">Register</Button>
-                        }
                             
 
                         
