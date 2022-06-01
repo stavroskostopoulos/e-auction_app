@@ -147,6 +147,9 @@
 
 .product-bid-button {
     width: 80px !important;
+
+    border-radius: 10px !important;
+
     background-color: #803cc0 !important;
 }
 
