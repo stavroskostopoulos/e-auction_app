@@ -270,8 +270,11 @@ function Login() {
                     
                         {locationpick &&
                             <Stack spacing={1.5} className='signup-stack-1'>
+                                
+    
 
-                                <InputMap inputMapSetLocation={setLocation}/>
+                                <InputMap inputMapSetLocation={setLocation} mapWidth="400px" mapHeight="320px" fieldSize="medium" textFieldClass="location-textfield" buttonClass="location-button" containsStackClass="signup-stack-1" buttonContainerClass="location-button-container"/>
+                                
 
                                 <CssTextField id="outlined-basic"
                                     InputProps={{

@@ -23,6 +23,36 @@
     
 }
 
+.filters-location-button-container {
+    grid-area: locationbutton;
+    /* background-color: red; */
+    /* margin-left: auto; */
+}
+
+
+.filters-location-button {
+    /* margin-left: 5% !important; */
+    height: 100%;
+    width: 100%;
+
+
+
+    border-radius: 12px !important;
+
+    background-color: #9966cc !important;
+}
+
+.filters-location-button:hover {
+    background-color: #a570db !important;
+
+}
+
+
+
+.filters-location-textfield{
+    width: 96% !important;
+}
+
 .filters-options-show-hide {
     display: none;
     grid-area: filters-btn;
@@ -159,7 +189,7 @@
 }
 
 .price-range-button:hover{
-    background-color: #a696cd;
+    background-color: #a570db;
     cursor: pointer;
 }
 

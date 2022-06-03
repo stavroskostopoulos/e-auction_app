@@ -64,6 +64,8 @@ input {
     height: 100%;
     width: 100%;
 
+    /* padding-left: 5% !important; */
+
     border-radius: 12px !important;
 
     background-color: #1976d2 !important;

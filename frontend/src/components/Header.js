@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import { Tabs } from '@mui/material';
 import Tab from '@mui/material/Tab';
 import StoreIcon from '@mui/icons-material/Store';
+import IconButton from '@mui/material/IconButton';
+
 import Avatar from '@mui/material/Avatar';
 import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
@@ -32,7 +34,11 @@ const useStyles = makeStyles({
         background: '#1e2749!important'
     },
     logo: {
-        transform: 'scale(1.5)'
+        transform: 'scale(1.5)',
+        '&:hover': {
+            cursor: 'pointer',
+        },
+        color: '#fff !important'
     },
     menuOptions: {
         marginLeft: '5%'
@@ -92,7 +98,9 @@ function Header() {
                 <Toolbar>
 
                     {/* Logo */}
-                    <StoreIcon className={classes.logo} />
+                    <IconButton component={Link} to={'/'}>
+                        <StoreIcon className={classes.logo}/>
+                    </IconButton>
 
                     {/* Menu options */}
                     <Tabs 
@@ -103,8 +111,8 @@ function Header() {
                         TabIndicatorProps={{ sx: { backgroundColor: "#e4d9ff"} }}
                         className={classes.menuOptions}
                         >
-                        <CustomTab className={classes.menuOption} value="1" label="Home" component={Link} to={'/'}/>
-                        <CustomTab className={classes.menuOption} value="2" label="Bids" component={Link} to={'/login'}/>
+                        <CustomTab className={classes.menuOption} value="1" label="Auctions" component={Link} to={'/'}/>
+                        <CustomTab className={classes.menuOption} value="2" label="Sell" component={Link} to={'/sell'}/>
                         <CustomTab className={classes.menuOption} value="3" label="Services" component={Link} to={'/product'}/>
                         <CustomTab className={classes.menuOption} value="4" label="Settings"/>
                         {!admin &&

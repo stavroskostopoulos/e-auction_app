@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import '../../css/ProductList.css';
 
@@ -9,7 +10,7 @@ import AlarmIcon from '@mui/icons-material/Alarm';
 import Divider from '@mui/material/Divider';
 
 //Electronics images
-import electronicImages from '../../images/image exports/ElectronicImages'
+import electronicImages from '../../images/image exports/ElectronicImages';
 
 
 function ProductListItem(props) {
@@ -33,8 +34,8 @@ function ProductListItem(props) {
 			</div>
 			
 			<div className={(props.price > 100) ? (props.price > 1000 ? "product-list-info-large" : "product-list-info-medium") : "product-list-info-small"}>
-				<div className='product-list-title-container'>
-					<h3 className='product-list-title'>{props.productname}</h3>
+				<div  className='product-list-title-container' >
+					<Link to='/product' className='product-name-link'><h3 className='product-list-title' >{props.productname}</h3></Link>
 				</div>
 				<div className='product-list-price-container'>
 					<p className='product-list-price'>current price: <span className='product-list-price-number'> {props.price}€ </span></p>
