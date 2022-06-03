@@ -5,6 +5,10 @@ import { makeStyles } from '@mui/styles';
 
 import "../../css/Bids.css"
 
+import InputMap from './InputMap';
+import Map from './Map';
+
+
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -90,6 +94,9 @@ function BidsFilters(props) {
     // filters
 	// const [checkedCateg, setCheckedCateg] = React.useState([]);
 	const [priceRange, setPriceRange] = React.useState([0, 400]);
+
+    const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
+
 
     const handleToggle = (value) => () => {
 
@@ -198,6 +205,11 @@ function BidsFilters(props) {
 
                                 <Divider  sx={{ mt: 4, mb: 5 }}/>
                                 
+                                <p className='filter-title'>Search by location</p>
+
+                                <div style={{width: '100%', height: '500px', paddingTop: '40px'}}>
+                                    <InputMap inputMapSetLocation={setLocation} mapWidth="100%" mapHeight="290px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container"/>
+                                </div>
                                 
                             </div>
     )

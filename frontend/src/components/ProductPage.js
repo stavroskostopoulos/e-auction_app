@@ -6,6 +6,7 @@ import { makeStyles } from '@mui/styles';
 import '../css/ProductPage.css'
 
 import BidHistory from './individual compenents/BidHistory';
+import Map from './individual compenents/Map';
 
 //Electronics images
 import electronicImages from '../images/image exports/ElectronicImages'
@@ -65,12 +66,15 @@ function ProductPage() {
     
     const [dataMenuValue, setDataMenuValue] = React.useState("1");
 
-    const currentprice = 130.20.toFixed(2);
+    const currentprice = 130.20;
 
     const [newBid, setNewBid] = React.useState(currentprice); //+1 !!!!
     const [invalidNewBid, setInvalidNewBid] = React.useState(false);
 
     const [openDialog, setOpenDialog] = React.useState(false);
+
+    const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
+
 
     const handleClickOpenDialog = () => {
       setOpenDialog(true);
@@ -82,6 +86,7 @@ function ProductPage() {
 
 
     const UpdateBidAmount = (value) =>  {
+        console.log(value , currentprice, (value > currentprice));
         (value > currentprice) ?  setInvalidNewBid(false) : setInvalidNewBid(true);
         setNewBid(value);
         
@@ -181,7 +186,16 @@ function ProductPage() {
                             </div>
 
                             <div className='data'>
-                                {(dataMenuValue==1) ? <BidHistory bids={previousBids}/> : <p>sadasdasd</p>}       
+                                {(dataMenuValue==1) ? 
+                                    <BidHistory bids={previousBids}/> 
+                                : 
+                                    <div className='map-container'>
+                                        {/* <p>{"Longitude: "+ location[0] + ", Latitude: " + location[1]}</p> */}
+                                        <Map longitude={location[0]} latitude={location[1]}/>
+                                    </div>
+                                }       
+                       
+                            
                             </div>
 
                         </div>

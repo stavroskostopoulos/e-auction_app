@@ -17,7 +17,6 @@ function Map(props) {
     return (
         <>
             
-            <p>{props.longitude} , {props.latitude}</p>
             <MapContainer center={position} key={`${position[0]}-${position[1]}`} zoom={13} scrollWheelZoom={true} style={{width: "100%", height: "100%"}}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

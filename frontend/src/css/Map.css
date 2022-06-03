@@ -1,0 +1,5 @@
+.mymap {
+    border-radius: 200px; 
+    position: relative; 
+    z-index: 500;
+}

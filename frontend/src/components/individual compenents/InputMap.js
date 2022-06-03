@@ -37,17 +37,10 @@ const CssTextField = withStyles({
     }
 })(TextField);
 
-const useStyles = makeStyles({
-    loginField: {
-        maxWidth: '400px',
-        width: '100%',
-        
-    },
-});
+
 
 function InputMap(props) {
     // const position = [37.96867087793514, 23.76662747322076];
-    const classes = useStyles();
 
     const [position, setPosition] = React.useState([props.longitude, props.latitude]);
     
@@ -67,8 +60,8 @@ function InputMap(props) {
     };
     
     return (
-        <>
-        <Stack spacing={1.5} className='signup-stack-1'>
+
+        <Stack spacing={1.5} className={props.containsStackClass}>
 
 
             <div className='location-fields-container'>
@@ -76,26 +69,26 @@ function InputMap(props) {
 
                 <div className='location-textfield-container'>
                     <CssTextField id="outlined-basic" 
-                        className="location-textfield"
-                        
+                        className={props.textFieldClass}
                         label="Longitude, Latitude" 
                         type="text" 
                         variant="outlined" 
-                        value={locationStr} 
+                        value={locationStr}
+                        size={props.fieldSize}
                         onChange={(e)=>setLocationStr(e.target.value)} 
                         error={false}
                     />
                 </div>
 
-                <div className='location-button-container'>
-                    <Button className='location-button' onClick={parseLocation}><MyLocationIcon style={{color: '#fff'}}/></Button>
+                <div className={props.buttonContainerClass}>
+                    <Button className={props.buttonClass} onClick={parseLocation} size={props.fieldSize}><MyLocationIcon style={{color: '#fff'}} /></Button>
 
                 </div>
 
             </div>
 
 
-            <div style={{width: '400px', height: '320px'}}>
+            <div style={{width: props.mapWidth, height: props.mapHeight, paddingTop: "10px"}} >
  
 
                 {/* <RegisterMap longitude={location[0]} latitude={location[1]}/> */}
@@ -114,7 +107,7 @@ function InputMap(props) {
 
 
         </Stack>
-        </>   
+           
     );
 }
 

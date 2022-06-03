@@ -25,6 +25,10 @@
 
 }
 
+.product-name-link {
+    text-decoration: none !important;
+}
+
 .product-list-title:hover{
     cursor: pointer;
     text-decoration: underline;

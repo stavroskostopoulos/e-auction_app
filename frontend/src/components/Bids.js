@@ -1,14 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { withStyles } from "@material-ui/core/styles";
-import { makeStyles } from '@mui/styles';
 
 import BidsFilters from './individual compenents/BidsFilters';
 import ProductListItem from './individual compenents/ProductListItem';
 
+//import Styling
 import "../css/Bids.css"
+import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@mui/styles';
 
+//import variables
+import productCategories from '../variables/categories';
 
+//import Material UI components
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -136,7 +140,7 @@ function Bids() {
 
 
 	//filters categories
-	const categories = ['Used', 'Unused', 'Electronics', 'Fashion', 'Health & Beauty'];
+	const categories = productCategories;
 
 	//products
 	const products = ["Product 1 Title", "Product 2 Title", "Product 3 Title", "Product 4 Title", "Product 5 Title", "Product 6 Title", "Product 7 Title"];
@@ -206,6 +210,8 @@ function Bids() {
 
 						<div className='bids-title'>
 							<h4>Active Bids</h4>
+							{/* <h4>Active Auctions</h4> */}
+
 						</div>
 
 						<div className='bids-searchbar'>

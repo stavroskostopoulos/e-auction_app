@@ -78,6 +78,11 @@
     padding-top: 35px;
 }
 
+.map-container {
+    height: 500px;
+
+}
+
 .product-data-menu-option {
     text-transform: unset !important;
 }
@@ -142,7 +147,8 @@
 }
 
 .product-bid-textfield {
-    width: 150px !important;
+    /* width: 150px !important; */
+    width: 95% !important
 }
 
 .product-bid-button {
@@ -217,7 +223,9 @@
                                 "productactions"
                                 "whatever";
     }
-
+    .product-data {
+        padding-top: 50px;
+    }
 
 }
 
