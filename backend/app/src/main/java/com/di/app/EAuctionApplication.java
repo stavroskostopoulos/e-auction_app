@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 @SpringBootApplication
 @RestController
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class EAuctionApplication {
 
 	public static void main(String[] args) {
@@ -55,7 +55,7 @@ public class EAuctionApplication {
 
 			userService.SaveUser(new User(null,
                     "nota",
-                    "nouabfa",
+                    "kk",
                     "nota@gmail.com",
                     "Noths",
                     "Stam",
@@ -72,34 +72,34 @@ public class EAuctionApplication {
 	}
 
 
-	@Bean
-	public ServletWebServerFactory servletContainer() {
-		// Enable SSL Traffic
-		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
-			@Override
-			protected void postProcessContext(Context context) {
-				SecurityConstraint securityConstraint = new SecurityConstraint();
-				securityConstraint.setUserConstraint("CONFIDENTIAL");
-				SecurityCollection collection = new SecurityCollection();
-				collection.addPattern("/*");
-				securityConstraint.addCollection(collection);
-				context.addConstraint(securityConstraint);
-			}
-		};
-
-		tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
-		return tomcat;
-	}
-
-    // Redirect from HTTP 8080 to HTTPS 8443
-	private Connector httpToHttpsRedirectConnector() {
-		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-		connector.setScheme("http");
-		connector.setPort(8080);
-		connector.setSecure(false);
-		connector.setRedirectPort(8443);
-		return connector;
-	}
+//	@Bean
+//	public ServletWebServerFactory servletContainer() {
+//		// Enable SSL Traffic
+//		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+//			@Override
+//			protected void postProcessContext(Context context) {
+//				SecurityConstraint securityConstraint = new SecurityConstraint();
+//				securityConstraint.setUserConstraint("CONFIDENTIAL");
+//				SecurityCollection collection = new SecurityCollection();
+//				collection.addPattern("/*");
+//				securityConstraint.addCollection(collection);
+//				context.addConstraint(securityConstraint);
+//			}
+//		};
+//
+//		tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
+//		return tomcat;
+//	}
+//
+//    // Redirect from HTTP 8080 to HTTPS 8443
+//	private Connector httpToHttpsRedirectConnector() {
+//		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+//		connector.setScheme("http");
+//		connector.setPort(8080);
+//		connector.setSecure(false);
+//		connector.setRedirectPort(8443);
+//		return connector;
+//	}
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {

@@ -30,19 +30,28 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.authorizeRequests().antMatchers("/login").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "api/users/**").hasAnyAuthority("ADMIN");
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "api/users/save/**").hasAnyAuthority("ADMIN");
-
-        http.authorizeRequests().anyRequest().authenticated();
-//        http.authorizeRequests().anyRequest().permitAll();
-
-        http.addFilter(new AuthenticationFilter(authenticationManager()));
-        http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new AuthenticationFilter(authenticationManager()))
+                .addFilterAfter(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .authorizeRequests()
+                .antMatchers("/login").permitAll()
+//                .antMatchers("/api/users/**").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/users/**").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyAuthority("ADMIN")
+                .anyRequest()
+                .authenticated()
+           ;
+//        http.cors();
     }
+
+//    @Override
+//    @Bean
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
 
 
 

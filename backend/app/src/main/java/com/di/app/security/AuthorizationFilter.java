@@ -21,6 +21,7 @@ import static com.di.app.security.SecurityConstants.*;
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
+
 public class AuthorizationFilter extends OncePerRequestFilter {
 
     @Override
@@ -36,7 +37,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         }
         else {
             try{
-                String token = header.substring(TOKEN_PREFIX.length());
+//                String token = header.substring(TOKEN_PREFIX.length());
+                String token = header.replace(TOKEN_PREFIX, "");
 
                 JWTVerifier verifier = JWT.require(HMAC512(SECRET.getBytes())).build();
                 DecodedJWT decodedJWT = verifier.verify(token);

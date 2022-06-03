@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service @Transactional
 @RequiredArgsConstructor
@@ -27,7 +28,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void SaveUser(User newUser) {
+    public Optional<User> GetUserById(Long id){
+        return userRepository.findById(id);
+    }
+
+    public User SaveUser(User newUser) {
 
         //search if username already exists
         Collection<User> userByUsername = userRepository.checkUsername(newUser.getUsername());
@@ -43,7 +48,7 @@ public class UserService {
 
         // all good, encode the password and save the user
         newUser.setPass(passwordEncoder.encode(newUser.getPass()));
-        userRepository.save(newUser);
+        return userRepository.save(newUser);
     }
 
 

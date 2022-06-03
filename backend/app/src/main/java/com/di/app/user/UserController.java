@@ -1,14 +1,17 @@
 package com.di.app.user;
 
 import com.di.app.role.Role;
-import lombok.Data;
+import com.di.app.role.RoleForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-//@RequestMapping(path = "api/users")
+@RequestMapping(path = "/api")
 @RestController
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService service;
@@ -18,32 +21,30 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping(path = "api/users")
-    public List<User> GetUsers(){
-        return service.GetUsers();
+    @GetMapping(path = "/users")
+    public ResponseEntity<List<User>> GetUsers(){
+        return ResponseEntity.ok().body(service.GetUsers());
+    }
+    @GetMapping(path = "/users/{userid}")
+    public ResponseEntity<Optional<User>> GetUserById(@PathVariable("userid") Long id){
+        return ResponseEntity.ok().body(service.GetUserById(id));
     }
 
-    @PostMapping(path = "api/users/save")
-    public void RegisterUser(@RequestBody User newUser){
-        service.SaveUser(newUser);
+    @PostMapping(path = "users/save")
+    public ResponseEntity<User> RegisterUser(@RequestBody User newUser){
+        return ResponseEntity.ok().body(service.SaveUser(newUser));
     }
 
-    @PostMapping(path = "api/role/save")
-    public void RegisterRole(@RequestBody Role newRole){
-        service.SaveRole(newRole);
+    @PostMapping(path = "role/save")
+    public ResponseEntity<Role> RegisterRole(@RequestBody Role newRole){
+        return ResponseEntity.ok().body(service.SaveRole(newRole));
     }
 
-    @PostMapping(path = "api/role/give")
-    public void GiveRole(@RequestBody RoleForm role){
+    @PostMapping(path = "role/give")
+    public ResponseEntity<?> GiveRole(@RequestBody RoleForm role){
         service.GiveRole(role.getUsername(), role.getRolename());
+        return ResponseEntity.ok().build();
     }
 
 }
-
-@Data
-class RoleForm{
-    private String username;
-    private String rolename;
-}
-
 
