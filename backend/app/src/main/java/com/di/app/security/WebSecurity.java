@@ -31,6 +31,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors().and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -43,9 +44,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
+//                .and()
+//                .requiresChannel()
+//                .anyRequest()
+//                .requiresSecure()
            ;
-//        http.cors();
     }
+
 
 //    @Override
 //    @Bean
@@ -61,7 +66,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         CorsConfiguration config = new CorsConfiguration();
         config.applyPermitDefaultValues();
         config.addExposedHeader("Access_token");
-//        config.addExposedHeader("Authorization");
         config.setAllowCredentials(true);
         source.registerCorsConfiguration("/**", config);
         return source;

@@ -4,7 +4,6 @@ import com.di.app.role.Role;
 import com.di.app.user.User;
 import com.di.app.user.UserService;
 import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.CommandLineRunner;
@@ -72,34 +71,25 @@ public class EAuctionApplication {
 	}
 
 
-//	@Bean
-//	public ServletWebServerFactory servletContainer() {
-//		// Enable SSL Traffic
-//		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
-//			@Override
-//			protected void postProcessContext(Context context) {
-//				SecurityConstraint securityConstraint = new SecurityConstraint();
-//				securityConstraint.setUserConstraint("CONFIDENTIAL");
-//				SecurityCollection collection = new SecurityCollection();
-//				collection.addPattern("/*");
-//				securityConstraint.addCollection(collection);
-//				context.addConstraint(securityConstraint);
-//			}
-//		};
-//
-//		tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
-//		return tomcat;
-//	}
-//
-//    // Redirect from HTTP 8080 to HTTPS 8443
-//	private Connector httpToHttpsRedirectConnector() {
-//		Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-//		connector.setScheme("http");
-//		connector.setPort(8080);
-//		connector.setSecure(false);
-//		connector.setRedirectPort(8443);
-//		return connector;
-//	}
+	@Bean
+	public ServletWebServerFactory servletContainer() {
+		// Enable SSL Traffic
+		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+			@Override
+			protected void postProcessContext(Context context) {
+				SecurityConstraint securityConstraint = new SecurityConstraint();
+				securityConstraint.setUserConstraint("CONFIDENTIAL");
+				SecurityCollection collection = new SecurityCollection();
+				collection.addPattern("/*");
+				securityConstraint.addCollection(collection);
+				context.addConstraint(securityConstraint);
+			}
+		};
+
+		return tomcat;
+	}
+
+
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
