@@ -38,10 +38,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .addFilter(new AuthenticationFilter(authenticationManager()))
                 .addFilterAfter(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
+
                 .antMatchers("/login").permitAll()
-//                .antMatchers("/api/users/**").hasAnyAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/users/**").hasAnyAuthority("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/users/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/role/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/items/**").hasAnyAuthority("ADMIN")
+//                .antMatchers(HttpMethod.GET, "/api/users/**").hasAnyAuthority("ADMIN")
+//                .antMatchers(HttpMethod.POST, "/api/users/**").hasAnyAuthority("ADMIN")
+//                .antMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyAuthority("ADMIN")
+
                 .anyRequest()
                 .authenticated()
 //                .and()

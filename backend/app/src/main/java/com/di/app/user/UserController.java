@@ -23,8 +23,10 @@ public class UserController {
 
     @GetMapping(path = "/users")
     public ResponseEntity<List<User>> GetUsers(){
-        return ResponseEntity.ok().body(service.GetUsers());
+//        return ResponseEntity.ok().body(service.GetUsers());
+        return ResponseEntity.ok().body(service.GetUsersLimit());
     }
+
     @GetMapping(path = "/users/{userid}")
     public ResponseEntity<Optional<User>> GetUserById(@PathVariable("userid") Long id){
         return ResponseEntity.ok().body(service.GetUserById(id));
@@ -35,16 +37,18 @@ public class UserController {
         return ResponseEntity.ok().body(service.SaveUser(newUser));
     }
 
-    @PostMapping(path = "role/save")
-    public ResponseEntity<Role> RegisterRole(@RequestBody Role newRole){
-        return ResponseEntity.ok().body(service.SaveRole(newRole));
-    }
-
     @PostMapping(path = "role/give")
     public ResponseEntity<?> GiveRole(@RequestBody RoleForm role){
         service.GiveRole(role.getUsername(), role.getRolename());
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping(path = "role/save")
+    public ResponseEntity<Role> RegisterRole(@RequestBody Role newRole){
+        return ResponseEntity.ok().body(service.SaveRole(newRole));
+    }
+
+
 
 }
 

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
@@ -14,7 +15,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 public class Role {
 
-    @Id @GeneratedValue
-    private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long roleid;
     private String name;
 }

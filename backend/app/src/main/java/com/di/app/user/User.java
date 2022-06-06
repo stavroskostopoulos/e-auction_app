@@ -13,8 +13,8 @@ import java.util.Collection;
 @Data @AllArgsConstructor @NoArgsConstructor
 public class User {
 
-    //@GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;

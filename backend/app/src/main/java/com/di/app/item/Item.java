@@ -14,7 +14,8 @@ import java.util.List;
 @AllArgsConstructor @NoArgsConstructor
 public class Item {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long itemId;
 
     private String name;
@@ -22,7 +23,7 @@ public class Item {
     private String description;
     private String firstBid;
     private String currentBid;
-    private String bidCount;
+    private Integer bidCount;
     private Date start;
     private Date end;
 

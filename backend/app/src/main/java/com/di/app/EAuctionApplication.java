@@ -1,12 +1,8 @@
 package com.di.app;
 
-import com.di.app.role.Role;
-import com.di.app.user.User;
-import com.di.app.user.UserService;
 import org.apache.catalina.Context;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
@@ -18,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.ArrayList;
-
 
 @SpringBootApplication
 @RestController
@@ -30,46 +24,6 @@ public class EAuctionApplication {
 		SpringApplication.run(EAuctionApplication.class, args);
 
 	}
-
-	@Bean
-	CommandLineRunner run(UserService userService){
-		return args -> {
-			userService.SaveRole(new Role(null, "ADMIN"));
-			userService.SaveRole(new Role(null, "SELLER"));
-			userService.SaveRole(new Role(null, "BIDDER"));
-			userService.SaveRole(new Role(null, "GUEST"));
-
-			userService.SaveUser(new User(
-					null,
-					"kapphs",
-					"kwdikos",
-					"sss@gmail.com",
-					"Kwstas",
-					"Kopos",
-					"6988772829",
-					"23323",
-					new ArrayList<>()
-
-			));
-
-			userService.SaveUser(new User(null,
-                    "nota",
-                    "kk",
-                    "nota@gmail.com",
-                    "Noths",
-                    "Stam",
-                    "6952252",
-                    "222222",
-                    new ArrayList<>()
-            ));
-
-			userService.GiveRole("kapphs", "SELLER");
-			userService.GiveRole("kapphs", "BIDDER");
-			userService.GiveRole("nota", "ADMIN");
-
-		};
-	}
-
 
 	@Bean
 	public ServletWebServerFactory servletContainer() {
@@ -88,8 +42,6 @@ public class EAuctionApplication {
 
 		return tomcat;
 	}
-
-
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {

@@ -2,7 +2,6 @@ package com.di.app.user;
 
 import com.di.app.role.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +18,13 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-//    @Autowired
-//    public UserService(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
 
     public List<User> GetUsers(){
         return userRepository.findAll();
+    }
+
+    public List<User> GetUsersLimit(){
+        return userRepository.getUsersLimit();
     }
 
     public Optional<User> GetUserById(Long id){
@@ -52,15 +51,15 @@ public class UserService {
     }
 
 
-    public Role SaveRole(Role role){
-        return roleRepository.save(role);
-    }
-
     public void GiveRole(String username, String rolename){
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName(rolename);
 
         user.getRoles().add(role);
+    }
+
+    public Role SaveRole(Role role){
+        return roleRepository.save(role);
     }
 
 
