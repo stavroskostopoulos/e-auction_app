@@ -12,7 +12,8 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import InputMap from './individual compenents/InputMap';
 import MenuItem from '@mui/material/MenuItem';
-
+import DoneIcon from '@mui/icons-material/Done';
+import Button from '@mui/material/Button';
 
 const CssTextField = withStyles({
     root: {
@@ -120,17 +121,24 @@ function NewBidPage() {
                                     ))}
                                 </CssTextField> 
 
-                                <div style={{width: '65%', height: '500px'}} className="new-bid-input-map">
+                                <div style={{width: '380px', height: '195px'}} className="new-bid-input-map">
                                     <InputMap inputMapSetLocation={setLocation} mapWidth="100%" mapHeight="195px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container"/>
                                 </div>
 
                             </Stack>
 
                         </div>
+                        
 
 
                     </div>
 
+                    <div className='new-bid-button-container'>
+                        <Button variant="contained" size="small" endIcon={<DoneIcon/>} className='new-bid-button'>
+                            Create auction
+                        </Button>
+                        
+                    </div>
 
                     
 

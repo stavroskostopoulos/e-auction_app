@@ -17,7 +17,8 @@
     grid-template-rows:  min-content();
     grid-template-areas:    "newbidtitle"
                             "rules"
-                            "textfield";
+                            "textfield"
+                            "buttons";
                             
 } 
 
@@ -41,8 +42,12 @@
 }
 
 .new-bid-textfields-container{
+    grid-area: textfield;
+
+    /* background-color: aliceblue; */
 
     padding-top: 100px;
+    padding-bottom: 60px;
 
     display: grid;
 
@@ -61,10 +66,35 @@
 }
 
 .new-bid-textfield {
-    width: 65% !important;
+    /* width: 65% !important; */
+    width: 380px !important;
+
 }
 
-@media (max-width: 1250px) {
+.new-bid-button-container{
+    grid-area: buttons;
+    /* background-color: #9c9c9c; */
+    
+
+}
+
+.new-bid-button{
+    width: 180px !important;
+
+    border-radius: 10px !important;
+
+    background-color: #4E944F !important;
+
+    /* margin-left: auto; */
+    /* margin-left: 67%; */
+    margin-left: calc(50% + 380px - 180px);
+}
+
+.new-bid-button:hover {
+    background-color: rgb(110, 161, 111) !important;
+}
+
+@media (max-width: 1450px) {
 
     .new-bid-container{
         padding-top: 50px;
@@ -73,6 +103,7 @@
     .new-bid-textfields-container{
 
         padding-top: 100px;
+        padding-bottom: 90px;
     
         display: grid;
     
@@ -96,5 +127,20 @@
 
     .location-fields-container{
         max-width: 100% !important;
+    }
+
+
+    .new-bid-button-container{
+        grid-area: buttons;
+        /* background-color: #9c9c9c; */
+        
+        display: flex;
+    
+    }
+    .new-bid-button{
+    
+        margin-left: auto;
+        /* margin-left: 67%; */
+        /* margin-left: calc(50% + 380px - 180px); */
     }
 }
