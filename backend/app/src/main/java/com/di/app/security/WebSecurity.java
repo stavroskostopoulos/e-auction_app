@@ -55,15 +55,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 //                .requiresSecure()
            ;
     }
-
-
-//    @Override
-//    @Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
-
-
+    
 
 //    @Bean
 //    CorsConfigurationSource corsConfigurationSource() {

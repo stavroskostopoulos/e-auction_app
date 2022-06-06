@@ -19,6 +19,7 @@ public class UserConfig {
             userService.SaveRole(new Role(null, "SELLER"));
             userService.SaveRole(new Role(null, "BIDDER"));
             userService.SaveRole(new Role(null, "GUEST"));
+            userService.SaveRole(new Role(null, "NOT_ACCEPTED"));
 
             userService.SaveUser(new User(null,
                     "kapphs",

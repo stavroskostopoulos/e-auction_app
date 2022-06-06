@@ -23,12 +23,12 @@ public class ItemController {
     }
 
     @GetMapping(path = "/items")
-    public ResponseEntity<List<Item>> GetUsers(){
+    public ResponseEntity<List<Item>> GetItems(){
         return ResponseEntity.ok().body(itemService.GetItems());
     }
 
     @GetMapping(path = "/items/{itemid}")
-    public ResponseEntity<Optional<Item>> GetUserById(@PathVariable("itemid") Long id){
+    public ResponseEntity<Optional<Item>> GetItemById(@PathVariable("itemid") Long id){
         return ResponseEntity.ok().body(itemService.GetItemById(id));
     }
 

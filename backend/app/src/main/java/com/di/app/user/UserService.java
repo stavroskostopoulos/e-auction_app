@@ -51,6 +51,12 @@ public class UserService {
     }
 
 
+    public void DeleteUser(Long id) {
+        User user = userRepository.getById(id);
+        userRepository.delete(user);
+    }
+
+
     public void GiveRole(String username, String rolename){
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName(rolename);
@@ -63,4 +69,8 @@ public class UserService {
     }
 
 
+    public void AcceptedRole(Long id) {
+        User user = userRepository.getById(id);
+        user.getRoles().remove(roleRepository.getById(5L));
+    }
 }
