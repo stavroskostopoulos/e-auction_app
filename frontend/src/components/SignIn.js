@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 
 import "../css/SignIn.css"
 
@@ -62,9 +64,28 @@ function Login() {
     const [showEmptyPass, setShowEmptyPass] = React.useState(false);
 
 
-    const sendSignInCredentials = () => {
-        (!username) ? setShowEmptyUsername(true) : setShowEmptyUsername(false);
-        (!pass) ? setShowEmptyPass(true) : setShowEmptyPass(false);
+    const sendSignInCredentials = (e) => {
+
+        e.preventDefault();
+
+        if(!username) {
+            setShowEmptyUsername(true);
+            return;
+        }
+            
+        if(!pass){
+            setShowEmptyPass(true);
+            return;   
+        }
+
+
+        axios.post('https://localhost:8443/login', {
+            username,
+            pass
+        }).then( res => console.log(res))
+        .catch(error => console.log(error.response.data));
+
+        
     };
 
     return (
