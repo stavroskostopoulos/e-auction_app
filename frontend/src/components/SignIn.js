@@ -64,7 +64,7 @@ function Login() {
     const [showEmptyPass, setShowEmptyPass] = React.useState(false);
 
 
-    const sendSignInCredentials = (e) => {
+    const sendSignInCredentials =  (e) => {
 
         e.preventDefault();
 
@@ -82,10 +82,14 @@ function Login() {
         axios.post('https://localhost:8443/login', {
             username,
             pass
-        }).then( res => console.log(res))
+        }).then( res => {
+            localStorage.setItem("jwt", res.data);
+            console.log(localStorage.getItem("jwt"));
+        })
         .catch(error => console.log(error.response.data));
 
-        
+        // const response = await axios.post('https://localhost:8443/login', { username, pass});
+        // console.log(response);
     };
 
     return (
