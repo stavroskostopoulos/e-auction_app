@@ -63,6 +63,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .sign(HMAC512(SECRET.getBytes()));
 
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+
+        String body = ((User) authResult.getPrincipal()).getUsername() + " " + token;
+
+        response.getWriter().write(body);
+        response.getWriter().flush();
     }
 
 }
