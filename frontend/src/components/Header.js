@@ -113,8 +113,7 @@ function Header() {
                         >
                         <CustomTab className={classes.menuOption} value="1" label="Auctions" component={Link} to={'/'}/>
                         <CustomTab className={classes.menuOption} value="2" label="Sell" component={Link} to={'/sell'}/>
-                        <CustomTab className={classes.menuOption} value="3" label="Services" component={Link} to={'/product'}/>
-                        <CustomTab className={classes.menuOption} value="4" label="Settings"/>
+                        <CustomTab className={classes.menuOption} value="3" label="Messsages" component={Link} to={'/messages'}/>
                         {!admin &&
                             <CustomTab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'}/>
                         }

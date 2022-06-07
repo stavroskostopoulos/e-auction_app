@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 //import variables
 import productCategories from '../variables/categories';
+import possibleDuration from '../variables/durations';
 
 //import Material UI components
 import Stack from '@mui/material/Stack';
@@ -14,6 +15,11 @@ import InputMap from './individual compenents/InputMap';
 import MenuItem from '@mui/material/MenuItem';
 import DoneIcon from '@mui/icons-material/Done';
 import Button from '@mui/material/Button';
+import InputAdornment from '@mui/material/InputAdornment';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const CssTextField = withStyles({
     root: {
@@ -34,19 +40,48 @@ const CssTextField = withStyles({
     }
 })(TextField);
 
+const CustomOutlinedInput = withStyles({
+    root: {
+        '&.Mui-focused fieldset': {
+            borderColor: '#1e2749 !important',
+            
+        }
+    }
+})(OutlinedInput);
+
+const CustomInputLabel = withStyles({
+    root: {
+        '&.Mui-focused': {
+            color: '#1e2749 !important',
+        }
+    }
+})(InputLabel);
+
 function NewBidPage() {
 
+    //if empty
+
     const categories = productCategories;
+    const durations = possibleDuration;
 
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
     const [chosenCategory, setChosenCategory] = React.useState(categories[0]);
+    const [chosenDuration, setChosenDuration] = React.useState(durations[0]);
+    const [buyNowPrice, setBuyNowPrice] = React.useState(0);
 
-    
-
-
-    const handleChange = (event) => {
+    const handleChangeCategory = (event) => {
         setChosenCategory(event.target.value);
     };
+
+    const handleChangeDuration = (event) => {
+        setChosenDuration(event.target.value);
+    };
+
+    const isNumeric = (val) => {
+        return /^-?\d+$/.test(val) && val>=0;
+    }
+
+    
 
     return (
         <div className="main-container">
@@ -68,6 +103,7 @@ function NewBidPage() {
                             <li>The duration of the auction must be within 4 to 60 days</li>
                             <li>The auction product must fit to one of the given product category options</li>
                             <li>You need to provide a description of the product, declaring its state, its availability, and any further details</li>
+                            <li>You can optionally provide a "Buy now price", giving the opportunity to customers to instantly buy your product, <br/>without having to participate to the auction </li>
                         </ol>
 
                         <p style={{ marginTop: '25px' }}>Please note that once your auction is created, it cannot be canceled!</p>
@@ -94,9 +130,30 @@ function NewBidPage() {
                                     rows={10}
                                     inputProps={{ maxLength: 240 }}
                                     size="small"
-                                    />
+                                />
+                                <div className='shrinked-textfield'>
 
-                            </Stack>
+                                    <CssTextField
+                                        id="outlined-select-currency"
+                                        className="new-bid-textfield" 
+                                        select
+                                        maxMenuHeight="60px"
+                                        label="Auction duration days"
+                                        // value={`${chosenDuration} days`}
+                                        value={chosenDuration}
+
+                                        onChange={handleChangeDuration} 
+                                        size="small"
+
+                                    >
+                                        {durations.map((option) => (
+                                            <MenuItem key={option} value={option}>
+                                            {option}
+                                            </MenuItem>
+                                        ))}
+                                    </CssTextField>
+                                </div>
+                                </Stack>
 
                         </div>
 
@@ -110,7 +167,7 @@ function NewBidPage() {
                                     select
                                     label="Product category"
                                     value={chosenCategory}
-                                    onChange={handleChange} 
+                                    onChange={handleChangeCategory} 
                                     size="small"
 
                                 >
@@ -121,9 +178,33 @@ function NewBidPage() {
                                     ))}
                                 </CssTextField> 
 
-                                <div style={{width: '380px', height: '195px'}} className="new-bid-input-map">
+                                <div style={{width: '380px', height: '250px'}} className="new-bid-input-map">
                                     <InputMap inputMapSetLocation={setLocation} mapWidth="100%" mapHeight="195px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container"/>
                                 </div>
+                                
+                                <div className='shrinked-textfield'>
+
+                                    <FormControl className='new-bid-textfield'>
+
+                                        <CustomInputLabel htmlFor="outlined-adornment-amount">Buy now price</CustomInputLabel>
+                                        <CustomOutlinedInput
+                                            id="outlined-adornment-amount"
+                                            value={buyNowPrice}
+                                            type="number"
+                                            size='small'
+                                            onChange={(e) => setBuyNowPrice(e.target.value)}
+                                            startAdornment={<InputAdornment position="start">€</InputAdornment>}
+                                            label="Buy now price"
+                                            className='new-bid-textfield'
+                                            error={!isNumeric(buyNowPrice)}
+                                            
+                                            
+                                        />
+                                        <FormHelperText>Setting this to 0 will not provide a buy now option</FormHelperText>
+                                    </FormControl>
+
+                                </div>
+
 
                             </Stack>
 

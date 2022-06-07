@@ -33,7 +33,7 @@
 .new-bid-rules-container{
     grid-area: rules;
     /* background-color: aqua; */
-    padding-top: 30px;
+    padding-top: 20px;
 }
 
 .new-bid-rules-container :is(p, li){
@@ -46,8 +46,8 @@
 
     /* background-color: aliceblue; */
 
-    padding-top: 100px;
-    padding-bottom: 60px;
+    padding-top: 30px;
+    padding-bottom: 30px;
 
     display: grid;
 
@@ -87,12 +87,14 @@
 
     /* margin-left: auto; */
     /* margin-left: 67%; */
-    margin-left: calc(50% + 380px - 180px);
+    margin-left: calc(50% + 380px - 180px) !important;
 }
 
 .new-bid-button:hover {
     background-color: rgb(110, 161, 111) !important;
 }
+
+.shrinked-textfield{ margin-top: 30px !important;}
 
 @media (max-width: 1450px) {
 
@@ -102,8 +104,8 @@
 
     .new-bid-textfields-container{
 
-        padding-top: 100px;
-        padding-bottom: 90px;
+        padding-top: 60px;
+        padding-bottom: 30px;
     
         display: grid;
     
@@ -139,7 +141,7 @@
     }
     .new-bid-button{
     
-        margin-left: auto;
+        margin-left: auto !important;
         /* margin-left: 67%; */
         /* margin-left: calc(50% + 380px - 180px); */
     }

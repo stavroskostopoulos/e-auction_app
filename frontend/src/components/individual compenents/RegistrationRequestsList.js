@@ -44,6 +44,8 @@ const CssListItem = withStyles({
 
 function RegistrationRequestsList(props){
 
+    //AVATAR {`${props.msgusername.charAt(0)}`}
+
     const [pendingRequestsList, setPendingRequestsList] = React.useState([...props.requests]);
 
     const renderUsers = () => {

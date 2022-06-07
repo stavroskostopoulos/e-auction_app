@@ -106,10 +106,56 @@
 
 .product-title {
     grid-area: producttitle;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: min-content();
+    grid-template-areas:    "auctiontitle auctionbuynow"
+                            "auctiondescription auctiondescription";
     /* background-color: blueviolet; */
 }
 
-.product-title > h3 {
+.product-description-container{
+    grid-area: auctiondescription;
+}
+
+.product-buynow-container {
+    grid-area: auctionbuynow;
+
+    /* background-color: #D83A56; */
+
+    /* center contains vertically */
+    display: flex;
+    align-items: center;
+}
+
+.buy-now-button {
+    background-color: #4E944F !important;
+
+    width: 200px !important;
+    border-radius: 10px !important;
+
+
+    color: #fff !important;
+
+    margin-left: auto !important;
+
+}
+
+.buy-now-button:hover {
+    background-color: rgb(110, 161, 111) !important;
+}
+
+.product-title-container {
+    grid-area: auctiontitle;
+    /* background-color: #4E944F; */
+    /* center contains vertically */
+    display: flex;
+    align-items: center;
+
+}
+
+.product-title-container > h3 {
     font-size: 2rem;
     font-weight: 600;
     color: #131313;
@@ -119,7 +165,7 @@
 .product-description {
     color: #9c9c9c;
     font-size: 1rem;
-    padding-top: 40px;
+    padding-top: 20px;
 }
 
 
@@ -191,6 +237,8 @@
     grid-area: bidtime;
     /* background-color: aquamarine; */
 }
+
+
 
 .new-bid-product-stack {
     padding-top: 70px;
