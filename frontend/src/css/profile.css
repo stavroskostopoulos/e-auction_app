@@ -12,11 +12,14 @@
     grid-template-columns: 25% 65% 10%;
     grid-template-rows: min-content;
     grid-template-areas: "picture info buttons"
-                         "nothing nothing buttons";
+                         "nothing nothing buttons"
+                         "a map map";
     padding: 80px;
     height: 50%;
     /* background-color: darksalmon; */
 }
+
+
 
 .profile-buttons{
     grid-area: buttons;
@@ -24,14 +27,48 @@
     display: block;
     text-align: center;
     
+    
 }
 
-.profile-info-container {
+/* .profile-info-container {
    display: grid;
    grid-template-columns: 1fr 1fr;
-   grid-template-areas: "leftinfo rightinfo";
+   grid-template-rows: min-content();
+   grid-template-areas:     "name name"
+   "leftinfo rightinfo";
+   
+   margin-top: 35px;
+} */
+.profile-column-right {
+    grid-area: info;
+    font-family: 'Poppins', sans-serif;
+    
 
-    margin-top: 35px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min-content();
+    grid-template-areas:    "name name"
+                            "leftinfo rightinfo";
+
+    /* margin-top: 35px; */
+    /* background-color: red; */
+}
+
+.profile-map{
+    grid-area: map;
+
+    margin-top: 20px;
+
+    padding: 40px;
+
+    width: 100%;
+    height: 400px;
+
+    /* border-radius: 50%; */
+}
+
+.name-title-container{
+    grid-area: name;
 }
 
 .left-profile-info-column{
@@ -61,16 +98,16 @@
     /* background-color: aqua; */
 }
 
-.profile-column-right {
-    grid-area: info;
-    font-family: 'Poppins', sans-serif;
-    
-    /* background-color: red; */
+.profile-map-text {
+    font-weight: 600;
+    font-size: 1.5rem;
+    padding-top: 45px;
+    padding-bottom: 6px;
 }
 
 .profile-picture {
     width: 100%;
-    max-width: 260px;
+    max-width: 200px;
     height: auto;
     
     border-radius: 49px;
@@ -118,15 +155,16 @@
 }
 
 @media (max-width: 1500px) {
-    .profile-container {
+    /* .profile-container {
       display: grid;
       height: 100%;
       grid-auto-rows: minmax(min-content, max-content);
       grid-template-columns: 100%;
       grid-template-areas: "picture"
       "info"
-      "buttons";
-    }
+      "buttons"
+      "map";
+    } */
 
     .profile-picture {
         display: block;
@@ -135,7 +173,7 @@
     }
 
     .profile-column-right {
-            font-size: 2.1rem;
+        font-size: 2.1rem;
 
     }
 
@@ -154,8 +192,60 @@
     }
 }
 
-@media (max-width: 1000px) {
-    .profile-column-right {
-        overflow: auto;
+@media (max-width: 1500px) {
+    
+    .profile-container {
+        display: grid;
+        height: 100%;
+
+        grid-template-columns: 100%;
+        grid-template-rows: min-content;
+        grid-template-areas: "picture"
+                             "info"
+                             "buttons"
+                             "map";
+        padding: 80px;
+        height: 50%;
+        /* background-color: darksalmon; */
     }
+
+    .profile-picture {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        
+        border-radius: 49px;
+    }
+
+    .name-title {
+        margin-top: 40px;
+    }
+
+    .profile-map{
+        grid-area: map;
+    
+        margin-top: 0px;
+    
+        padding: 0px 20px 20px 20px;
+    
+        width: 100%;
+        height: 400px;
+    
+        /* border-radius: 50%; */
+    }
+    .profile-buttons{
+        grid-area: buttons;
+        /* background-color: blueviolet; */
+        display: block;
+        text-align: center;
+        
+        height: 80px;
+        /* background-color: #e4d9ff; */
+    }
+
+    .profile-map-text {
+        
+        padding-top: 40px;
+    }
+    
 }

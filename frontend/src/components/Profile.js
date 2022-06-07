@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
 
+//import styling
 import "../css/profile.css"
 
+//import Material UI components
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -15,6 +17,12 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
+import Divider from '@mui/material/Divider';
+
+
+//import custom components
+import InputMap from './individual compenents/InputMap';
+import Map from './individual compenents/Map';
 
 const CssTextField = withStyles({
     root: {
@@ -41,6 +49,9 @@ function Profile() {
 
     const [edit, setEdit] = React.useState(false);
     const [profiletype, setProfiletype] = React.useState('Seller');
+
+    const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
+
 
     const handleChange = (event) => {
         setProfiletype(event.target.value);
@@ -70,9 +81,13 @@ function Profile() {
                         <img draggable="false" className="profile-picture" src="/faithplusone.jpg"></img>
                     </div>
                     <div className="profile-column-right">
-                        <h2 className="name-title">Stavros Kostopoulos</h2>
+
+                        <div className='name-title-container'>
+                            <h2 className="name-title">Stavros Kostopoulos</h2>
+                        </div>
+
                         
-                        <div className="profile-info-container">
+                        
                             <div className="left-profile-info-column">
 
                                 {edit &&
@@ -101,6 +116,16 @@ function Profile() {
                                     className="profileinfo-tf" 
                                     sx={{ mt: 5}}
                                 />
+                                {edit &&
+                                    <CssTextField
+                                        disabled={!edit}
+                                        id="outlined-disabled"
+                                        label="Longitude, Latitude"
+                                        defaultValue={`${location[0]}, ${location[1]}`}
+                                        className="profileinfo-tf" 
+                                        sx={{ mt: 5}}
+                                    />
+                                }
                             </div>
                             <div className="right-profile-info-column">
                                 {edit &&
@@ -141,8 +166,13 @@ function Profile() {
                                     sx={{ mt: 5}}
                                 />  
                             </div>
-                        </div>
-                        
+                            
+                    </div>
+                    
+                    <div className='profile-map'>
+                        <Divider/>
+                        <p className='profile-map-text'>Location:</p>
+                        <Map longitude={location[0]} latitude={location[1]}/>
                     </div>
                     <div className="profile-buttons">
                         { !edit &&

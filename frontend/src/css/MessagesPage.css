@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+.msg-main-container {
+    font-family: 'Poppins', sans-serif;
+    
+    padding: 50px 80px 80px 80px;
+
+
+    display: grid;
+    grid-template-rows: min-content;
+    grid-template-columns: 40% 60%;
+    grid-template-areas:    "msgtitle msgtabs"
+                            "msgcontent msgcontent";
+}
+
+.msg-title-container {
+    grid-area: msgtitle;
+    /* background-color: aquamarine; */
+    font-size: 2.5rem;
+    color: rgb(19, 19, 19);
+    
+}
+
+.msg-title-container > h3 {
+    font-weight: 600;
+}
+
+.msg-tab-container {
+    grid-area: msgtabs;
+    /* background-color: red; */
+
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+
+.msg-content {
+    grid-area: msgcontent;
+    
+    padding-top: 60px;
+
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-areas: "msglist msgtext";
+
+}
+
+.msg-list-container {
+    grid-area: msglist;
+}
+
+.msg-text-container {
+    grid-area: msgtext;
+    /* background-color: aqua; */
+}
+
+/* Message List Item */
+
+.msg-list-item {
+    height: 55px;
+    width: 100%;
+
+    border-radius: 6px !important;
+
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+}
+
+.msg-list-item:hover {
+    background-color: #9966cc1c !important;
+    cursor: pointer;
+}
+
+.msg-list-item-info-container {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.msg-list-item-name {
+    font-size: 1rem;
+    color: rgb(19, 19, 19);
+
+}
+
+.msg-list-item-name-bold {
+    font-size: 1rem;
+    color: rgb(19, 19, 19);
+    font-weight: 600;
+}
+
+/* Message body */
+
+.msg-body-container{
+    display: grid;
+
+    padding: 4px 40px;
+    
+    grid-template-columns: 85% 15%;
+    grid-template-areas:    "msg-sender-info msg-date"
+                            "msg-contains msg-contains";
+
+}   
+
+.msg-sender-info-container {
+    grid-area: msg-sender-info;
+
+}
+
+.msg-sender-text {
+    font-size: 1.2rem;
+}
+
+.msg-date-container{
+    grid-area: msg-date;
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+
+}
+
+.msg-date-text {
+    color: #9c9c9c;
+    font-size: 1rem;
+}
+
+.msg-text-contains-container {
+
+
+    
+    grid-area: msg-contains;
+
+    padding: 40px 20px;
+
+    color: #9c9c9c;
+    font-size: 1rem;
+}
+
+@media (max-width: 1500px) {
+    .msg-content {
+        grid-area: msgcontent;
+        
+        padding-top: 60px;
+    
+        display: grid;
+        grid-template-columns: 40% 60%;
+        grid-template-areas: "msglist msgtext";
+    
+    }
+
+}

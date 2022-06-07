@@ -61,8 +61,8 @@ function Administration() {
                             indicatorColor="secondary"
                             aria-label="secondary tabs example"
                             >
-                            <Tab value="1" label="All users" onClick={() => setRequest(false)} className='admin-menu-option' />
-                            <Tab value="2" label="Pending registration requests" onClick={() => setRequest(true)} className='admin-menu-option' />
+                            <Tab value="1" label={<p>All users</p>} onClick={() => setRequest(false)} className='admin-menu-option' />
+                            <Tab value="2" label={<p>Pending registration requests</p>} onClick={() => setRequest(true)} className='admin-menu-option' />
                             
                         </Tabs>
                     </div>
