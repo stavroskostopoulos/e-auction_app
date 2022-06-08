@@ -33,6 +33,10 @@
     font-weight: 600;
 }
 
+.tooltip-text{
+    font-size: 1.1rem !important;
+}
+
 .msg-tab-container {
     grid-area: msgtabs;
     /* background-color: red; */
@@ -42,6 +46,26 @@
     align-items: center;
 }
 
+.new-mail-textfield {
+    width: 460px !important;
+}
+
+.new-mail-dialog {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    
+}
+
+.new-mail-dialog-title {
+    font-size: 1.4rem !important;
+    color: rgb(19, 19, 19);
+    font-weight: 600 !important;
+
+}
+
+.new-mail-textfields-container {
+    padding-top: 20px;
+}
 
 .msg-content {
     grid-area: msgcontent;
@@ -54,6 +78,11 @@
 
 }
 
+.dialog-action {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+}
+
 .msg-list-container {
     grid-area: msglist;
 }
@@ -63,6 +92,29 @@
     /* background-color: aqua; */
 }
 
+.send-button {
+    background-color: #4E944F !important;
+    border-radius: 10px !important;
+    color: #fff !important;
+
+}
+
+.send-button:hover {
+    background-color: rgb(110, 161, 111) !important;
+
+}
+
+.cancel-button {
+    background-color: #D83A56 !important;
+    border-radius: 10px !important;
+    color: #fff !important;
+}
+
+.cancel-button:hover {
+    background-color: #ff616ea1 !important;
+
+}
+
 /* Message List Item */
 
 .msg-list-item {
@@ -70,6 +122,7 @@
     width: 100%;
 
     border-radius: 6px !important;
+    overflow: hidden;
 
     /* background-color: red; */
     display: flex;
@@ -93,10 +146,16 @@
 
 }
 
+
+
 .msg-list-item-name-bold {
     font-size: 1rem;
     color: rgb(19, 19, 19);
     font-weight: 600;
+}
+
+.msg-list-item-title {
+    color: #9c9c9c;
 }
 
 /* Message body */
@@ -111,6 +170,17 @@
                             "msg-contains msg-contains";
 
 }   
+
+.msg-list-item-title-container {
+    height: 25px;
+    width: 100%;
+
+    /* background-color: antiquewhite; */
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .msg-sender-info-container {
     grid-area: msg-sender-info;
@@ -146,6 +216,15 @@
     font-size: 1rem;
 }
 
+.msg-text-contains-container :is(h3) {
+    color: rgb(19, 19, 19);
+    font-weight: 500 !important;
+}
+
+.msg-text-contains-text {
+    padding-top: 20px;
+}
+
 @media (max-width: 1500px) {
     .msg-content {
         grid-area: msgcontent;
@@ -157,5 +236,7 @@
         grid-template-areas: "msglist msgtext";
     
     }
+
+    
 
 }

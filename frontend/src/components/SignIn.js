@@ -68,16 +68,13 @@ function Login() {
 
         e.preventDefault();
 
-        if(!username) {
-            setShowEmptyUsername(true);
+        (!username) ? setShowEmptyUsername(true) : setShowEmptyUsername(false);
+            
+        (!pass) ? setShowEmptyPass(true) : setShowEmptyPass(false);
+            
+        if( showEmptyPass === true || setShowEmptyUsername===true ) {
             return;
         }
-            
-        if(!pass){
-            setShowEmptyPass(true);
-            return;   
-        }
-
 
         axios.post('https://localhost:8443/login', {
             username,
