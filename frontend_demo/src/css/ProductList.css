@@ -1,0 +1,222 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+*,
+*::before,
+*::after {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+.product-list-card {
+    
+    width: 100%;
+    height: 140px;
+
+    border-radius: 5px;
+    border: 1px solid;
+    border-color: #f1f1f1;
+
+    background-color: #f5f5f5;
+
+    display: grid;
+    grid-template-columns: 180px calc(100% - 180px);
+    grid-template-areas: "image info";
+
+
+}
+
+.product-name-link {
+    text-decoration: none !important;
+}
+
+.product-list-title:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.product-list-img-container{
+    grid-area: image;
+
+    border-radius: 5px 0px 0px 5px;
+    background-color: white;
+
+    /* center img horizontally and vertically */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-list-info-small{
+    grid-area: info;
+
+    /* background-color: red; */
+
+    /* padding-left: 20px; */
+    /* padding-top: 8px; */
+    display: grid;
+
+    grid-template-columns: calc(100% - 170px) 170px;
+    grid-template-rows: 40px 68px 30px;
+    grid-template-areas:    "product-title product-price"
+                            "product-owner product-owner"
+                            "product-details product-details";
+}
+
+.product-list-info-medium{
+    grid-area: info;
+
+    /* background-color: red; */
+
+    /* padding-left: 20px; */
+    /* padding-top: 8px; */
+    display: grid;
+
+    grid-template-columns: calc(100% - 180px) 180px;
+    grid-template-rows: 40px 68px 30px;
+    grid-template-areas:    "product-title product-price"
+                            "product-owner product-owner"
+                            "product-details product-details";
+}
+
+.product-list-info-large{
+    grid-area: info;
+
+    /* background-color: red; */
+
+    /* padding-left: 20px; */
+    /* padding-top: 8px; */
+    display: grid;
+
+    grid-template-columns: calc(100% - 190px) 190px;
+    grid-template-rows: 40px 68px 30px;
+    grid-template-areas:    "product-title product-price"
+                            "product-owner product-owner"
+                            "product-details product-details";
+}
+
+
+
+.product-list-image{
+    object-fit: cover;
+    /* margin-left: 20px; */
+    height: 110px;
+    width: 110px;
+}
+
+.product-list-img-container:hover{
+    cursor: pointer;
+}
+
+.product-list-owner-text{
+    padding-left: 20px;
+    color: #9c9c9c;
+}
+
+.product-list-owner-container {
+    grid-area: product-owner;
+    font-size: 0.85rem;
+}
+
+.product-list-details-container {
+    grid-area: product-details;
+    
+    
+    display: grid;
+    grid-template-columns: 140px 180px;
+    grid-template-areas: "bidders currentprice";
+    
+    /* background-color: #131313; */
+}
+
+.current-bidders-container {
+    grid-area: bidders;
+    
+    /* background-color: red; */
+    font-size: 0.9rem;
+    
+   
+}
+
+.current-currentprice-container {
+    grid-area: currentprice;
+    /* background-color: aquamarine; */
+    
+    font-size: 0.9rem;
+    
+}
+
+.current-bidders-stack{
+    /* center contains vertically */
+    display: flex;
+    align-items: center;
+}
+
+.current-bidders-text {
+    color: #9c9c9c;
+}
+
+.current-bidders-icon {
+    margin-left: 4px;
+    color: #9c9c9c;
+    padding: 3px !important;
+}
+
+.product-list-title-container {
+    grid-area: product-title;
+    /* background-color: aqua; */
+    
+    /* center contains vertically */
+    display: flex;
+    align-items: center;
+}
+
+.product-list-title{
+    padding-left: 20px;
+    padding-top: 8px;
+    font-weight: 500;
+    font-size: 1.4rem;
+    color: #131313;
+}
+
+.product-list-price-container{
+    grid-area: product-price;
+
+    
+    /* center contains vertically */
+    display: flex;
+    align-items: center;
+}
+
+.product-list-price {
+    padding-top: 8px;
+    font-size: 0.95rem;
+    color: #9c9c9c;
+
+}
+
+.product-list-price-number{
+    color: #131313;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+@media (max-width: 1050px) {
+    .product-list-info-large,
+    .product-list-info-medium,
+    .product-list-info-small {
+        /* background-color: red; */
+        /* padding-left: 20px; */
+        /* padding-top: 8px; */
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 40px 15px 55px 30px;
+        grid-template-areas:    "product-title"
+                                "product-owner"
+                                "product-price"
+                                "product-details";
+    }
+    .product-list-price {
+        padding-left: 20px;
+    }
+
+}

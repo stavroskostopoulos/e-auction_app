@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.new-bid-container {
+    font-family: 'Poppins', sans-serif;
+
+    padding: 45px 80px 80px 80px;
+
+    display: grid;
+    
+    grid-template-rows:  min-content();
+    grid-template-areas:    "newbidtitle"
+                            "rules"
+                            "textfield"
+                            "buttons";
+                            
+} 
+
+.new-bid-title-container {
+    grid-area: newbidtitle;
+}
+
+.new-bid-title-container :is(h1) {
+    color: #222222;
+}
+
+.new-bid-rules-container{
+    grid-area: rules;
+    /* background-color: aqua; */
+    padding-top: 20px;
+}
+
+.new-bid-rules-container :is(p, li){
+    color: #9c9c9c;
+
+}
+
+.new-bid-textfields-container{
+    grid-area: textfield;
+
+    /* background-color: aliceblue; */
+
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    display: grid;
+
+    grid-template-columns: 50% 50%;
+    grid-template-areas: "textfields1 textfields2";
+}
+
+.textfields-1{
+    grid-area: textfields1;
+    /* background-color: red; */
+}
+
+.textfields-2{
+    grid-area: textfields2;
+    /* background-color: antiquewhite; */
+}
+
+.new-bid-textfield {
+    /* width: 65% !important; */
+    width: 380px !important;
+
+}
+
+.new-bid-button-container{
+    grid-area: buttons;
+    /* background-color: #9c9c9c; */
+    
+
+}
+
+.new-bid-button{
+    width: 180px !important;
+
+    border-radius: 10px !important;
+
+    background-color: #4E944F !important;
+
+    /* margin-left: auto; */
+    /* margin-left: 67%; */
+    margin-left: calc(50% + 380px - 180px) !important;
+}
+
+.new-bid-button:hover {
+    background-color: rgb(110, 161, 111) !important;
+}
+
+.shrinked-textfield{ margin-top: 30px !important;}
+
+@media (max-width: 1450px) {
+
+    .new-bid-container{
+        padding-top: 50px;
+    }
+
+    .new-bid-textfields-container{
+
+        padding-top: 60px;
+        padding-bottom: 30px;
+    
+        display: grid;
+    
+        grid-template-columns: 100%;
+        grid-template-rows: min-content;
+        grid-template-areas:    "textfields1" 
+                                "textfields2";
+    }
+    .new-bid-textfield {
+        width: 100% !important;
+    }
+
+    .textfields-2{
+        padding-top: 30px;
+        /* background-color: antiquewhite; */
+    }
+    
+    .new-bid-input-map {
+        width: 100% !important;
+    }
+
+    .location-fields-container{
+        max-width: 100% !important;
+    }
+
+
+    .new-bid-button-container{
+        grid-area: buttons;
+        /* background-color: #9c9c9c; */
+        
+        display: flex;
+    
+    }
+    .new-bid-button{
+    
+        margin-left: auto !important;
+        /* margin-left: 67%; */
+        /* margin-left: calc(50% + 380px - 180px); */
+    }
+}
