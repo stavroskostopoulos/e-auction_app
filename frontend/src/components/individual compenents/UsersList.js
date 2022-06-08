@@ -61,7 +61,7 @@ function UsersList(props) {
                                     </ListItemAvatar>
                                     <ListItemText primary="Vasilis Pasios" className='list-item-admin'/>
                                     <ListItemSecondaryAction>
-                                        <Tooltip title='Delete user'>
+                                        <Tooltip title={<p>Delete user</p>} arrow>
                                             <IconButton edge="end" aria-label="delete" component={Link} to={'/login'} className='delete-icon-admin'>
                                                 <DeleteIcon />
                                             </IconButton>

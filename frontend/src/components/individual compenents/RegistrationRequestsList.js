@@ -63,12 +63,12 @@ function RegistrationRequestsList(props){
 									</ListItemAvatar>
 									<ListItemText primary="Giorgos Koumpis" className='list-item-admin'/>
 									<ListItemSecondaryAction>
-										<Tooltip title='Reject'>
+										<Tooltip title={<p>Reject</p>} arrow>
 											<IconButton edge="end" aria-label="cancel" sx={{mr: 1}} scomponent={Link} to={'/login'} className='cancel-icon-admin'>
 												<CloseOutlinedIcon />
 											</IconButton>
 										</Tooltip>
-										<Tooltip title='Approve'>	
+										<Tooltip title={<p>Approve</p>} arrow>	
 											<IconButton edge="end" aria-label="confirm" component={Link} to={'/login'} className='check-icon-admin'>
 												<CheckIcon />
 											</IconButton>
