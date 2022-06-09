@@ -1,6 +1,5 @@
 package com.di.app.item;
 
-import com.di.app.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +17,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query(value = "Select * from item i where i.item_id IN( " +
             "SELECT item_item_id FROM item_category ic WHERE ic.category=:cat ) LIMIT 8", nativeQuery = true)
     List<Item> getItemsInCategory(@Param("cat")String category);
+
+    @Query(value = "SELECT * FROM item i WHERE (i.latitude BETWEEN :lat-1000 AND :lng+1000) OR (i.longitude BETWEEN :lng-1000 AND :lng+1000) LIMIT 8", nativeQuery = true)
+    List<Item> getItemsByLocation(@Param("lat")Integer lat, @Param("lng")Integer lng);
 
 
 

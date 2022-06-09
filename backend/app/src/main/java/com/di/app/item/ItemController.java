@@ -1,12 +1,9 @@
 package com.di.app.item;
 
 
-import com.di.app.user.User;
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +34,11 @@ public class ItemController {
     @PostMapping(path = "/items/filter/price")
     public ResponseEntity<List<Item>> GetItemsById(@RequestBody Map<String, String> json){
         return ResponseEntity.ok().body(itemService.GetItemsByPrice(json.get("low"), json.get("high")));
+    }
+
+    @PostMapping(path = "/items/filter/loc")
+    public ResponseEntity<List<Item>> GetItemsByLocation(@RequestBody Map<String, String> json){
+        return ResponseEntity.ok().body(itemService.GetItemsByLocation(json.get("lat"), json.get("lng")));
     }
 
     @PostMapping(path = "/items/filter/cat")

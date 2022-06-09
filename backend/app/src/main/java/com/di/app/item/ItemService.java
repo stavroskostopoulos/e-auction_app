@@ -1,14 +1,11 @@
 package com.di.app.item;
 
-import com.di.app.user.User;
-import com.di.app.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 @Service @Transactional
 @RequiredArgsConstructor
@@ -30,6 +27,13 @@ public class ItemService {
         Integer high = Integer.parseInt(shigh);
 
         return itemRepository.getItemsByPrice(low,high);
+    }
+
+    public List<Item> GetItemsByLocation(String slat, String slong){
+        Integer lat = Integer.parseInt(slat);
+        Integer lng = Integer.parseInt(slong);
+
+        return itemRepository.getItemsByLocation(lat, lng);
     }
 
     public List<Item> GetItemsByCategory(Category categories){
