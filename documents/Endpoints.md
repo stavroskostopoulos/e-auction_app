@@ -51,6 +51,26 @@ POST save product categories
 
 ________________
 
+`[POST] items/filter/price`
+
+{
+    "low":"5",
+    "high":"25"
+}
+get items filtered by price
+
+________________
+
+`[POST] api/items/filter/cat`
+
+{
+    "cats":["texnologia","kati"]
+}
+
+get items filtered by category
+
+________________
+
 `[DELETE] /api/role/accepted/{userid}`
 
 DELETE not_accepted role from user with id {userid}
