@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service @Transactional
 @RequiredArgsConstructor
@@ -23,6 +23,32 @@ public class ItemService {
 
     public Optional<Item> GetItemById(Long id){
         return itemRepository.findById(id);
+    }
+
+    public List<Item> GetItemsByPrice(String slow, String shigh){
+        Integer low = Integer.parseInt(slow);
+        Integer high = Integer.parseInt(shigh);
+
+        return itemRepository.getItemsByPrice(low,high);
+    }
+
+    public List<Item> GetItemsByCategory(Category categories){
+
+        List<Item> tempList;
+        List<Item> items = new ArrayList<>();
+        List<String> list = categories.getCats();
+
+        for (String value : list) {
+            tempList = itemRepository.getItemsInCategory(value);
+            items.addAll(tempList);
+        }
+
+        // Clear duplicates
+        Set<Item> set = new HashSet<>(items);
+        items.clear();
+        items.addAll(set);
+
+        return items;
     }
 
     public Item SaveItem(Item newItem) {

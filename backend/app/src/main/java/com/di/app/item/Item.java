@@ -22,7 +22,7 @@ public class Item {
     private String buyPrice;
     private String description;
     private String firstBid;
-    private String currentBid;
+    private Integer currentBid;
     private Integer bidCount;
     private Date start;
     private Date end;
