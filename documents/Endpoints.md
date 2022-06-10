@@ -82,3 +82,22 @@ ________________
 DELETE user with id {userid}
 
 ________________
+
+
+
+
+
+
+
+
+
+Shmeiwseis:
+-
+1)
+`[POST] api/items/save`
+
+POST save product
+
+-θέλω buy now price
+-first bid αχρείαστο νομίζω
+-country αχρείαστο
