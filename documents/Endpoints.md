@@ -98,6 +98,6 @@ Shmeiwseis:
 
 POST save product
 
--θέλω buy now price
 -first bid αχρείαστο νομίζω
+
 -country αχρείαστο
