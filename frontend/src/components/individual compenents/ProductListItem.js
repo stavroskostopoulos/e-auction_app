@@ -33,7 +33,7 @@ function ProductListItem(props) {
 				{props.category==='Electronics' && <img draggable="false" src={electronicImages[Math.floor(Math.random()*electronicImages.length)]} alt="This should be sth" className='product-list-image'/>}
 			</div>
 			
-			<div className={(props.price > 100) ? (props.price > 1000 ? "product-list-info-large" : "product-list-info-medium") : "product-list-info-small"}>
+			<div className="product-list-info">
 				<div  className='product-list-title-container' >
 					<Link to='/product' className='product-name-link'><h3 className='product-list-title' >{props.productname}</h3></Link>
 				</div>
@@ -71,6 +71,8 @@ function ProductListItem(props) {
 							<AlarmIcon className='current-bidders-icon' style={{ paddingLeft: '20px'}}/>
 						
 					</div>
+
+					
 
 				</div>
 			
