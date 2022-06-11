@@ -25,11 +25,36 @@ ________________
 }
 
 Give role to user
+
+________________
+
+`[GET] api/users`
+
+GET all users
+
+________________
+
+`[GET] api/users/{userid}`
+
+GET user from id
+
+________________
+
+`[GET] api/users/{username}`
+
+GET user from username
+
 ________________
 
 `[GET] api/items`
 
 GET all products
+
+________________
+
+`[GET] api/items/{itemid}`
+
+GET product by id
 
 ________________
 
@@ -89,9 +114,8 @@ ________________
 
 
 
-
-
 Shmeiwseis:
+
 -
 1)
 `[POST] api/items/save`
