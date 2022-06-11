@@ -32,7 +32,7 @@ public class ItemController {
     }
 
     @PostMapping(path = "/items/filter/price")
-    public ResponseEntity<List<Item>> GetItemsById(@RequestBody Map<String, String> json){
+    public ResponseEntity<List<Item>> GetItemsByPrice(@RequestBody Map<String, String> json){
         return ResponseEntity.ok().body(itemService.GetItemsByPrice(json.get("low"), json.get("high")));
     }
 

@@ -31,6 +31,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public User GetUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public User SaveUser(User newUser) {
 
         //search if username already exists
@@ -73,4 +77,6 @@ public class UserService {
         User user = userRepository.getById(id);
         user.getRoles().remove(roleRepository.getById(5L));
     }
+
+
 }

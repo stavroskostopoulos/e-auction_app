@@ -62,7 +62,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
 
-        String body = token;
+        String body = "Username:" + user.getUsername() + " token:" + TOKEN_PREFIX + token;
 
         response.getWriter().write(body);
         response.setContentType("text/plain");

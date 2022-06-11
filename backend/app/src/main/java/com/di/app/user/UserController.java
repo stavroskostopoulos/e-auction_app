@@ -34,6 +34,11 @@ public class UserController {
         return ResponseEntity.ok().body(service.GetUserById(id));
     }
 
+    @GetMapping(path = "/users/{username}")
+    public ResponseEntity<User> GetUserByUsername(@PathVariable("username") String username){
+        return ResponseEntity.ok().body(service.GetUserByUsername(username));
+    }
+
 
     // POST
 
