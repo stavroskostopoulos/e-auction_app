@@ -10,6 +10,7 @@ import { withStyles } from "@material-ui/core/styles";
 import InputAdornment from '@mui/material/InputAdornment';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
 
 const icon = L.icon({
     iconUrl: "./mymarker.png",
@@ -45,12 +46,21 @@ function InputMap(props) {
     const [position, setPosition] = React.useState([props.longitude, props.latitude]);
     
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
+
     const [locationStr, setLocationStr] = React.useState('');
-    
-    const parseLocation = () => {
+    const [showEmptyLocationStr, setShowEmptyLocationStr] = React.useState(false);
+
+    const parseLocation = (e) => {
+
+        e.preventDefault();
 
         //errror checking
         //kai if !parsestr an adeio
+
+        if(!locationStr){   
+            setShowEmptyLocationStr(true);
+            return; 
+        }
 
         let parsedlocation = locationStr.replace(/ /g,'').split(',');
         
@@ -76,12 +86,16 @@ function InputMap(props) {
                         value={locationStr}
                         size={props.fieldSize}
                         onChange={(e)=>setLocationStr(e.target.value)} 
-                        error={false}
+                        error={props.textfieldError || showEmptyLocationStr}
                     />
                 </div>
 
                 <div className={props.buttonContainerClass}>
-                    <Button className={props.buttonClass} onClick={parseLocation} size={props.fieldSize}><MyLocationIcon style={{color: '#fff'}} /></Button>
+                    <Tooltip title={<p className='tooltip-text'>Submit Location</p>} placement="right" arrow>
+                        <Button className={props.buttonClass} onClick={parseLocation} size={props.fieldSize}><MyLocationIcon style={{color: '#fff'}} /></Button>
+                        
+                    </Tooltip>
+
 
                 </div>
 

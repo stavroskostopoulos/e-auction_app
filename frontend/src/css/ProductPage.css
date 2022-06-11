@@ -198,6 +198,8 @@
 }
 
 .product-bid-button {
+    box-shadow: none !important;
+
     width: 80px !important;
 
     border-radius: 10px !important;

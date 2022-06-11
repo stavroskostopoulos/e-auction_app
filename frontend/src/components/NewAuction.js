@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 //import styling
 import '../css/NewAuction.css';
@@ -64,10 +65,25 @@ function NewBidPage() {
     const categories = productCategories;
     const durations = possibleDuration;
 
-    const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
+    
+    
+    
+    //new product info
+    const [productTitle, setProductTitle] = React.useState('');
+    const [showEmptyProductTitle, setShowEmptyProductTitle] = React.useState(false);
+    
+    const [productDesc, setProductDesc] = React.useState('');
+    const [showEmptyProductDesc, setShowEmptyProductDesc] = React.useState(false);
+    
+    
     const [chosenCategory, setChosenCategory] = React.useState(categories[0]);
     const [chosenDuration, setChosenDuration] = React.useState(durations[0]);
     const [buyNowPrice, setBuyNowPrice] = React.useState(0);
+    
+    const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
+    const [showEmptyProductLocation, setShowEmptyProductLocation] = React.useState(false);
+    
+
 
     const handleChangeCategory = (event) => {
         setChosenCategory(event.target.value);
@@ -81,6 +97,52 @@ function NewBidPage() {
         return /^-?\d+$/.test(val) && val>=0;
     }
 
+
+    const postProduct = async (e) => {
+        
+        e.preventDefault();
+
+
+        (!productTitle) ? setShowEmptyProductTitle(true) : setShowEmptyProductTitle(false);
+        (!productDesc) ? setShowEmptyProductDesc(true) : setShowEmptyProductDesc(false);
+
+        (location[0]==37.96867087793514 && location[1]==23.76662747322076) ? setShowEmptyProductLocation(true) : setShowEmptyProductLocation(false);
+
+
+        if(showEmptyProductTitle || showEmptyProductDesc || showEmptyProductLocation || (!isNumeric(buyNowPrice))){  return; }
+
+        //calculate the end and start date of the auction
+        let startDate = new Date();
+
+        let endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + parseInt(chosenDuration))
+        
+        const result = await axios.post('https://localhost:8443/api/items/save', 
+        
+            {
+            
+                name: productTitle,
+                buyPrice: buyNowPrice,
+                description: productDesc,
+                firstBid: null,
+                currentBid: "0",
+                bidCount: "0",
+                start: startDate,
+                end: endDate,
+                latitude: location[1].toString(),
+                longitude: location[0].toString(),
+                country: "Greece",
+            }
+        
+        
+        ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+        
+        console.log(result.data);
+
+    }
+
+
+
     
 
     return (
@@ -91,11 +153,11 @@ function NewBidPage() {
 
                 <div className='new-bid-container'>
 
-                    <bid className='new-bid-title-container'>
+                    <div className='new-bid-title-container'>
                         <h1 className='admin-title'>Create an auction</h1>
-                    </bid>
+                    </div>
                     
-                    <bid className='new-bid-rules-container'>
+                    <div className='new-bid-rules-container'>
 
                         <p>In order to sell a product, your auction needs to satisfy the following terms:</p>
                     
@@ -108,7 +170,7 @@ function NewBidPage() {
 
                         <p style={{ marginTop: '25px' }}>Please note that once your auction is created, it cannot be canceled!</p>
 
-                    </bid>
+                    </div>
 
                     <div className='new-bid-textfields-container'>
 
@@ -119,7 +181,9 @@ function NewBidPage() {
                                     label="Product title" 
                                     type='text'
                                     size="small"
-    
+                                    value={productTitle}
+                                    onChange={(e) => setProductTitle(e.target.value)}
+                                    error={showEmptyProductTitle}
                                 />
                                 <CssTextField 
                                     id="outlined-multiline-static" 
@@ -130,6 +194,9 @@ function NewBidPage() {
                                     rows={10}
                                     inputProps={{ maxLength: 240 }}
                                     size="small"
+                                    value={productDesc}
+                                    onChange={(e) => setProductDesc(e.target.value)}
+                                    error={showEmptyProductDesc}
                                 />
                                 <div className='shrinked-textfield'>
 
@@ -137,7 +204,6 @@ function NewBidPage() {
                                         id="outlined-select-currency"
                                         className="new-bid-textfield" 
                                         select
-                                        maxMenuHeight="60px"
                                         label="Auction duration days"
                                         // value={`${chosenDuration} days`}
                                         value={chosenDuration}
@@ -179,7 +245,7 @@ function NewBidPage() {
                                 </CssTextField> 
 
                                 <div style={{width: '380px', height: '250px'}} className="new-bid-input-map">
-                                    <InputMap inputMapSetLocation={setLocation} mapWidth="100%" mapHeight="195px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container"/>
+                                    <InputMap inputMapSetLocation={setLocation} mapWidth="100%" mapHeight="195px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container" textfieldError={showEmptyProductLocation}/>
                                 </div>
                                 
                                 <div className='shrinked-textfield'>
@@ -215,7 +281,7 @@ function NewBidPage() {
                     </div>
 
                     <div className='new-bid-button-container'>
-                        <Button variant="contained" size="small" endIcon={<DoneIcon/>} className='new-bid-button'>
+                        <Button variant="contained" size="small" endIcon={<DoneIcon/>} className='new-bid-button' onClick={postProduct}>
                             Create auction
                         </Button>
                         

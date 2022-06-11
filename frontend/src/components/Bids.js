@@ -34,6 +34,7 @@ import Pagination from '@mui/material/Pagination';
 
 
 import FilterListIcon from '@mui/icons-material/FilterList';
+import axios from 'axios';
 
 const PriceTextField = withStyles({
     root: {
@@ -144,7 +145,24 @@ function Bids() {
 
 	//products
 	const products = ["Product 1 Title", "Product 2 Title", "Product 3 Title", "Product 4 Title", "Product 5 Title", "Product 6 Title", "Product 7 Title"];
+	const [productsList, setProductsList] = React.useState([]);
 
+
+	React.useEffect(() => {
+		// ⬇ This calls my get request from the server
+		getProducts();
+	}, []);
+
+
+	const getProducts = async () => {
+		
+		
+		const result = await axios.get('https://localhost:8443/api/items/', { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+		console.log(result.data);
+		setProductsList(result.data);
+
+	};
 
 	const handleDelete = (value) => {
 		const currentIndex = checkedCateg.indexOf(value);
@@ -252,9 +270,9 @@ function Bids() {
 						{/* Products */}
 						<div className='bids-products'>
 							<Stack spacing={3} className='products-stack'>
-								{(products.length!==0) &&
-									products.map((product) =>	(
-										<ProductListItem productname={product} category='Electronics' owner='kostopez' numberOfBidders="15" price={2400}/>
+								{(productsList.length!==0) &&
+									productsList.map((product) =>	(
+										<ProductListItem productKey={product.itemId} productname={product.name} category='Electronics' owner='kostopez' numberOfBidders="15" price={product.currentBid}/>
 										
 									))
 								
