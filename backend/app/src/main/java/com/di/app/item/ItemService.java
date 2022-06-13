@@ -1,6 +1,8 @@
 package com.di.app.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,6 +22,10 @@ public class ItemService {
 
     public Optional<Item> GetItemById(Long id){
         return itemRepository.findById(id);
+    }
+
+    public Page<Item> GetItemsLimit(Pageable pageable) {
+        return itemRepository.findAll(pageable);
     }
 
     public List<Item> GetItemsByPrice(String slow, String shigh){
@@ -67,4 +73,6 @@ public class ItemService {
 
         return itemRepository.save(item);
     }
+
+
 }
