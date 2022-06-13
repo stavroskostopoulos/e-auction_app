@@ -1,5 +1,7 @@
 package com.di.app.item;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,8 +13,11 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     Item findByName(String name);
 
-    @Query(value = "SELECT * FROM item i WHERE i.current_bid BETWEEN :low AND :high ORDER BY i.current_bid ASC LIMIT 8", nativeQuery = true)
-    List<Item> getItemsByPrice(@Param("low")Integer low, @Param("high")Integer high);
+
+
+    @Query( value = "SELECT * FROM item WHERE current_bid BETWEEN :low AND :high ORDER BY current_bid \n-- #pageable\\n",
+            countQuery = "SELECT count(*) FROM item", nativeQuery = true)
+    Page<Item> getItemsByPrice(@Param("low")Integer low, @Param("high")Integer high, Pageable pageable);
 
     @Query(value = "Select * from item i where i.item_id IN( " +
             "SELECT item_item_id FROM item_category ic WHERE ic.category=:cat ) LIMIT 8", nativeQuery = true)

@@ -28,11 +28,11 @@ public class ItemService {
         return itemRepository.findAll(pageable);
     }
 
-    public List<Item> GetItemsByPrice(String slow, String shigh){
+    public Page<Item> GetItemsByPrice(String slow, String shigh, Pageable pageable){
         Integer low = Integer.parseInt(slow);
         Integer high = Integer.parseInt(shigh);
 
-        return itemRepository.getItemsByPrice(low,high);
+        return itemRepository.getItemsByPrice(low,high,pageable);
     }
 
     public List<Item> GetItemsByLocation(String slat, String slong){
