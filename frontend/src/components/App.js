@@ -34,7 +34,7 @@ function App() {
             <Route exact path="/register" element={<Signup/>}/>
             <Route exact path="/profile" element={<Profile/>}/>
             <Route exact path="/administration" element={<Administration/>}/>
-            <Route exact path="/product" element={<ProductPage/>}/>
+            <Route exact path="/product/:id" element={<ProductPage/>}/>
             <Route exact path="/sell" element={<NewBidPage/>}/>
             <Route exact path="/not-accepted" element={<NotAccepted/>}/>
             <Route exact path="/messages" element={<MessagesPage/>}/>

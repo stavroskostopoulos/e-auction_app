@@ -31,7 +31,7 @@ import Stack from '@mui/material/Stack';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Pagination from '@mui/material/Pagination';
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 import FilterListIcon from '@mui/icons-material/FilterList';
 import axios from 'axios';
@@ -148,16 +148,25 @@ function Bids() {
 	const [productsList, setProductsList] = React.useState([]);
 
 
+	//is Loading
+	const [isLoading, setIsLoading] = React.useState(true);
+
 	React.useEffect(() => {
+
+				
 		// ⬇ This calls my get request from the server
 		getProducts();
+
+		
 	}, []);
 
 
 	const getProducts = async () => {
 		
 		
-		const result = await axios.get('https://localhost:8443/api/items/', { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+		const result = await axios.get('https://localhost:8443/api/items/', { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
+									.then(setIsLoading(false))
+									.catch(setIsLoading(true));
 
 		console.log(result.data);
 		setProductsList(result.data);
@@ -174,7 +183,7 @@ function Bids() {
 
 	};
 
-	const handleToggle = (value) => () => {
+	const handleToggle = (value) => {
 
 		console.log(value);
 
@@ -270,18 +279,25 @@ function Bids() {
 						{/* Products */}
 						<div className='bids-products'>
 							<Stack spacing={3} className='products-stack'>
-								{(productsList.length!==0) &&
+								{(!isLoading) && (productsList.length!==0) &&
 									productsList.map((product) =>	(
 										<ProductListItem productKey={product.itemId} productname={product.name} category='Electronics' owner='kostopez' numberOfBidders="15" price={product.currentBid}/>
 										
 									))
 								
 								}
-							{(products.length>6) &&
-								<div className='pagination-container-bids'>
-									<Pagination className='pagination-admin' count={10} color="secondary" />
-								</div>
-							}
+
+								{isLoading && 
+									<div className='circular-container'>
+										<CircularProgress color="secondary" />
+									</div>
+								}
+
+								{(productsList.length>6) &&
+									<div className='pagination-container-bids'>
+										<Pagination className='pagination-admin' count={10} color="secondary" />
+									</div>
+								}
 							</Stack>
 						</div>
 

@@ -35,7 +35,9 @@ function ProductListItem(props) {
 			
 			<div className="product-list-info">
 				<div  className='product-list-title-container' >
-					<Link to='/product' className='product-name-link'><h3 className='product-list-title' >{props.productname}</h3></Link>
+					{/* <Link to='/product' className='product-name-link'><h3 className='product-list-title' >{props.productname}</h3></Link> */}
+					<Link to={{pathname: `/product/${props.productKey}`, state: {productKey: props.productKey }}} className='product-name-link'><h3 className='product-list-title' >{props.productname}</h3></Link>
+
 				</div>
 				<div className='product-list-price-container'>
 					<p className='product-list-price'>current price: <span className='product-list-price-number'> {props.price}€ </span></p>

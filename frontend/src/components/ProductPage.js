@@ -56,7 +56,7 @@ function priceRangetext(value) {
 	return `${value}€`;
 }
 
-function ProductPage() {
+function ProductPage(props) {
 
     //DEN KSEXNW:
     //ALLAZW CURRENT PRICE ME PROPS
@@ -80,7 +80,7 @@ function ProductPage() {
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
 
     const buyNow_flag = true; //if the porduct has a buy now option, we'll use this flag to show it
-    const [buyNowPrice, setBuyNowPrice] = React.useState("12,99")
+    const [buyNowPrice, setBuyNowPrice] = React.useState("12,99");
 
     const handleClickOpenDialogBid = () => {
       setOpenDialogBid(true);
@@ -109,6 +109,7 @@ function ProductPage() {
 
     return (
             <div className="main-container">
+                {console.log(props.id)}
             	<div className="column-left" />
               	<div className="column-right"/>
                 <div className="column-middle" style={{backgroundColor: "#fff"}}>
