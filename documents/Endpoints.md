@@ -12,7 +12,15 @@ ________________
 
 `[POST] api/users/save`
 
-{username,pass,email,..}
+{
+    "username":"kwstop",
+    "pass":"ll",
+    "roles": [
+        {
+            "name" : "BIDDER"
+        }
+    ]
+}
 
 Save new user
 ________________
@@ -61,6 +69,19 @@ ________________
 `[POST] api/items/save`
 
 POST save product
+
+{
+    "name":"SSD WD 3002",
+    "buyPrice":"60",
+    "description":"ssd xwriktikothta 500gb",
+    "firstBid":"0",
+    "currentBid":0,
+    "bidCount":0,
+    "latitude":"3444",
+    "longitude":"2222",
+    "country":"Greece",
+    "category":["texnologia","allo"]
+}
 
 ________________
 
