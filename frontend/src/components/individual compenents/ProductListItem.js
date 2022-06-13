@@ -16,6 +16,8 @@ import electronicImages from '../../images/image exports/ElectronicImages';
 function ProductListItem(props) {
 	
 	
+
+	const id = props.productKey;
 	
 
 	//We will generate a random image for each product
@@ -36,7 +38,7 @@ function ProductListItem(props) {
 			<div className="product-list-info">
 				<div  className='product-list-title-container' >
 					{/* <Link to='/product' className='product-name-link'><h3 className='product-list-title' >{props.productname}</h3></Link> */}
-					<Link to={{pathname: `/product/${props.productKey}`, state: {productKey: props.productKey }}} className='product-name-link'><h3 className='product-list-title' >{props.productname}</h3></Link>
+					<Link to={ `/product/${id}`} state= {{id: id }} className='product-name-link'><h3 className='product-list-title' >{props.productname}</h3></Link>
 
 				</div>
 				<div className='product-list-price-container'>

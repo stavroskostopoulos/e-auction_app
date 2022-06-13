@@ -1,7 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
 import { makeStyles } from '@mui/styles';
+import axios from 'axios';
+
+
 
 //import styling
 import '../css/ProductPage.css'
@@ -56,7 +59,12 @@ function priceRangetext(value) {
 	return `${value}€`;
 }
 
-function ProductPage(props) {
+const ProductPage = (props) => {
+
+    const { state } = useLocation();
+
+    // const product = props.location.state.productKey;
+    // console.log(props);
 
     //DEN KSEXNW:
     //ALLAZW CURRENT PRICE ME PROPS
@@ -82,6 +90,43 @@ function ProductPage(props) {
     const buyNow_flag = true; //if the porduct has a buy now option, we'll use this flag to show it
     const [buyNowPrice, setBuyNowPrice] = React.useState("12,99");
 
+    const [isLoading, setIsLoading] = React.useState(true);
+
+
+    const [productInfo, setProductInfo] = React.useState({});
+
+
+    React.useEffect(() => {
+
+		// console.log(currentPages)
+		
+        // ⬇ This calls my get request from the server
+		getProductInfo();
+	
+		// setIsLoading(false);
+        
+        // (productInfo.buyPrice!=0) ? setBuyNowPrice(productInfo.buyPrice) : (buyNow_flag=false);
+        setBuyNowPrice(productInfo.buyPrice);
+        
+
+	}, []);
+
+    const getProductInfo = async () => {	
+		
+		const result = await axios.get(`https://localhost:8443/api/items/${state.id}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
+									.then(setIsLoading(false))
+									.catch(err => {
+										setIsLoading(true);
+										console.log(err);
+									});
+
+		console.log(result.data);
+        // console.log("asdsadsadsadas")
+        setProductInfo(result.data)
+		// console.log(productInfo);
+
+	};
+
     const handleClickOpenDialogBid = () => {
       setOpenDialogBid(true);
     };
@@ -100,7 +145,7 @@ function ProductPage(props) {
 
 
     const UpdateBidAmount = (value) =>  {
-        console.log(value , currentprice, (value > currentprice));
+        // console.log(value , currentprice, (value > currentprice));
         (value > currentprice) ?  setInvalidNewBid(false) : setInvalidNewBid(true);
         setNewBid(value);
         
@@ -109,129 +154,132 @@ function ProductPage(props) {
 
     return (
             <div className="main-container">
-                {console.log(props.id)}
             	<div className="column-left" />
               	<div className="column-right"/>
                 <div className="column-middle" style={{backgroundColor: "#fff"}}>
+                
+                    {!(isLoading) &&
+                        <div className='product-container'>
 
-                    <div className='product-container'>
 
-
-                        <div className='product-image'>
-                            <img draggable="false" src={electronicImages[2]}></img>
-                        </div>
-
-                        <div className='product-title'>
-                            <div className='product-title-container'>
-                                <h3>Product Item 1</h3>
+                            <div className='product-image'>
+                                <img draggable="false" src={electronicImages[2]}></img>
                             </div>
-                            <div className='product-description-container'>
-                                <p className='product-description'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-                            </div>
-                            { buyNow_flag &&
-                                <div className='product-buynow-container'>
-                                    <Button endIcon={<LocalMallIcon/>} className='buy-now-button' onClick={handleClickOpenDialogBuyNow}>Buy now {buyNowPrice}€</Button>
+
+                            <div className='product-title'>
+                                <div className='product-title-container'>
+                                    <h3>{productInfo.name}</h3>
                                 </div>
-                            }
-                        </div>
+                                <div className='product-description-container'>
+                                    {/* <p className='product-description'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p> */}
+                                    <p className='product-description'>{productInfo.description}</p>
 
-                        <div className='product-actions'>
-                            <div className='current-price'>
-                                <p>current price: &nbsp;&nbsp;<span className='product-price-number'> {currentprice}€ </span></p>
-                            </div>
-
-                            <div className="new-bid-product-stack-container">
-
-                                <Stack direction="row" spacing={1} className="new-bid-product-stack">
-                                    <FormControl >
-
-                                        <CustomInputLabel htmlFor="outlined-adornment-amount">Amount</CustomInputLabel>
-                                        <CustomOutlinedInput
-                                            id="outlined-adornment-amount"
-                                            value={newBid}
-                                            type="number"
-                                            size='small'
-                                            onChange={(e) => UpdateBidAmount(e.target.value)}
-                                            startAdornment={<InputAdornment position="start">€</InputAdornment>}
-                                            label="Amount"
-                                            className='product-bid-textfield'
-                                            error={invalidNewBid}
-                                        />
-                                    </FormControl>
-
-                                    <Button variant="contained" size="small" disabled={invalidNewBid} endIcon={<PanToolIcon/>} className='product-bid-button' onClick={handleClickOpenDialogBid}>
-                                        bid
-                                    </Button>
-                                </Stack>
-                            </div>
-
-
-                            <div className='time-left-container' style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexWrap: 'wrap',
-                            }}>
-                                <span className='current-bidders-text' >12 days left</span>
-							    <AlarmIcon className='current-bidders-icon' />
-						
-                            </div>
-
-                            <div className='bidders-number-container' style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexWrap: 'wrap',
-                            }}>
-                                <span className='current-bidders-text' >15 bidders</span>
-							    <PersonSharpIcon className='current-bidders-icon' />
-                            </div>
-
-                            
-
-                        </div>
-
-
-                        <div className='product-data'>
-
-                            <div className='data-title-container'>
-                                <h1 className='product-data-title'>{(dataMenuValue==1) ? "Bid History" : "Auction Location"}</h1>
-                            </div>
-
-
-                            <div className='data-menu'>
-                                <Tabs
-                                    value={dataMenuValue}
-                                    onChange={(e,value) => {setDataMenuValue(value);}}                        
-                                    textColor="secondary"
-                                    indicatorColor="secondary"
-                                    aria-label="secondary tabs example"
-                                    
-                                >
-                                    <Tab value="1" label={<p>Previous Bids</p>} className='product-data-menu-option'/>
-                                    <Tab value="2" label={<p>Location</p>} className='product-data-menu-option' />
-                                    
-                                </Tabs>
-                            </div>
-
-                            <div className='data'>
-                                {(dataMenuValue==1) ? 
-                                    <BidHistory bids={previousBids}/> 
-                                : 
-                                    <div className='map-container'>
-                                        {/* <p>{"Longitude: "+ location[0] + ", Latitude: " + location[1]}</p> */}
-                                        <Map longitude={location[0]} latitude={location[1]}/>
+                                </div>
+                                { (buyNowPrice!=="0") &&
+                                    <div className='product-buynow-container'>
+                                        <Button endIcon={<LocalMallIcon/>} className='buy-now-button' onClick={handleClickOpenDialogBuyNow}>Buy now {buyNowPrice}€</Button>
                                     </div>
-                                }       
-                       
-                            
+                                }
                             </div>
 
+                            <div className='product-actions'>
+                                <div className='current-price'>
+                                    <p>current price: &nbsp;&nbsp;<span className='product-price-number'> {currentprice}€ </span></p>
+                                </div>
+
+                                <div className="new-bid-product-stack-container">
+
+                                    <Stack direction="row" spacing={1} className="new-bid-product-stack">
+                                        <FormControl >
+
+                                            <CustomInputLabel htmlFor="outlined-adornment-amount">Amount</CustomInputLabel>
+                                            <CustomOutlinedInput
+                                                id="outlined-adornment-amount"
+                                                value={newBid}
+                                                type="number"
+                                                size='small'
+                                                onChange={(e) => UpdateBidAmount(e.target.value)}
+                                                startAdornment={<InputAdornment position="start">€</InputAdornment>}
+                                                label="Amount"
+                                                className='product-bid-textfield'
+                                                error={invalidNewBid}
+                                            />
+                                        </FormControl>
+
+                                        <Button variant="contained" size="small" disabled={invalidNewBid} endIcon={<PanToolIcon/>} className='product-bid-button' onClick={handleClickOpenDialogBid}>
+                                            bid
+                                        </Button>
+                                    </Stack>
+                                </div>
+
+
+                                <div className='time-left-container' style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    flexWrap: 'wrap',
+                                }}>
+                                    <span className='current-bidders-text' >12 days left</span>
+                                    <AlarmIcon className='current-bidders-icon' />
+                            
+                                </div>
+
+                                <div className='bidders-number-container' style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    flexWrap: 'wrap',
+                                }}>
+                                    <span className='current-bidders-text' >15 bidders</span>
+                                    <PersonSharpIcon className='current-bidders-icon' />
+                                </div>
+
+                                
+
+                            </div>
+
+
+                            <div className='product-data'>
+
+                                <div className='data-title-container'>
+                                    <h1 className='product-data-title'>{(dataMenuValue==1) ? "Bid History" : "Auction Location"}</h1>
+                                </div>
+
+
+                                <div className='data-menu'>
+                                    <Tabs
+                                        value={dataMenuValue}
+                                        onChange={(e,value) => {setDataMenuValue(value);}}                        
+                                        textColor="secondary"
+                                        indicatorColor="secondary"
+                                        aria-label="secondary tabs example"
+                                        
+                                    >
+                                        <Tab value="1" label={<p>Previous Bids</p>} className='product-data-menu-option'/>
+                                        <Tab value="2" label={<p>Location</p>} className='product-data-menu-option' />
+                                        
+                                    </Tabs>
+                                </div>
+
+                                <div className='data'>
+                                    {(dataMenuValue==1) ? 
+                                        <BidHistory bids={previousBids}/> 
+                                    : 
+                                        <div className='map-container'>
+                                            {/* <p>{"Longitude: "+ location[0] + ", Latitude: " + location[1]}</p> */}
+                                            <Map longitude={location[0]} latitude={location[1]}/>
+                                        </div>
+                                    }       
+                        
+                                
+                                </div>
+
+                            </div>
+
+                            {/* {console.log(dataMenuValue)} */}
+
+
+                        
                         </div>
-
-                        {console.log(dataMenuValue)}
-
-
-                    </div>
-
+                    }
 
                 </div>
 

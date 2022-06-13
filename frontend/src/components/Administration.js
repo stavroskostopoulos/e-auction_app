@@ -81,7 +81,7 @@ function Administration() {
 						{/* pagination */}
 						{!request && (totalUsersList.length > 6) &&
 							<div className='pagination-container'>
-								<Pagination className='pagination-admin' count={10} color="secondary" />
+								<Pagination variant="outlined" className='pagination-admin' count={10} color="secondary" />
 							</div>
 						}
 						
@@ -95,7 +95,7 @@ function Administration() {
 						{/* pagination */}
 						{request && (usersRegisterList.length > 6) &&
 							<div className='pagination-container'>
-								<Pagination className='pagination-admin' count={10} color="secondary" />
+								<Pagination variant="outlined" className='pagination-admin' count={10} color="secondary" />
 							</div>
 						}
 						

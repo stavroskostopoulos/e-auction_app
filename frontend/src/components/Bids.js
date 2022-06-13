@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+//import custom components
 import BidsFilters from './individual compenents/BidsFilters';
 import ProductListItem from './individual compenents/ProductListItem';
+import ProductsList from './individual compenents/ProductsList';
 
 //import Styling
 import "../css/Bids.css"
@@ -114,6 +116,8 @@ const CustomCheckbox = withStyles({
 })(Checkbox);
 
 
+
+
 function priceRangetext(value) {
 	return `${value}€`;
 }
@@ -147,26 +151,31 @@ function Bids() {
 	const products = ["Product 1 Title", "Product 2 Title", "Product 3 Title", "Product 4 Title", "Product 5 Title", "Product 6 Title", "Product 7 Title"];
 	const [productsList, setProductsList] = React.useState([]);
 
+	//pagination
+	const [totalPages, setTotalPages] = React.useState(0);
+	const [currentPages, setCurrentPages] = React.useState(1);
+
 
 	//is Loading
 	const [isLoading, setIsLoading] = React.useState(false);
 
-	React.useEffect(() => {
+	// React.useEffect(() => {
 
-		setIsLoading(true);
+	// 	setIsLoading(true);
+	// 	console.log(currentPages)
 				
-		// ⬇ This calls my get request from the server
-		getProducts();
+	// 	// ⬇ This calls my get request from the server
+	// 	getProducts();
 	
-		// setIsLoading(false);
+	// 	// setIsLoading(false);
 		
-	}, []);
+	// }, [currentPages]);
 
 
 	const getProducts = async () => {
 		
 		
-		const result = await axios.get('https://localhost:8443/api/items/', { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
+		const result = await axios.get(`https://localhost:8443/api/items?page=${currentPages-1}&size=8`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
 									.then(setIsLoading(false))
 									.catch(err => {
 										setIsLoading(true);
@@ -174,8 +183,14 @@ function Bids() {
 									});
 
 		console.log(result.data);
-		setProductsList(result.data);
+		setTotalPages(result.data.totalPages);
+		setProductsList(result.data.content);
 
+	};
+
+	const pageChangeHandler = (event, pageNumber = 1) => {
+		// Your code
+		setCurrentPages(pageNumber) 
 	};
 
 	const handleDelete = (value) => {
@@ -283,31 +298,10 @@ function Bids() {
 						
 						{/* Products */}
 						<div className='bids-products'>
-							<Stack spacing={3} className='products-stack'>
-								{(!isLoading) && (productsList.length!==0) &&
-									productsList.map((product) =>	(
-										<ProductListItem productKey={product.itemId} productname={product.name} category='Electronics' owner='kostopez' numberOfBidders="15" price={product.currentBid}/>
-										
-									))
-								
-								}
-
-								{isLoading && 
-									<div className='circular-container'>
-										<CircularProgress color="secondary" />
-									</div>
-								}
-
-								{(productsList.length>8) &&
-									<div className='pagination-container-bids'>
-										<Pagination className='pagination-admin' count={10} color="secondary" />
-									</div>
-								}
-							</Stack>
+							<ProductsList/>
 						</div>
 
-
-
+							
 						<div className='filtertags'>
 							<Stack direction="row" spacing={1}>
 								{categories.map((category) => (
