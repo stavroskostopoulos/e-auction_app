@@ -133,7 +133,7 @@ function Bids() {
 	const [checkedCateg, setCheckedCateg] = React.useState([]);
 	const [priceRange, setPriceRange] = React.useState([0, 400]);
 	//this flag will let us know when to change between filter and delete buttons
-	const [responsiveFiltersShown, setResponsiveFiltersShown] = React.useState(false)
+	const [responsiveFiltersShown, setResponsiveFiltersShown] = React.useState(false);
 
 	//useRef - References
 	const showFiltersRef = React.useRef(0);
@@ -149,14 +149,16 @@ function Bids() {
 
 
 	//is Loading
-	const [isLoading, setIsLoading] = React.useState(true);
+	const [isLoading, setIsLoading] = React.useState(false);
 
 	React.useEffect(() => {
 
+		setIsLoading(true);
 				
 		// ⬇ This calls my get request from the server
 		getProducts();
-
+	
+		// setIsLoading(false);
 		
 	}, []);
 
@@ -166,7 +168,10 @@ function Bids() {
 		
 		const result = await axios.get('https://localhost:8443/api/items/', { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
 									.then(setIsLoading(false))
-									.catch(setIsLoading(true));
+									.catch(err => {
+										setIsLoading(true);
+										console.log(err);
+									});
 
 		console.log(result.data);
 		setProductsList(result.data);
@@ -293,7 +298,7 @@ function Bids() {
 									</div>
 								}
 
-								{(productsList.length>6) &&
+								{(productsList.length>8) &&
 									<div className='pagination-container-bids'>
 										<Pagination className='pagination-admin' count={10} color="secondary" />
 									</div>
