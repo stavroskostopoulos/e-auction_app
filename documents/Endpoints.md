@@ -88,16 +88,15 @@ ________________
 `[POST] items/save/cat`
 
 {
-    "name": "Geforce 1080 Ti",
-    "cats": ["texnologia","kati","katiallo"]
+    "itemId":1,
+    "cats":["texnologia","kati"]
 }
-
 
 POST save product categories
 
 ________________
 
-`[POST] items/filter/price`
+`[POST] items/filter/price?page=0&size=3`
 
 {
     "low":"5",
@@ -107,13 +106,13 @@ get items filtered by price
 
 ________________
 
-`[POST] api/items/filter/cat`
+`[POST] api/items/filter/cat/{offset}`
 
 {
     "cats":["texnologia","kati"]
 }
 
-get items filtered by category
+get items filtered by category(give offset for pagination)
 
 ________________
 
