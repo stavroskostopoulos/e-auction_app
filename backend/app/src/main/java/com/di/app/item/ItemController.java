@@ -2,6 +2,8 @@ package com.di.app.item;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +26,7 @@ public class ItemController {
 
     // GET
 
-    @GetMapping(path = "/items")
+    @GetMapping(path = "/items/all")
     public ResponseEntity<List<Item>> GetItems(){
         return ResponseEntity.ok().body(itemService.GetItems());
     }
@@ -32,6 +34,11 @@ public class ItemController {
     @GetMapping(path = "/items/{itemid}")
     public ResponseEntity<Optional<Item>> GetItemById(@PathVariable("itemid") Long id){
         return ResponseEntity.ok().body(itemService.GetItemById(id));
+    }
+
+    @GetMapping(path = "/items")
+    public ResponseEntity<Page<Item>> GetItemsLimit(Pageable pageable){
+        return ResponseEntity.ok().body(itemService.GetItemsLimit(pageable));
     }
 
 
