@@ -61,7 +61,7 @@ public class ItemService {
     }
 
     public Item GiveCategories(Category cats) {
-        Item item = itemRepository.findByName(cats.getName());
+        Item item = itemRepository.getById(cats.getCatId());
 
         item.setCategory(cats.getCats());
 

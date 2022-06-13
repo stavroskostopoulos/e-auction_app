@@ -15,7 +15,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 public class Role {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long roleid;
     private String name;
 }

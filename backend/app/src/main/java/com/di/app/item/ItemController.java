@@ -21,6 +21,9 @@ public class ItemController {
         this.itemService = service;
     }
 
+
+    // GET
+
     @GetMapping(path = "/items")
     public ResponseEntity<List<Item>> GetItems(){
         return ResponseEntity.ok().body(itemService.GetItems());
@@ -30,6 +33,9 @@ public class ItemController {
     public ResponseEntity<Optional<Item>> GetItemById(@PathVariable("itemid") Long id){
         return ResponseEntity.ok().body(itemService.GetItemById(id));
     }
+
+
+    // POST
 
     @PostMapping(path = "/items/filter/price")
     public ResponseEntity<List<Item>> GetItemsByPrice(@RequestBody Map<String, String> json){

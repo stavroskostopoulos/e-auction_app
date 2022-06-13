@@ -18,7 +18,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "SELECT item_item_id FROM item_category ic WHERE ic.category=:cat ) LIMIT 8", nativeQuery = true)
     List<Item> getItemsInCategory(@Param("cat")String category);
 
-    @Query(value = "SELECT * FROM item i WHERE (i.latitude BETWEEN :lat-1000 AND :lng+1000) OR (i.longitude BETWEEN :lng-1000 AND :lng+1000) LIMIT 8", nativeQuery = true)
+    @Query(value = "SELECT * FROM item i WHERE (i.latitude BETWEEN :lat-1000 AND :lat+1000) OR (i.longitude BETWEEN :lng-1000 AND :lng+1000) LIMIT 8", nativeQuery = true)
     List<Item> getItemsByLocation(@Param("lat")Integer lat, @Param("lng")Integer lng);
 
 

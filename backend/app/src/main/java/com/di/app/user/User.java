@@ -4,10 +4,12 @@ import com.di.app.role.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity @Table
 @Data @AllArgsConstructor @NoArgsConstructor
@@ -26,7 +28,8 @@ public class User {
     private String afm;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private List<Role> roles = new ArrayList<>();
 
 }
 

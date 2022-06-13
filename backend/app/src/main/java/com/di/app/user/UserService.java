@@ -51,6 +51,8 @@ public class UserService {
 
         // all good, encode the password and save the user
         newUser.setPass(passwordEncoder.encode(newUser.getPass()));
+
+
         return userRepository.save(newUser);
     }
 
