@@ -11,11 +11,11 @@ import java.util.List;
 public class Category {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long catId;
+    private Long itemId;
     private List<String> cats;
 
-    public Long getCatId() {
-        return catId;
+    public Long getItemId() {
+        return itemId;
     }
 
     public List<String> getCats() {

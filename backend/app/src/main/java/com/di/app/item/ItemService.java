@@ -2,6 +2,7 @@ package com.di.app.item;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -35,21 +36,22 @@ public class ItemService {
         return itemRepository.getItemsByPrice(low,high,pageable);
     }
 
-    public List<Item> GetItemsByLocation(String slat, String slong){
+    public Page<Item> GetItemsByLocation(String slat, String slong, Pageable pageable){
         Integer lat = Integer.parseInt(slat);
         Integer lng = Integer.parseInt(slong);
 
-        return itemRepository.getItemsByLocation(lat, lng);
+        return itemRepository.getItemsByLocation(lat, lng, pageable);
     }
 
-    public List<Item> GetItemsByCategory(Category categories){
+    public Page<Item> GetItemsByCategory(Category categories, Integer offset){
 
         List<Item> tempList;
         List<Item> items = new ArrayList<>();
         List<String> list = categories.getCats();
 
+
         for (String value : list) {
-            tempList = itemRepository.getItemsInCategory(value);
+            tempList = itemRepository.getItemsInCategory(value,offset);
             items.addAll(tempList);
         }
 
@@ -58,7 +60,11 @@ public class ItemService {
         items.clear();
         items.addAll(set);
 
-        return items;
+        System.out.println(items);
+
+        Page<Item> page = new PageImpl<>(items);
+
+        return page;
     }
 
     public Item SaveItem(Item newItem) {
@@ -67,7 +73,7 @@ public class ItemService {
     }
 
     public Item GiveCategories(Category cats) {
-        Item item = itemRepository.getById(cats.getCatId());
+        Item item = itemRepository.getById(cats.getItemId());
 
         item.setCategory(cats.getCats());
 

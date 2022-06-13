@@ -50,13 +50,13 @@ public class ItemController {
     }
 
     @PostMapping(path = "/items/filter/loc")
-    public ResponseEntity<List<Item>> GetItemsByLocation(@RequestBody Map<String, String> json){
-        return ResponseEntity.ok().body(itemService.GetItemsByLocation(json.get("lat"), json.get("lng")));
+    public ResponseEntity<Page<Item>> GetItemsByLocation(@RequestBody Map<String, String> json, Pageable pageable){
+        return ResponseEntity.ok().body(itemService.GetItemsByLocation(json.get("lat"), json.get("lng"),pageable));
     }
 
-    @PostMapping(path = "/items/filter/cat")
-    public ResponseEntity<List<Item>> GetItemsByCat(@RequestBody Category cat){
-        return ResponseEntity.ok().body(itemService.GetItemsByCategory(cat));
+    @PostMapping(path = "/items/filter/cat/{offset}")
+    public ResponseEntity<Page<Item>> GetItemsByCat(@RequestBody Category cat, @PathVariable("offset") Integer offset){
+        return ResponseEntity.ok().body(itemService.GetItemsByCategory(cat,offset));
     }
 
     @PostMapping(path = "items/save")
