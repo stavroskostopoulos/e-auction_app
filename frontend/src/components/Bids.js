@@ -1,42 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 //import custom components
 import BidsFilters from './individual compenents/BidsFilters';
-import ProductListItem from './individual compenents/ProductListItem';
 import ProductsList from './individual compenents/ProductsList';
 
 //import Styling
 import "../css/Bids.css"
 import { withStyles } from "@material-ui/core/styles";
-import { makeStyles } from '@mui/styles';
 
 //import variables
 import productCategories from '../variables/categories';
 
 //import Material UI components
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
 import Slider from '@mui/material/Slider';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Pagination from '@mui/material/Pagination';
-import CircularProgress from '@mui/material/CircularProgress';
-
 import FilterListIcon from '@mui/icons-material/FilterList';
-import axios from 'axios';
+
 
 const PriceTextField = withStyles({
     root: {
@@ -135,7 +123,7 @@ function Bids() {
 
 	// filters
 	const [checkedCateg, setCheckedCateg] = React.useState([]);
-	const [priceRange, setPriceRange] = React.useState([0, 400]);
+
 	//this flag will let us know when to change between filter and delete buttons
 	const [responsiveFiltersShown, setResponsiveFiltersShown] = React.useState(false);
 
@@ -159,22 +147,51 @@ function Bids() {
 	//is Loading
 	const [isLoading, setIsLoading] = React.useState(false);
 
-	// React.useEffect(() => {
 
-	// 	setIsLoading(true);
-	// 	console.log(currentPages)
-				
-	// 	// ⬇ This calls my get request from the server
-	// 	getProducts();
-	
-	// 	// setIsLoading(false);
-		
-	// }, [currentPages]);
+	//filters
+	const [priceRange, setPriceRange] = React.useState(["0", "1000"]);
+	const [priceRangeToggle, setPriceRangeToggle] = React.useState(false);
+	const [priceRangeTagToggleMin, setPriceRangeTagToggleMin] = React.useState(true);
+	const [priceRangeTagToggleMax, setPriceRangeTagToggleMax] = React.useState(true);
 
 
-	const getProducts = async () => {
+
+    const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
+
+
+	React.useEffect(() => {
+
+		// console.log(currentPages)
 		
+        // ⬇ This calls my get request from the server
+		// getProducts();
+        // console.log(priceRange)
 		
+		//if price range has been modified
+        if( (priceRange[0].toString() !=="0" ) || (priceRange[1].toString() !=="1000") ) {
+			
+			getProductsbyPrice();
+			setPriceRangeToggle(false);
+			
+        }else{
+			setPriceRangeToggle(false);
+			
+			getProducts();
+
+		}
+
+		// setIsLoading(false);
+	}, [currentPages, priceRangeToggle]);
+
+    const pageChangeHandler = (event, pageNumber = 1) => {
+		// Your code
+        window.scrollTo(0, 0);
+		setCurrentPages(pageNumber) 
+	};
+
+    const getProducts = async () => {
+		
+
 		const result = await axios.get(`https://localhost:8443/api/items?page=${currentPages-1}&size=8`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
 									.then(setIsLoading(false))
 									.catch(err => {
@@ -188,9 +205,31 @@ function Bids() {
 
 	};
 
-	const pageChangeHandler = (event, pageNumber = 1) => {
-		// Your code
-		setCurrentPages(pageNumber) 
+
+	const getProductsbyPrice = async () => {
+		
+		
+		const result = await axios.post(`https://localhost:8443/api/items/filter/price?page=${currentPages-1}&size=8`,
+
+                            {
+                                low: priceRange[0],
+                                high: priceRange[1],
+                            },
+
+
+                            { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
+
+                            .then(setIsLoading(false))
+
+                            .catch(err => {
+                                setIsLoading(true);
+                                console.log(err);
+                            });
+
+		console.log(result.data);
+		setTotalPages(result.data.totalPages);
+		setProductsList(result.data.content);
+
 	};
 
 	const handleDelete = (value) => {
@@ -219,6 +258,16 @@ function Bids() {
 		setCheckedCateg(newChecked);
 
 	};
+
+	const handleDeletePriceTag = (min_or_max_str) => {
+		if(min_or_max_str === "min"){
+			setPriceRange(["0", priceRange[1]])
+		}else{
+			setPriceRange([priceRange[0], "1000"]);
+		} 
+
+	};
+
 
 	const handleChange = (event, newValue) => {
 		setPriceRange(newValue);
@@ -292,13 +341,13 @@ function Bids() {
 
 
 						<div ref={showFiltersRef} className='bids-filters'>
-							<BidsFilters className='filters-component'  categories={categories} checkedCateg={checkedCateg} setCheckedCateg={setCheckedCateg}/>
+							<BidsFilters className='filters-component'  categories={categories} checkedCateg={checkedCateg} setCheckedCateg={setCheckedCateg} setNewLocation={setLocation} setPriceRange={setPriceRange} priceRange={priceRange} setPriceRangeToggle={setPriceRangeToggle} />
 						</div>
 
 						
 						{/* Products */}
 						<div className='bids-products'>
-							<ProductsList/>
+							<ProductsList pageChangeHandler={pageChangeHandler} productsList={productsList} totalPages={totalPages} isLoading={isLoading} setPriceRange={setPriceRange}/>
 						</div>
 
 							
@@ -307,6 +356,9 @@ function Bids() {
 								{categories.map((category) => (
 									(checkedCateg.indexOf({category}.category)!==-1) && <Chip label={category} color="primary"  size='small' onDelete={() => handleDelete({category}.category)}/>
 								))}
+								{(priceRangeTagToggleMin) && (priceRange[0].toString() !=="0") && <Chip label={`${priceRange[0]} <`} color="primary"  size='small' onDelete={() => handleDeletePriceTag("min")}/>}
+								{(priceRangeTagToggleMax) && (priceRange[1].toString() !=="1000") && <Chip label={`> ${priceRange[1]}`} color="primary"  size='small' onDelete={() => handleDeletePriceTag("max")}/>}
+
 							</Stack>
 						</div>
 

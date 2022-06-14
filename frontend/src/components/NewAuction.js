@@ -137,6 +137,18 @@ function NewBidPage() {
         
         ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
         
+        const result_cat = await axios.post('https://localhost:8443/api/items/save/cat', 
+        
+        {
+        
+            itemId: result.data.itemId,
+            cats: [chosenCategory],
+        
+        }
+    
+    
+    ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
         console.log(result.data);
 
     }
