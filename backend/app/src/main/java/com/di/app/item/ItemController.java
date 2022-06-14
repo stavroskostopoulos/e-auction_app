@@ -41,6 +41,10 @@ public class ItemController {
         return ResponseEntity.ok().body(itemService.GetItemsLimit(pageable));
     }
 
+    @GetMapping(path = "/itemswithcats")
+    public ResponseEntity<Page<Item>> GetItemsByPrice(Pageable pageable){
+        return ResponseEntity.ok().body(itemService.GetItemsWithCats(pageable));
+    }
 
     // POST
 

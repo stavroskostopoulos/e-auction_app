@@ -11,7 +11,7 @@ import Divider from '@mui/material/Divider';
 
 //Electronics images
 import electronicImages from '../../images/image exports/ElectronicImages';
-
+import fashionImages from '../../images/image exports/FashionImages';
 
 function ProductListItem(props) {
 	
@@ -31,8 +31,12 @@ function ProductListItem(props) {
 		<div className='product-list-card'>
 			
 			<div className='product-list-img-container'>
+				{console.log("sadasds")}
 
-				{props.category==='Electronics' && <img draggable="false" src={electronicImages[Math.floor(Math.random()*electronicImages.length)]} alt="This should be sth" className='product-list-image'/>}
+				{console.log(props.category)}
+				{props.category==='Electronics' && <img draggable="false" src={electronicImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
+				{props.category==='Fashion' && <img draggable="false" src={fashionImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
+			
 			</div>
 			
 			<div className="product-list-info">

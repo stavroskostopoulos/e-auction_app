@@ -13,7 +13,9 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     Item findByName(String name);
 
-
+    @Query( value = "SELECT * FROM item JOIN item_category ON item.item_id = item_category.item_item_id",
+            countQuery = "SELECT count(*) FROM item", nativeQuery = true)
+    Page<Item> getItemsWithCats(Pageable pageable);
 
     @Query( value = "SELECT * FROM item WHERE current_bid BETWEEN :low AND :high ORDER BY current_bid",
             countQuery = "SELECT count(*) FROM item", nativeQuery = true)

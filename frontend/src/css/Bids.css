@@ -183,7 +183,7 @@
     /* background-color: #1e2749; */
     
 
-    border-radius: 4px;
+    border-radius: 8px;
     
     /* center submit icon horizontally and vertically */
     display: flex;
@@ -194,6 +194,7 @@
 .price-range-icon{
     color: #f1f1f1 !important;
 }
+
 
 .price-range-button:hover{
     background-color: #a570db;
@@ -212,6 +213,18 @@
     justify-content: center;
 
     margin-top: 60px !important;
+}
+
+.categ-chip{
+    background-color: #42a5f5 !important;
+}
+
+.price-chip-min{
+    background-color: #9966cc !important;
+}
+
+.price-chip-max{
+    background-color: #894ec4 !important;
 }
 
 @media (max-width: 1750px) {

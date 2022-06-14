@@ -5,9 +5,7 @@ import L from "leaflet";
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
-import InputAdornment from '@mui/material/InputAdornment';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
@@ -55,15 +53,39 @@ function InputMap(props) {
         e.preventDefault();
 
         //errror checking
-        //kai if !parsestr an adeio
 
+        //if there was no location given
         if(!locationStr){   
+            setShowEmptyLocationStr(true);
+            return; 
+        }
+
+        //if the format is not correct
+        //contains ","
+        if(!locationStr.includes(",")){   
             setShowEmptyLocationStr(true);
             return; 
         }
 
         let parsedlocation = locationStr.replace(/ /g,'').split(',');
         
+        //if there are more than one "," or there is nothing before or after the ","
+        if(parsedlocation.length!=2 || parsedlocation[0] === "" || parsedlocation[1] === ""){
+            setShowEmptyLocationStr(true);
+            return; 
+        }
+
+        //if these are not numbers
+        if( isNaN(parsedlocation[0]) || isNaN(parseFloat(parsedlocation[0])) || isNaN(parsedlocation[1]) || isNaN(parseFloat(parsedlocation[1])) ) {
+            setShowEmptyLocationStr(true);
+            return;
+        }
+
+        setShowEmptyLocationStr(false);
+
+
+        console.log(parsedlocation);
+
         setLocation([parsedlocation[0], parsedlocation[1]]);
         props.inputMapSetLocation([parsedlocation[0], parsedlocation[1]]);
         // console.log(location);

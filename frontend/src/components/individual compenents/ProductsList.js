@@ -20,11 +20,12 @@ function ProductsList(props) {
         <Stack spacing={3} className='products-stack'>
             {(!props.isLoading) && (props.productsList.length!==0) &&
                 props.productsList.map((product) =>	(
-                    <ProductListItem productKey={product.itemId} productname={product.name} category='Electronics' owner='kostopez' numberOfBidders="15" price={product.currentBid}/>
+                    <ProductListItem productKey={product.itemId} productname={product.name} category={product.category[0]} photoId={product.photoId} owner='kostopez' numberOfBidders="15" price={product.currentBid}/>
                     
                     ))
                     
             }
+            {(!props.isLoading) && console.log(props.productsList)}
 
             {props.isLoading && 
                 <div className='circular-container'>

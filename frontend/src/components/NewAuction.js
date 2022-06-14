@@ -22,6 +22,10 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 
+//import images by category to choose an image for this product
+import electronicImages from '../images/image exports/ElectronicImages';
+import fashionImages from '../images/image exports/FashionImages';
+
 const CssTextField = withStyles({
     root: {
       '& label.Mui-focused': {
@@ -102,7 +106,6 @@ function NewBidPage() {
         
         e.preventDefault();
 
-
         (!productTitle) ? setShowEmptyProductTitle(true) : setShowEmptyProductTitle(false);
         (!productDesc) ? setShowEmptyProductDesc(true) : setShowEmptyProductDesc(false);
 
@@ -117,6 +120,12 @@ function NewBidPage() {
         let endDate = new Date(startDate);
         endDate.setDate(startDate.getDate() + parseInt(chosenDuration))
         
+        // choose a random image for this product
+        let imgID;
+
+        if(chosenCategory==="Electronics") imgID = Math.floor(Math.random()*electronicImages.length);
+        if(chosenCategory==="Fashion") imgID = Math.floor(Math.random()*fashionImages.length);
+
         const result = await axios.post('https://localhost:8443/api/items/save', 
         
             {
@@ -132,6 +141,7 @@ function NewBidPage() {
                 latitude: location[1].toString(),
                 longitude: location[0].toString(),
                 country: "Greece",
+                photoId: imgID,
             }
         
         
