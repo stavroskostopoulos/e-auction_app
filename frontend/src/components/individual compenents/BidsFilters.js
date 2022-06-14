@@ -16,6 +16,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import Slider from '@mui/material/Slider';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import Tooltip from '@mui/material/Tooltip';
 
 const PriceTextField = withStyles({
     root: {
@@ -89,7 +90,7 @@ function BidsFilters(props) {
 
 
     const submitPriceRange = () => {
-        props.setPriceRangeToggle(true);
+        props.setPriceRangeToggle(props.priceRange);
     };
 
     const submitLocation = () => {
@@ -170,7 +171,7 @@ function BidsFilters(props) {
                                                 
                                                 // value={`${priceRange[0]}€`}
                                                 value={props.priceRange[0]}
-
+                                                
                                                 className="minprice-textfield"
                                                 size='small'   
                                                 onChange={(e)=> props.setPriceRange([e.target.value, props.priceRange[1]])}
@@ -187,10 +188,12 @@ function BidsFilters(props) {
                                                 size='small'   
                                             />
                                         </div>
-
-                                        <div className='price-range-button' onClick={submitPriceRange}>
-                                            <KeyboardArrowRightIcon className='price-range-icon'/>
-                                        </div>
+                                        
+                                        <Tooltip title={<p className='tooltip-text'>Submit price Range</p>} placement="right" arrow>
+                                            <div className='price-range-button' onClick={submitPriceRange}>
+                                                <KeyboardArrowRightIcon className='price-range-icon'/>
+                                            </div>
+                                        </Tooltip>
 
                                     </div>
 

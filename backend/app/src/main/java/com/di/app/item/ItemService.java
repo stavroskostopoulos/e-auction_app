@@ -37,6 +37,10 @@ public class ItemService {
         return itemRepository.getItemsByPrice(low,high,pageable);
     }
 
+    public Page<Item> GetItemsWithCats( Pageable pageable){
+        return itemRepository.getItemsWithCats(pageable);
+    }
+
     public Page<Item> GetItemsByLocation(String slat, String slong, Pageable pageable){
         Integer lat = Integer.parseInt(slat);
         Integer lng = Integer.parseInt(slong);
