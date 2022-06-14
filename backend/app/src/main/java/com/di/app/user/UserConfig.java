@@ -49,12 +49,15 @@ public class UserConfig {
             userService.GiveRole("nota", "ADMIN");
 
             itemService.SaveItem(new Item(null,
+                    2L,
+                    3,
                     "Geforce 1080 Ti",
                     "400",
                     "Κάρτα γραφικών",
                     null,
                     20,
                     0,
+                    3,
                     null,
                     null,
                     "lat",
@@ -65,12 +68,15 @@ public class UserConfig {
             ));
 
             itemService.SaveItem(new Item(null,
+                    3L,
+                    4,
                     "Roar R100WD",
                     "400",
                     "Ενσύρματο Gamepad για Android/PC/PS3 Μαύρο",
                     null,
                     5,
                     0,
+                    2,
                     null,
                     null,
                     "lat",

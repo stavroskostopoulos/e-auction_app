@@ -1,5 +1,6 @@
 package com.di.app.item;
 
+import com.di.app.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -78,6 +79,11 @@ public class ItemService {
         item.setCategory(cats.getCats());
 
         return itemRepository.save(item);
+    }
+
+    public void DeleteItem(Long id) {
+        Item item = itemRepository.getById(id);
+        itemRepository.delete(item);
     }
 
 

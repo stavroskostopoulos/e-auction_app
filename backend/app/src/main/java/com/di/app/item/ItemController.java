@@ -70,4 +70,13 @@ public class ItemController {
     }
 
 
+    // DELETE
+
+    @DeleteMapping("/items/delete/{itemid}")
+    public ResponseEntity<?> DeleteItem(@PathVariable("itemid") Long id) {
+        itemService.DeleteItem(id);
+        return ResponseEntity.ok().build();
+    }
+
+
 }

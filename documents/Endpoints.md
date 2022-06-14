@@ -137,47 +137,10 @@ ________________
 Shmeiwseis:
 
 -
-1)
-`[POST] api/items/save`
 
-POST save product
-
--first bid αχρείαστο νομίζω
-
--country αχρείαστο
-
--product owner (id)
-
--product category column (nomizw den xreaizetai na to kratame se all otable to category ,as pernaei mazi me auto to POST request kalutera kai as apo8hkeuetai sto item) (needless excessive HTTP request)
-
-2)
-
-/login
-
--return user id mazi me to jwt ws object 
-{
-  id: sadasd
-  
-  token: asdsadas
-}
-
-
-
-3) /api/items
+1) /api/items
 
 -prepei na doume mazi to pagination ( https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/ )
  example: On scroll/next page, client makes second request `GET /items?limit=20&offset=20`
  
- 
- 4)
- 
- `GET api/items/id` 
- 
- kataskeuh endpoint gia na antleis ta dedomena item me sugkekrimeno itemId
- 
- 5)
- 
- SAVE USER
 
-sto save user na stelnw mazi aki to role mazi me auto to POST request (needless excessive HTTP request), alla na meinei kai to role give, giati 8a fanei xrhsimo se alla shmeia!
- 
