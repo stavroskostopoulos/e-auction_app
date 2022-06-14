@@ -1,28 +1,20 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
-import { makeStyles } from '@mui/styles';
 
 import "../../css/Bids.css"
 
 import InputMap from './InputMap';
-import Map from './Map';
 
 
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import Slider from '@mui/material/Slider';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 const PriceTextField = withStyles({
@@ -92,11 +84,17 @@ function priceRangetext(value) {
 function BidsFilters(props) {
 
     // filters
-	// const [checkedCateg, setCheckedCateg] = React.useState([]);
-	const [priceRange, setPriceRange] = React.useState([0, 400]);
 
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
 
+
+    const submitPriceRange = () => {
+        props.setPriceRangeToggle(true);
+    };
+
+    const submitLocation = () => {
+        props.setNewLocation(location);
+    };
 
     const handleToggle = (value) => () => {
 
@@ -106,9 +104,9 @@ function BidsFilters(props) {
 		const newChecked = [...props.checkedCateg];
 
 		if (currentIndex === -1) {
-		newChecked.push(value);
+		    newChecked.push(value);
 		} else {
-		newChecked.splice(currentIndex, 1);
+		    newChecked.splice(currentIndex, 1);
 		}
 
 		props.setCheckedCateg(newChecked);
@@ -116,10 +114,13 @@ function BidsFilters(props) {
 	};
 
 	const handleChange = (event, newValue) => {
-		setPriceRange(newValue);
+		props.setPriceRange(newValue);
 	};
 
     
+
+
+
     return (
         <div>
                                 <div className='categ-filters-container'>
@@ -167,21 +168,27 @@ function BidsFilters(props) {
                                         <div className='minprice-textfield-container'>
                                             <PriceTextField
                                                 
-                                                value={`${priceRange[0]}€`}
+                                                // value={`${priceRange[0]}€`}
+                                                value={props.priceRange[0]}
+
                                                 className="minprice-textfield"
                                                 size='small'   
+                                                onChange={(e)=> props.setPriceRange([e.target.value, props.priceRange[1]])}
                                             />
                                         </div>
                                         <div className='maxprice-textfield-container'>
                                             <PriceTextField
                                                 
-                                                value={`${priceRange[1]}€`}
+                                                // value={`${priceRange[1]}€`}
+                                                value={props.priceRange[1]}
+                                                onChange={(e)=> props.setPriceRange([props.priceRange[0], e.target.value])}
+
                                                 className="maxprice-textfield"
                                                 size='small'   
                                             />
                                         </div>
 
-                                        <div className='price-range-button'>
+                                        <div className='price-range-button' onClick={submitPriceRange}>
                                             <KeyboardArrowRightIcon className='price-range-icon'/>
                                         </div>
 
@@ -191,12 +198,12 @@ function BidsFilters(props) {
 
                                     <CustomSlider
                                         getAriaLabel={() => 'Price range'}
-                                        value={priceRange}
+                                        value={props.priceRange}
                                         onChange={handleChange}
                                         valueLabelDisplay="auto"
                                         getAriaValueText={priceRangetext}
                                         className='price-range-bar'
-                                        max='400'
+                                        max='1000'
                                     />
                                     
                                     
