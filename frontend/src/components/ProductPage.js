@@ -78,23 +78,23 @@ const ProductPage = (props) => {
 
     const currentprice = 130.20;
 
-    const [newBid, setNewBid] = React.useState(currentprice); //+1 !!!!
-    const [invalidNewBid, setInvalidNewBid] = React.useState(false);
-
+    
     const [openDialogBid, setOpenDialogBid] = React.useState(false);
     const [openDialogBuyNow, setOpenDialogBuyNow] = React.useState(false);
-
+    
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
-
-    const buyNow_flag = true; //if the porduct has a buy now option, we'll use this flag to show it
+    
     const [buyNowPrice, setBuyNowPrice] = React.useState("12,99");
-
+    
     const [isLoading, setIsLoading] = React.useState(true);
-
-
+    
+    //Info of the product after we fetch its data
     const [productInfo, setProductInfo] = React.useState({});
+    
+    const [newBid, setNewBid] = React.useState(0); //+1 !!!!
+    const [invalidNewBid, setInvalidNewBid] = React.useState(false);
 
-
+    const [currentPrice, setCurrentPrice] = React.useState(0);
     React.useEffect(() => {
 
 		// console.log(currentPages)
@@ -102,28 +102,31 @@ const ProductPage = (props) => {
         // ⬇ This calls my get request from the server
 		getProductInfo();
 	
-		// setIsLoading(false);
-        
-        // (productInfo.buyPrice!=0) ? setBuyNowPrice(productInfo.buyPrice) : (buyNow_flag=false);
-        setBuyNowPrice(productInfo.buyPrice);
-        
+		
 
 	}, []);
 
     const getProductInfo = async () => {	
 		
 		const result = await axios.get(`https://localhost:8443/api/items/${state.id}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
-									.then(setIsLoading(false))
+									.then(response => {
+                                        
+                                        setProductInfo(response.data)
+                                        setNewBid(response.data.currentBid+1);
+                                        setCurrentPrice(response.data.currentBid);
+                                        setIsLoading(false)
+		                                console.log(response.data);
+
+                                    })
 									.catch(err => {
 										setIsLoading(true);
 										console.log(err);
 									});
 
-		console.log(result.data);
-        // console.log("asdsadsadsadas")
-        setProductInfo(result.data)
-		// console.log(productInfo);
 
+        //store product's info
+        // setProductInfo(result.data)
+        
 	};
 
     const handleClickOpenDialogBid = () => {
@@ -145,11 +148,27 @@ const ProductPage = (props) => {
 
     const UpdateBidAmount = (value) =>  {
         // console.log(value , currentprice, (value > currentprice));
-        (value > currentprice) ?  setInvalidNewBid(false) : setInvalidNewBid(true);
+        (value > currentPrice) ?  setInvalidNewBid(false) : setInvalidNewBid(true);
         setNewBid(value);
         
-    }
+    };
     
+    const getDaysLeft = () => {
+
+        let endDate = new Date(productInfo.end);
+        let startDate = new Date(productInfo.start);
+
+        let Difference_In_Time = endDate.getTime() - startDate.getTime();
+  
+        // To calculate the no. of days between two dates
+        let daysLeftNumber = ( Difference_In_Time / (1000 * 3600 * 24));
+
+        return daysLeftNumber.toString();
+        // setDaysLeft(( Difference_In_Time / (1000 * 3600 * 24)))
+        // setDaysLeft(productInfo.end.getTime());
+        
+
+    };
 
     return (
             <div className="main-container">
@@ -174,16 +193,16 @@ const ProductPage = (props) => {
                                     <p className='product-description'>{productInfo.description}</p>
 
                                 </div>
-                                { (buyNowPrice!=="0") &&
+                                { (productInfo.buyPrice!=="0") &&
                                     <div className='product-buynow-container'>
-                                        <Button endIcon={<LocalMallIcon/>} className='buy-now-button' onClick={handleClickOpenDialogBuyNow}>Buy now {buyNowPrice}€</Button>
+                                        <Button endIcon={<LocalMallIcon/>} className='buy-now-button' onClick={handleClickOpenDialogBuyNow}>Buy now {productInfo.buyPrice}€</Button>
                                     </div>
                                 }
                             </div>
 
                             <div className='product-actions'>
                                 <div className='current-price'>
-                                    <p>current price: &nbsp;&nbsp;<span className='product-price-number'> {currentprice}€ </span></p>
+                                    <p>current price: &nbsp;&nbsp;<span className='product-price-number'> {productInfo.currentBid}€ </span></p>
                                 </div>
 
                                 <div className="new-bid-product-stack-container">
@@ -217,11 +236,13 @@ const ProductPage = (props) => {
                                     alignItems: 'center',
                                     flexWrap: 'wrap',
                                 }}>
-                                    <span className='current-bidders-text' >12 days left</span>
+                                    {/* <span className='current-bidders-text' >{typeof(productInfo.end)!== "undefined" && productInfo.newDate.getTime()} days left</span> */}
+                                    <span className='current-bidders-text' >{typeof(productInfo.end)!== "undefined" && getDaysLeft()} days left</span>
+
                                     <AlarmIcon className='current-bidders-icon' />
                             
                                 </div>
-
+                                {console.log(productInfo.end)}
                                 <div className='bidders-number-container' style={{
                                     display: 'flex',
                                     alignItems: 'center',
@@ -318,7 +339,7 @@ const ProductPage = (props) => {
                     </DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        <p>Please you're willing to purchase Product Item 1 using the "Buy Now" option. Once confirmed, your purchase cannot be refunded!<br/><br/>Purchase amount: {buyNowPrice}€</p> 
+                        <p>Please you're willing to purchase Product Item 1 using the "Buy Now" option. Once confirmed, your purchase cannot be refunded!<br/><br/>Purchase amount: {productInfo.buyPrice}€</p> 
                         
                     </DialogContentText>
                     </DialogContent>
