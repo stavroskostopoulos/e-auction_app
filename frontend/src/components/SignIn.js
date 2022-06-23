@@ -80,7 +80,7 @@ function Login() {
             username,
             pass
         }).then( res => {
-            localStorage.setItem("jwt", res.data);
+            localStorage.setItem("jwt", res.data.split(' ').pop());
             console.log(localStorage.getItem("jwt"));
         })
         .catch(error => console.log(error.response.data));

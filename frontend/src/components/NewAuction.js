@@ -106,6 +106,8 @@ function NewBidPage() {
         
         e.preventDefault();
 
+        console.log("ti les");
+
         (!productTitle) ? setShowEmptyProductTitle(true) : setShowEmptyProductTitle(false);
         (!productDesc) ? setShowEmptyProductDesc(true) : setShowEmptyProductDesc(false);
 
@@ -125,6 +127,7 @@ function NewBidPage() {
 
         if(chosenCategory==="Electronics") imgID = Math.floor(Math.random()*electronicImages.length);
         if(chosenCategory==="Fashion") imgID = Math.floor(Math.random()*fashionImages.length);
+        console.log("ti eipa");
 
         const result = await axios.post('https://localhost:8443/api/items/save', 
         
@@ -145,7 +148,10 @@ function NewBidPage() {
             }
         
         
-        ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+        ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} }).catch(err => {
+            console.log(err);
+        });
+        console.log("ti elega");
         
         const result_cat = await axios.post('https://localhost:8443/api/items/save/cat', 
         

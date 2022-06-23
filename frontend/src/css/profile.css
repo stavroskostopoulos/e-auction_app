@@ -99,10 +99,11 @@
 }
 
 .profile-map-text {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.5rem;
     padding-top: 45px;
-    padding-bottom: 6px;
+    padding-bottom: 20px;
+    color:rgb(19, 19, 19);
 }
 
 .profile-picture {
