@@ -195,6 +195,13 @@
     color: #f1f1f1 !important;
 }
 
+.empty-auctions { 
+    text-align: center;
+}
+
+.empty-auctions > p { 
+    color: rgb(121, 121, 121);
+}
 
 .price-range-button:hover{
     background-color: #a570db;

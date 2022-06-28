@@ -160,9 +160,9 @@ function Bids() {
 
 	React.useEffect(() => {
 
-		console.log(priceRangeToggle)
 		
-        // ⬇ This calls my get request from the server
+		console.log(priceRangeToggle)
+		// ⬇ This calls my get request from the server
 		
 		//if price range has been modified
         if( (priceRange[0].toString() !=="0" ) || (priceRange[1].toString() !=="1000") ) {
@@ -170,8 +170,15 @@ function Bids() {
 			getProductsbyPrice();
 			
         }else{
-						
-			getProducts();
+			
+			if(!checkedCateg.length){
+				
+				getProducts();
+			
+			}else{
+				getProductsCategories();
+			}
+
 
 		}
 
@@ -201,21 +208,28 @@ function Bids() {
 										console.log(err);
 									});
 
+		console.log("getprod")
 		console.log(result.data);
 		setTotalPages(result.data.totalPages);
 		setProductsList(result.data.content);
 
 	};
 
+	const getProductsCategories = async () => {
+		
 
-	const getProductsbyPrice = async () => {
-		
-		
-		const result = await axios.post(`https://localhost:8443/api/items/filter/price?page=${currentPages-1}&size=8`,
+		// const result = await axios.get(`https://localhost:8443/api/items?page=${currentPages-1}&size=8`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
+		// 							.then(setIsLoading(false))
+		// 							.catch(err => {
+		// 								setIsLoading(true);
+		// 								console.log(err);
+		// 							});
+
+		const result = await axios.post(`https://localhost:8443/api/items/filter/cat/${currentPages-1}`,
 
                             {
-                                low: priceRange[0],
-                                high: priceRange[1],
+                                cats: checkedCateg,
+
                             },
 
 
@@ -228,6 +242,38 @@ function Bids() {
                                 console.log(err);
                             });
 
+		console.log("getprodCats")
+		console.log(result.data);
+		setTotalPages(result.data.totalPages);
+		setProductsList(result.data.content);
+
+	};
+
+
+	const getProductsbyPrice = async () => {
+		
+		let passCategsParam = "[" + checkedCateg.toString() + "]";
+		
+		const result = await axios.post(`https://localhost:8443/api/items/filter/price/${currentPages-1}`,
+
+                            {
+                                low: priceRange[0],
+                                high: priceRange[1],
+								cats: passCategsParam,
+
+                            },
+
+
+                            { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
+
+                            .then(setIsLoading(false))
+
+                            .catch(err => {
+                                setIsLoading(true);
+                                console.log(err);
+                            });
+
+		console.log("getprodPRice")
 		console.log(result.data);
 		setTotalPages(result.data.totalPages);
 		setProductsList(result.data.content);
@@ -242,24 +288,12 @@ function Bids() {
 
 		setCheckedCateg(newChecked);
 
-	};
+		setPriceRangeToggle("togg2");
 
-	const handleToggle = (value) => {
-
-		console.log(value);
-
-		const currentIndex = checkedCateg.indexOf(value);
-		const newChecked = [...checkedCateg];
-
-		if (currentIndex === -1) {
-		newChecked.push(value);
-		} else {
-		newChecked.splice(currentIndex, 1);
-		}
-
-		setCheckedCateg(newChecked);
 
 	};
+
+	
 
 	const handleDeletePriceTag = (min_or_max_str) => {
 		if(min_or_max_str === "min"){
@@ -276,9 +310,7 @@ function Bids() {
 	};
 
 
-	const handleChange = (event, newValue) => {
-		setPriceRange(newValue);
-	};
+
 
 	const ShowOrHideFilters = () => {
 		//if it is hidden
@@ -363,8 +395,8 @@ function Bids() {
 								{categories.map((category) => (
 									(checkedCateg.indexOf({category}.category)!==-1) && <Chip label={category} color="primary"  size='small' onDelete={() => handleDelete({category}.category)} className="categ-chip"/>
 								))}
-								{ (priceRange[0].toString() !=="0") && <Chip label={`${priceRange[0]} <`} color="primary"  size='small' onDelete={() => handleDeletePriceTag("min")} className="price-chip-min"/>}
-								{ (priceRange[1].toString() !=="1000") && <Chip label={`> ${priceRange[1]}`} color="primary"  size='small' onDelete={() => handleDeletePriceTag("max")} className="price-chip-max"/>}
+								{ (priceRange[0].toString() !=="0") && <Chip label={`> ${priceRange[0]}`} color="primary"  size='small' onDelete={() => handleDeletePriceTag("min")} className="price-chip-min"/>}
+								{ (priceRange[1].toString() !=="1000") && <Chip label={`< ${priceRange[1]}`} color="primary"  size='small' onDelete={() => handleDeletePriceTag("max")} className="price-chip-max"/>}
 
 							</Stack>
 						</div>

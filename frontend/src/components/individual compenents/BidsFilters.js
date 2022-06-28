@@ -99,15 +99,18 @@ function BidsFilters(props) {
 
     const handleToggle = (value) => () => {
 
-		console.log(value);
+		// console.log(value);
 
 		const currentIndex = props.checkedCateg.indexOf(value);
 		const newChecked = [...props.checkedCateg];
 
 		if (currentIndex === -1) {
 		    newChecked.push(value);
+            props.setPriceRangeToggle(value);
 		} else {
 		    newChecked.splice(currentIndex, 1);
+            props.setPriceRangeToggle(value+" remove");
+
 		}
 
 		props.setCheckedCateg(newChecked);
