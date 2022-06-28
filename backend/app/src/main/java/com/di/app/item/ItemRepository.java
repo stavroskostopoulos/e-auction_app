@@ -17,14 +17,18 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             countQuery = "SELECT count(*) FROM item", nativeQuery = true)
     Page<Item> getItemsWithCats(Pageable pageable);
 
-    @Query( value = "SELECT * FROM item WHERE current_bid BETWEEN :low AND :high ORDER BY current_bid",
-            countQuery = "SELECT count(*) FROM item", nativeQuery = true)
-    Page<Item> getItemsByPrice(@Param("low")Integer low, @Param("high")Integer high, Pageable pageable);
+    @Query( value = "SELECT * FROM item WHERE current_bid BETWEEN :low AND :high LIMIT :limit OFFSET :offset", nativeQuery = true)
+    List<Item> getItemsByPrice(@Param("low")Integer low, @Param("high")Integer high, @Param("limit")Integer limit, @Param("offset")Integer offset);
+
+
+    @Query( value = "SELECT * FROM item JOIN item_category ON item.item_id = item_category.item_item_id WHERE (current_bid BETWEEN :low AND :high) AND (category=:cat ) LIMIT :limit OFFSET :offset",
+            nativeQuery = true)
+    List<Item> getItemsByPriceWithCats(@Param("low")Integer low, @Param("high")Integer high, @Param("cat")String cat, @Param("limit")Integer limit, @Param("offset")Integer offset);
 
     @Query( value = "Select * from item i where i.item_id IN( " +
-            "SELECT item_item_id FROM item_category ic WHERE ic.category=:cat ) LIMIT 8 OFFSET :offset",
+            "SELECT item_item_id FROM item_category ic WHERE ic.category=:cat ) LIMIT :limit OFFSET :offset",
             nativeQuery = true)
-    List<Item> getItemsInCategory(@Param("cat")String category, @Param("offset")Integer offset);
+    List<Item> getItemsInCategory(@Param("cat")String category, @Param("limit")Integer limit, @Param("offset")Integer offset);
 
     @Query( value = "SELECT * FROM item i WHERE (i.latitude BETWEEN :lat-1000 AND :lat+1000) OR (i.longitude BETWEEN :lng-1000 AND :lng+1000)",
             countQuery = "SELECT count(*) FROM item", nativeQuery = true)

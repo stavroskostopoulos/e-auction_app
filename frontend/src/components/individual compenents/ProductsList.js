@@ -25,7 +25,14 @@ function ProductsList(props) {
                     ))
                     
             }
-            {(!props.isLoading) && console.log(props.productsList)}
+            {(!props.isLoading) && (props.productsList.length===0) && 
+                <div className='empty-auctions'>
+                    <p>There are no active auctions right now</p>
+                </div>
+            }
+
+
+            {/* {(!props.isLoading) && console.log(props.productsList)} */}
 
             {props.isLoading && 
                 <div className='circular-container'>

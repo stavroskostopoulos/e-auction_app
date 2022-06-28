@@ -30,11 +30,52 @@ public class ItemService {
         return itemRepository.findAll(pageable);
     }
 
-    public Page<Item> GetItemsByPrice(String slow, String shigh, Pageable pageable){
+    public Page<Item> GetItemsByPrice(String slow, String shigh, String cats, Integer offset){
+
+        // To store data from different queries
+        List<Item> tempList;
+        List<Item> items = new ArrayList<>();
+
+        // Create an array fo the categories
+        String categories = cats.replace("[", "").replace("]", "");
+        String[] categoriesArray = categories.split(",");
+        String[] emptyarr = {""};
+
+        // Set price parameters
         Integer low = Integer.parseInt(slow);
         Integer high = Integer.parseInt(shigh);
 
-        return itemRepository.getItemsByPrice(low,high,pageable);
+        // Set the number of the items returned
+        Integer limit = 8;
+
+        // If no categories list was given, then search for all categories
+        if(Arrays.equals(categoriesArray, emptyarr)) {
+
+
+            tempList = itemRepository.getItemsByPrice(low, high, limit, limit*offset);
+
+            items.addAll(tempList);
+
+            Page<Item> page = new PageImpl<>(items);
+            return page;
+
+        }
+
+
+
+        for (String a:categoriesArray){
+            System.out.println(a);
+
+            tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""), limit, limit*offset);
+            items.addAll(tempList);
+        }
+
+
+        System.out.println(items);
+
+        Page<Item> page = new PageImpl<>(items);
+
+        return page;
     }
 
     public Page<Item> GetItemsWithCats( Pageable pageable){
@@ -54,16 +95,14 @@ public class ItemService {
         List<Item> items = new ArrayList<>();
         List<String> list = categories.getCats();
 
+        // Set the number of the items returned
+        Integer limit = 8;
 
         for (String value : list) {
-            tempList = itemRepository.getItemsInCategory(value,offset);
+            tempList = itemRepository.getItemsInCategory(value, limit, offset*limit);
             items.addAll(tempList);
         }
 
-        // Clear duplicates
-        Set<Item> set = new HashSet<>(items);
-        items.clear();
-        items.addAll(set);
 
         System.out.println(items);
 
