@@ -1,6 +1,7 @@
 package com.di.app.security;
 
 import com.auth0.jwt.JWT;
+import com.di.app.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +27,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Autowired
     private final AuthenticationManager authenticationManager;
+
 
     public AuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -62,7 +64,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
 
-        String body = "Username:" + user.getUsername() + " token:" + TOKEN_PREFIX + token;
+        String body = "Id:" + user.getUsername() + " token:" + TOKEN_PREFIX + token;
 
         response.getWriter().write(body);
         response.setContentType("text/plain");
