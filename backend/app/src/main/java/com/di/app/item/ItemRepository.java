@@ -36,5 +36,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
 
 
+    @Query( value = " SELECT * FROM item i WHERE i.description LIKE :word LIMIT :limit OFFSET :offset", nativeQuery = true)
+    List<Item> getItemsBySearch(@Param("word")String word,@Param("limit")Integer limit, @Param("offset")Integer offset);
+
+
+
 
 }

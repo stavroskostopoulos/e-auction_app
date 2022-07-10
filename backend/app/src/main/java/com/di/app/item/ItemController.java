@@ -63,6 +63,11 @@ public class ItemController {
         return ResponseEntity.ok().body(itemService.GetItemsByCategory(cat,offset));
     }
 
+    @PostMapping(path = "/items/filter/desc/{offset}")
+    public ResponseEntity<Page<Item>> GetItemsByCat(@RequestBody String word, @PathVariable("offset") Integer offset){
+        return ResponseEntity.ok().body(itemService.GetItemsBySearch(word,offset));
+    }
+
     @PostMapping(path = "items/save")
     public ResponseEntity<Item> SaveItem(@RequestBody Item newItem){
         return ResponseEntity.ok().body(itemService.SaveItem(newItem));

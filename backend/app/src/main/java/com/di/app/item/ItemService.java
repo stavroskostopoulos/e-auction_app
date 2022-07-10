@@ -2,10 +2,12 @@ package com.di.app.item;
 
 import com.di.app.user.User;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.json.JSONObject;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -78,7 +80,7 @@ public class ItemService {
         return page;
     }
 
-    public Page<Item> GetItemsWithCats( Pageable pageable){
+    public Page<Item> GetItemsWithCats(Pageable pageable){
         return itemRepository.getItemsWithCats(pageable);
     }
 
@@ -111,6 +113,34 @@ public class ItemService {
         return page;
     }
 
+
+    public Page<Item> GetItemsBySearch(String word, Integer offset){
+
+        try {
+
+            JSONObject obj = new JSONObject(word);
+            word = obj.getString("word");
+
+            char add = '%';
+            word = add + word + add;
+
+            //System.out.println(word);
+        }
+        catch (JSONException e){
+            System.out.println("Json Parse error");
+        }
+
+        Integer limit = 8;
+
+        List<Item>items = itemRepository.getItemsBySearch(word, limit, offset);
+
+        Page<Item> page = new PageImpl<>(items);
+        return page;
+
+    }
+
+
+
     public Item SaveItem(Item newItem) {
 
         return itemRepository.save(newItem);
@@ -128,6 +158,7 @@ public class ItemService {
         Item item = itemRepository.getById(id);
         itemRepository.delete(item);
     }
+
 
 
 }
