@@ -53,9 +53,9 @@ public class ItemController {
         return ResponseEntity.ok().body(itemService.GetItemsByPrice(json.get("low"), json.get("high"), json.get("cats"), offset));
     }
 
-    @PostMapping(path = "/items/filter/loc")
-    public ResponseEntity<Page<Item>> GetItemsByLocation(@RequestBody Map<String, String> json, Pageable pageable){
-        return ResponseEntity.ok().body(itemService.GetItemsByLocation(json.get("lat"), json.get("lng"),pageable));
+    @PostMapping(path = "/items/filter/loc/{offset}")
+    public ResponseEntity<Page<Item>> GetItemsByLocation(@RequestBody Map<String, String> json, @PathVariable("offset") Integer offset){
+        return ResponseEntity.ok().body(itemService.GetItemsByLocation(json.get("lat"), json.get("lng"), json.get("cats"), offset));
     }
 
     @PostMapping(path = "/items/filter/cat/{offset}")

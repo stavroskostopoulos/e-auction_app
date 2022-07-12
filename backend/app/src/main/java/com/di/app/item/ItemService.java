@@ -32,6 +32,10 @@ public class ItemService {
         return itemRepository.findAll(pageable);
     }
 
+    public Page<Item> GetItemsWithCats(Pageable pageable){
+        return itemRepository.getItemsWithCats(pageable);
+    }
+
     public Page<Item> GetItemsByPrice(String slow, String shigh, String cats, Integer offset){
 
         // To store data from different queries
@@ -53,42 +57,76 @@ public class ItemService {
         // If no categories list was given, then search for all categories
         if(Arrays.equals(categoriesArray, emptyarr)) {
 
-
             tempList = itemRepository.getItemsByPrice(low, high, limit, limit*offset);
 
             items.addAll(tempList);
 
-            Page<Item> page = new PageImpl<>(items);
-            return page;
+        }
+        else{
+            for (String a:categoriesArray){
+                //System.out.println(a);
 
+                tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""), limit, limit*offset);
+                items.addAll(tempList);
+            }
         }
 
 
+        // Clear duplicates
+        Set<Item> set = new HashSet<>(items);
+        items.clear();
+        items.addAll(set);
 
-        for (String a:categoriesArray){
-            System.out.println(a);
-
-            tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""), limit, limit*offset);
-            items.addAll(tempList);
-        }
-
-
-        System.out.println(items);
+        System.out.println("return "+items);
 
         Page<Item> page = new PageImpl<>(items);
 
         return page;
     }
 
-    public Page<Item> GetItemsWithCats(Pageable pageable){
-        return itemRepository.getItemsWithCats(pageable);
-    }
 
-    public Page<Item> GetItemsByLocation(String slat, String slong, Pageable pageable){
+    public Page<Item> GetItemsByLocation(String slat, String slong, String cats, Integer offset){
         Integer lat = Integer.parseInt(slat);
         Integer lng = Integer.parseInt(slong);
 
-        return itemRepository.getItemsByLocation(lat, lng, pageable);
+
+        List<Item> tempList;
+        List<Item> items = new ArrayList<>();
+        String[] emptyarr = {""};
+
+        // Create an array fo the categories
+        String categories = cats.replace("[", "").replace("]", "");
+        String[] categoriesArray = categories.split(",");
+
+        Integer limit = 8;
+
+        // If no categories list was given, then search for all categories
+        if(Arrays.equals(categoriesArray, emptyarr)) {
+
+            tempList = itemRepository.getItemsByLocation(lat, lng, limit, limit*offset);
+
+            items.addAll(tempList);
+        }
+        else{
+            for (String a:categoriesArray){
+                //System.out.println(a);
+
+                tempList = itemRepository.getItemsByLocationWithCats(lat, lng, a.replaceAll("\\s",""), limit, limit*offset);
+                items.addAll(tempList);
+            }
+        }
+
+
+        // Clear duplicates
+        Set<Item> set = new HashSet<>(items);
+        items.clear();
+        items.addAll(set);
+
+        System.out.println("return "+items);
+
+        Page<Item> page = new PageImpl<>(items);
+
+        return page;
     }
 
     public Page<Item> GetItemsByCategory(Category categories, Integer offset){
@@ -127,12 +165,12 @@ public class ItemService {
             //System.out.println(word);
         }
         catch (JSONException e){
-            System.out.println("Json Parse error");
+            System.out.println("Json Parse error(Word search)");
         }
 
         Integer limit = 8;
 
-        List<Item>items = itemRepository.getItemsBySearch(word, limit, offset);
+        List<Item>items = itemRepository.getItemsBySearch(word, limit, offset*limit);
 
         Page<Item> page = new PageImpl<>(items);
         return page;
