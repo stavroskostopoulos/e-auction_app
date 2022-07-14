@@ -129,7 +129,27 @@ DELETE user with id {userid}
 ________________
 
 
+`[POST] api/items/filter/desc/{offset}`
 
+{
+    "word":"για"
+}
+
+get items filtered by text search
+________________
+
+
+`[POST] api/messages/save`
+
+{
+    "content": "something long",
+    "receiverId": 2,
+    "senderId": 3
+}
+
+send message
+
+________________
 
 
 
@@ -138,9 +158,5 @@ Shmeiwseis:
 
 -
 
-1) /api/items
-
--prepei na doume mazi to pagination ( https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/ )
- example: On scroll/next page, client makes second request `GET /items?limit=20&offset=20`
  
 

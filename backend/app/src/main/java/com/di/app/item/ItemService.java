@@ -118,9 +118,9 @@ public class ItemService {
 
 
         // Clear duplicates
-        Set<Item> set = new HashSet<>(items);
-        items.clear();
-        items.addAll(set);
+        //Set<Item> set = new HashSet<>(items);
+        //items.clear();
+        //items.addAll(set);
 
         System.out.println("return "+items);
 

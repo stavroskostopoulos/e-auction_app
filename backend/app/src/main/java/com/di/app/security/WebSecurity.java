@@ -38,6 +38,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/api/role/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/api/items/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/messages/**").hasAnyAuthority("ADMIN","SELLER","BIDDER")
 //                .antMatchers(HttpMethod.GET, "/api/users/**").hasAnyAuthority("ADMIN")
 //                .antMatchers(HttpMethod.POST, "/api/users/**").hasAnyAuthority("ADMIN")
 //                .antMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyAuthority("ADMIN")
