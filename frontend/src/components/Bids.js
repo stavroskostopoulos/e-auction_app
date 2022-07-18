@@ -136,7 +136,6 @@ function Bids() {
 	const categories = productCategories;
 
 	//products
-	const products = ["Product 1 Title", "Product 2 Title", "Product 3 Title", "Product 4 Title", "Product 5 Title", "Product 6 Title", "Product 7 Title"];
 	const [productsList, setProductsList] = React.useState([]);
 
 	//pagination

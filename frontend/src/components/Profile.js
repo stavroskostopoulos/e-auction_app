@@ -7,6 +7,10 @@ import { withStyles } from "@material-ui/core/styles";
 //import styling
 import "../css/profile.css"
 
+//import variables
+import userTypes from '../variables/userTypes';
+
+
 //import Material UI components
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -18,6 +22,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 import Divider from '@mui/material/Divider';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 //import custom components
@@ -45,13 +50,16 @@ const CssTextField = withStyles({
 
 function Profile() {
     
-    const profiletypes = ['Seller', 'Bidder', 'Malakas'];
+    const profiletypes = userTypes;
 
     const [edit, setEdit] = React.useState(false);
     const [profiletype, setProfiletype] = React.useState('Seller');
 
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
 
+	const [isLoading, setIsLoading] = React.useState(true);
+
+    const [userInfo, setUserInfo] = React.useState({});
 
     const handleChange = (event) => {
         setProfiletype(event.target.value);
@@ -60,9 +68,20 @@ function Profile() {
 
 
     React.useEffect(() => {
-        axios.get('https://localhost:8443/api/users')
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err))
+    
+        let userId = localStorage.getItem('loggedUserId');
+
+        console.log(userId);
+
+        axios.get(`https://localhost:8443/api/users/${userId}`,
+            { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
+        .then(res => {
+            setIsLoading(false);
+            setUserInfo(res.data);
+            setLocation([12, 12])
+            console.log(res.data);
+        })
+        .catch(err => console.log(err));
 
 
     }, [])
@@ -74,136 +93,141 @@ function Profile() {
             <div className="column-right"/>
             <div className="column-middle" style={{backgroundColor: "#fff"}}>
             
+                    
+                {isLoading && <CircularProgress color="secondary" />}
+                {!isLoading && 
+                
+                
 
-
-                <div className="profile-container">
-                    <div className="profile-column-left" >
-                        <img draggable="false" className="profile-picture" src="/faithplusone.jpg"></img>
-                    </div>
-                    <div className="profile-column-right">
-
-                        <div className='name-title-container'>
-                            <h2 className="name-title">Stavros Kostopoulos</h2>
+                    <div className="profile-container">
+                        <div className="profile-column-left" >
+                            <img draggable="false" className="profile-picture" src="/faithplusone.jpg"></img>
                         </div>
+                        <div className="profile-column-right">
 
-                        
-                        
-                            <div className="left-profile-info-column">
+                            <div className='name-title-container'>
+                                <h2 className="name-title">{userInfo.realname + " " + userInfo.surname}</h2>
+                            </div>
 
-                                {edit &&
+                            
+                            
+                                <div className="left-profile-info-column">
+
+                                    {edit &&
+                                        <CssTextField
+                                            disabled={!edit}
+                                            id="outlined-disabled"
+                                            label="First name"
+                                            defaultValue={userInfo.realname}
+                                            className="profileinfo-tf"
+                                            sx={{ mt: 5}} 
+                                        />
+                                    }
                                     <CssTextField
                                         disabled={!edit}
                                         id="outlined-disabled"
-                                        label="First name"
-                                        defaultValue="Stavros"
-                                        className="profileinfo-tf"
-                                        sx={{ mt: 5}} 
-                                    />
-                                }
-                                <CssTextField
-                                    disabled={!edit}
-                                    id="outlined-disabled"
-                                    label="Email"
-                                    defaultValue="sdi1700068@di.uoa.gr"
-                                    className="profileinfo-tf" 
-                                    sx={{ mt: 5}}
-                                />
-                                <CssTextField
-                                    disabled={!edit}
-                                    id="outlined-disabled"
-                                    label="Phone number"
-                                    defaultValue="6983892580"
-                                    className="profileinfo-tf" 
-                                    sx={{ mt: 5}}
-                                />
-                                {edit &&
-                                    <CssTextField
-                                        disabled={!edit}
-                                        id="outlined-disabled"
-                                        label="Longitude, Latitude"
-                                        defaultValue={`${location[0]}, ${location[1]}`}
+                                        label="Email"
+                                        defaultValue={userInfo.email}
                                         className="profileinfo-tf" 
                                         sx={{ mt: 5}}
                                     />
-                                }
-                            </div>
-                            <div className="right-profile-info-column">
-                                {edit &&
-
                                     <CssTextField
                                         disabled={!edit}
                                         id="outlined-disabled"
-                                        label="Last name"
-                                        defaultValue="Kostopoulos"
+                                        label="Phone number"
+                                        defaultValue={userInfo.tele}
                                         className="profileinfo-tf" 
-                                        sx={{ mt: 5}}  
+                                        sx={{ mt: 5}}
                                     />
+                                    {edit &&
+                                        <CssTextField
+                                            disabled={!edit}
+                                            id="outlined-disabled"
+                                            label="Longitude, Latitude"
+                                            defaultValue={`${location[0]}, ${location[1]}`}
+                                            className="profileinfo-tf" 
+                                            sx={{ mt: 5}}
+                                        />
+                                    }
+                                </div>
+                                <div className="right-profile-info-column">
+                                    {edit &&
+
+                                        <CssTextField
+                                            disabled={!edit}
+                                            id="outlined-disabled"
+                                            label="Last name"
+                                            defaultValue={userInfo.surname}
+                                            className="profileinfo-tf" 
+                                            sx={{ mt: 5}}  
+                                        />
+                                    
+                                    }
+
+                                    <CssTextField
+                                        disabled={!edit}
+                                        id="outlined-select-currency"
+                                        select
+                                        label="Type"
+                                        value={profiletype}
+                                        onChange={handleChange}
+                                        sx={{ mt: 5}} 
+                                        className="profileinfo-tf"
+                                    >
+                                        {profiletypes.map((option) => (
+                                            <MenuItem key={option} value={option}>
+                                            {option}
+                                            </MenuItem>
+                                        ))}
+                                    </CssTextField> 
+                                    <CssTextField
+                                        disabled={!edit}
+                                        id="outlined-disabled"
+                                        label="ΑΦΜ"
+                                        defaultValue={userInfo.afm}
+                                        className="profileinfo-tf" 
+                                        sx={{ mt: 5}}
+                                    />  
+                                </div>
                                 
-                                }
-
-                                <CssTextField
-                                    disabled={!edit}
-                                    id="outlined-select-currency"
-                                    select
-                                    label="Type"
-                                    value={profiletype}
-                                    onChange={handleChange}
-                                    sx={{ mt: 5}} 
-                                    className="profileinfo-tf"
-                                >
-                                    {profiletypes.map((option) => (
-                                        <MenuItem key={option} value={option}>
-                                        {option}
-                                        </MenuItem>
-                                    ))}
-                                </CssTextField> 
-                                <CssTextField
-                                    disabled={!edit}
-                                    id="outlined-disabled"
-                                    label="ΑΦΜ"
-                                    defaultValue="128213692134"
-                                    className="profileinfo-tf" 
-                                    sx={{ mt: 5}}
-                                />  
-                            </div>
-                            
-                    </div>
-                    
-                    <div className='profile-map'>
-                        <Divider/>
-                        <p className='profile-map-text'>Location:</p>
-                        <Map longitude={location[0]} latitude={location[1]}/>
-                    </div>
-                    <div className="profile-buttons">
-                        { !edit &&
-                            <Tooltip title="Edit">
-                                <IconButton color="primary" sx={{ mt: 2}} aria-label="Edit profile info" className="edit-btn" onClick={() => setEdit(true)}>
-                                    <EditIcon/>
-                                </IconButton>
-                            </Tooltip>
-                        }
-
-                        { edit &&  
-                            <Tooltip title="Cancel">    
-                                <IconButton color="primary" sx={{ mt: 2}} aria-label="Cancel changes" className="edit-btn cancel-btn" onClick={() => setEdit(false)}>
-                                    <CloseOutlinedIcon/>
-                                </IconButton>
-                            </Tooltip> 
-
-                            
-                        }
-                        { edit &&   
-                            <Tooltip title="Confirm">
-                                <IconButton color="primary" sx={{ mt: 2}} aria-label="Confirm changes" className="edit-btn confirm-btn" onClick={() => setEdit(false)}>
-                                    <CheckIcon/>
-                                </IconButton>
-                            </Tooltip>
-
-                            
-                        }
+                        </div>
                         
+                        <div className='profile-map'>
+                            <Divider/>
+                            <p className='profile-map-text'>Location:</p>
+                            <Map longitude={location[0]} latitude={location[1]}/>
+                        </div>
+                        <div className="profile-buttons">
+                            { !edit &&
+                                <Tooltip title="Edit">
+                                    <IconButton color="primary" sx={{ mt: 2}} aria-label="Edit profile info" className="edit-btn" onClick={() => setEdit(true)}>
+                                        <EditIcon/>
+                                    </IconButton>
+                                </Tooltip>
+                            }
+
+                            { edit &&  
+                                <Tooltip title="Cancel">    
+                                    <IconButton color="primary" sx={{ mt: 2}} aria-label="Cancel changes" className="edit-btn cancel-btn" onClick={() => setEdit(false)}>
+                                        <CloseOutlinedIcon/>
+                                    </IconButton>
+                                </Tooltip> 
+
+                                
+                            }
+                            { edit &&   
+                                <Tooltip title="Confirm">
+                                    <IconButton color="primary" sx={{ mt: 2}} aria-label="Confirm changes" className="edit-btn confirm-btn" onClick={() => setEdit(false)}>
+                                        <CheckIcon/>
+                                    </IconButton>
+                                </Tooltip>
+
+                                
+                            }
+                            
+                        </div>
                     </div>
-                </div> 
+                }
             
                 
                 

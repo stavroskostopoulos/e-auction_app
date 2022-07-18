@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+//import styling
 import "../css/SignIn.css"
 
+//import variables
+import userTypes from '../variables/userTypes';
+
+//import custom components
 import Map from './individual compenents/Map';
 import InputMap from './individual compenents/InputMap';
 
+//import Material UI components
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -99,7 +105,7 @@ const useStyles = makeStyles({
 
 function Login() {
 
-    const profiletypes = ['Seller', 'Bidder', 'Malakas'];
+    const profiletypes = userTypes;
 
     const [profiletype, setProfiletype] = React.useState('Seller');
     const [locationpick, setLocationpick] = React.useState(false);
@@ -122,6 +128,7 @@ function Login() {
 
     const [tele, setTele] = React.useState('');
     const [showEmptyTele, setShowEmptyTele] = React.useState(false);
+    const [showNonNumeric, setShowNonNumeric] = React.useState(false);
 
     const [afm, setAfm] = React.useState('');
     const [showEmptyAfm, setShowEmptyAfm] = React.useState(false);
@@ -131,17 +138,22 @@ function Login() {
     const [pass, setPass] = React.useState('');
     const [showEmptyPass, setShowEmptyPass] = React.useState(false);
     const [showIncorrectPass, setShowIncorrectPass] = React.useState(false);
+    const [showUnmatchingPass, setShowUnmatchingPass] = React.useState(false);
 
     const [pass2, setPass2] = React.useState('');
     const [showEmptyPass2, setShowEmptyPass2] = React.useState(false);
 
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
+    const [showEmptyLocation, setShowEmptyLocation] = React.useState(false);
 
     //Check if password contains at least one uppercase, lowercase letter and digit
     const passwordValid = (str) => {
         return /[a-z]/.test(str) && /[A-Z]/.test(str) && /\d/.test(str);
     }
 
+    const isNumeric = (str) => {
+        return /^-?\d+$/.test(str);
+    }
 
 
     const classes = useStyles();
@@ -152,48 +164,88 @@ function Login() {
 
     const proceedtoStepTwoOfSignUp = (e) => {
         e.preventDefault();
+        console.log("tzimakos");
         (!email) ? setShowEmptyEmail(true) : setShowEmptyEmail(false);
         (!realname) ? setShowEmptyRealname(true) : setShowEmptyRealname(false);
         (!surname) ? setShowEmptySurname(true) : setShowEmptySurname(false);
         (!username) ? setShowEmptyUsername(true) : setShowEmptyUsername(false);
         (!afm) ? setShowEmptyAfm(true) : setShowEmptyAfm(false);
-
         //Password checking
         if(!pass){
             setShowEmptyPass(true);
         }else{
-            if(!passwordValid(pass)){
-                setShowIncorrectPass(true);
-            }
+            (!passwordValid(pass)) ?
+                setShowIncorrectPass(true) : setShowIncorrectPass(false);
+            
         }
 
         //Pass2 shit
+        if(!pass2){
+            setShowEmptyPass2(true);
+            return;
+        }
+
+        //compare the two passwords
+        if(pass!==pass2){
+            setShowUnmatchingPass(true);
+            return;
+        }
+        
+        if(email && realname && surname && afm && username){
+            // proceed to step 2 of sign up
+            setLocationpick(true);
+        }
+
 
     }
 
     
 
 
-    const sendSignUpCredentials = (e) => {
+    const sendSignUpCredentials = async (e) => {
         e.preventDefault();
     
-        // (!tele) ? setShowEmptyTele(true) : setShowEmptyTele(false);
         
+        (location[0]==37.96867087793514 && location[1]==23.76662747322076) ? setShowEmptyLocation(true) : setShowEmptyLocation(false);
         
+        if(!tele){
+
+            setShowEmptyTele(true);
+            return;
+
+        }else{
+
+            setShowEmptyTele(false);
+
+            if(!isNumeric(tele)){
+                setShowNonNumeric(true);
+                return;
+            }else{
+                setShowNonNumeric(false);
+            }
+
+        }
         
-        
+        if(location[0]==37.96867087793514 && location[1]==23.76662747322076 && !tele) return;
+
+        try {
+            const res = await axios.post('https://localhost:8443/api/users/save', {
+                    username,
+                    pass,
+                    email,
+                    realname,
+                    surname,
+                    tele,
+                    afm,
+                    latitude: location[1].toString(),
+                    longitude: location[0].toString(),
+                    type
+                }
+                ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+        }catch(err){
+            console.log(err)
+        }
     
-        // axios.post('https://localhost:8443/api/users', {
-        //     username,
-        //     pass,
-        //     email,
-        //     realname,
-        //     surname,
-        //     tele,
-        //     afm,
-        //     type
-        // }).then(res => console.log('Posting data', res))
-        // .catch(error => console.log(error.response.data))
     }
     
     return (
@@ -213,12 +265,12 @@ function Login() {
                         <Stack spacing={1.5} className='signup-stack-1'>
                         
                                 {showIncorrectPass && <Alert severity="error" className='signin-signup-alert'>Password must contain at least one uppercace letter, and one digit!</Alert>}
-                            
+                                {showUnmatchingPass && <Alert severity="error" className='signin-signup-alert'>Passwords do not match!</Alert>}
                                 <CssTextField id="outlined-basic"  className={classes.loginField} label="First name" variant="outlined" value={realname} onChange={(e)=>setRealname(e.target.value)} error={showEmptyRealname}/>
                             
                         
                             
-                                <CssTextField id="outlined-basic" className={classes.loginField} label="Last name" variant="outlined" value={surname} onChange={(e)=>setSurname(e.target.value)} error={showEmptyTele} />
+                                <CssTextField id="outlined-basic" className={classes.loginField} label="Last name" variant="outlined" value={surname} onChange={(e)=>setSurname(e.target.value)} error={showEmptySurname} />
                             
                         
                         
@@ -259,7 +311,7 @@ function Login() {
                                             
                         
                         
-                                <Button type="button" className={classes.loginFormBtn} endIcon={<ArrowForwardIcon/>} variant="contained" onClick={() => setLocationpick(true)}>Next</Button>
+                                <Button type="button" className={classes.loginFormBtn} endIcon={<ArrowForwardIcon/>} variant="contained" onClick={proceedtoStepTwoOfSignUp}>Next</Button>
                                 {/* <Button type="button" className={classes.loginFormBtn} endIcon={<ArrowForwardIcon/>} variant="contained" onClick={sendSignUpCredentials}>Next</Button> */}
                             </Stack>
                         }
@@ -273,7 +325,7 @@ function Login() {
                                 
     
 
-                                <InputMap inputMapSetLocation={setLocation} mapWidth="400px" mapHeight="320px" fieldSize="medium" textFieldClass="location-textfield" buttonClass="location-button" containsStackClass="signup-stack-1" buttonContainerClass="location-button-container" textfieldError={false} />
+                                <InputMap inputMapSetLocation={setLocation} mapWidth="400px" mapHeight="320px" fieldSize="medium" textFieldClass="location-textfield" buttonClass="location-button" containsStackClass="signup-stack-1" buttonContainerClass="location-button-container" textfieldError={showEmptyLocation} />
                                 
 
                                 <CssTextField id="outlined-basic"
@@ -291,7 +343,7 @@ function Login() {
                                     variant="outlined" 
                                     value={tele} 
                                     onChange={(e)=>setTele(e.target.value)} 
-                                    error={showEmptyAfm}
+                                    error={showEmptyTele || showNonNumeric}
                                 />
 
                                 <Stack direction="row" spacing={2}>

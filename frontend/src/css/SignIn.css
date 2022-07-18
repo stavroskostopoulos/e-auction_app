@@ -59,6 +59,11 @@ input {
     margin-left: auto;
 }
 
+.signinalert {
+    max-width: 380px !important;
+    width: 100% !important;
+}
+
 .location-button {
     /* margin-left: 5% !important; */
     height: 100%;

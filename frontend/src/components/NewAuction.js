@@ -8,6 +8,7 @@ import { withStyles } from "@material-ui/core/styles";
 //import variables
 import productCategories from '../variables/categories';
 import possibleDuration from '../variables/durations';
+import countriesList from '../variables/countries';
 
 //import Material UI components
 import Stack from '@mui/material/Stack';
@@ -21,6 +22,9 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
+import Box from '@mui/material/Box';
+import Autocomplete from '@mui/material/Autocomplete';
+
 
 //import images by category to choose an image for this product
 import electronicImages from '../images/image exports/ElectronicImages';
@@ -68,7 +72,7 @@ function NewBidPage() {
 
     const categories = productCategories;
     const durations = possibleDuration;
-
+    const countries = countriesList;
     
     
     
@@ -151,7 +155,6 @@ function NewBidPage() {
         ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} }).catch(err => {
             console.log(err);
         });
-        console.log("ti elega");
         
         const result_cat = await axios.post('https://localhost:8443/api/items/save/cat', 
         
@@ -247,7 +250,44 @@ function NewBidPage() {
                                         ))}
                                     </CssTextField>
                                 </div>
-                                </Stack>
+
+                                <div className='shrinked-textfield'>
+
+                                    <Autocomplete
+                                        id="country-select-demo"
+                                        sx={{ width: '100%' }}
+                                        options={countries}
+                                    
+                                        getOptionLabel={(option) => option.label}
+                                        renderOption={(props, option) => (
+                                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                            <img
+                                                loading="lazy"
+                                                width="20"
+                                                src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                                                srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                                                alt=""
+                                            />
+                                            {option.label} ({option.code}) +{option.phone}
+                                            </Box>
+                                        )}
+                                        renderInput={(params) => (
+                                            <CssTextField
+                                            {...params}
+                                            label="Choose a country"
+                                            size="small"
+                                            className="new-bid-textfield" 
+                                            inputProps={{
+                                                ...params.inputProps,
+                                                autoComplete: 'new-password', // disable autocomplete and autofill
+                                            }}
+                                            />
+                                        )}
+                                        />
+
+                                </div>
+
+                            </Stack>
 
                         </div>
 
@@ -276,7 +316,7 @@ function NewBidPage() {
                                     <InputMap inputMapSetLocation={setLocation} mapWidth="100%" mapHeight="195px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container" textfieldError={showEmptyProductLocation}/>
                                 </div>
                                 
-                                <div className='shrinked-textfield'>
+                                <div className='shrinked-textfield-second'>
 
                                     <FormControl className='new-bid-textfield'>
 
@@ -298,7 +338,8 @@ function NewBidPage() {
                                     </FormControl>
 
                                 </div>
-
+                                
+                                
 
                             </Stack>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -76,7 +76,7 @@ const useStyles = makeStyles({
 function Header() {
 
     const classes = useStyles();
-
+    let navigate = useNavigate();
 
 
     const [value, setValue] = React.useState(false);
@@ -90,6 +90,13 @@ function Header() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    function logout () {
+        localStorage.removeItem("jwt");
+		console.log("logging out");
+        navigate("/login")
+    }
+
 
     return (
         <React.Fragment>
