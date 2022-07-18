@@ -114,7 +114,8 @@ const ProductPage = (props) => {
                                         setProductInfo(response.data)
                                         setNewBid(response.data.currentBid+1);
                                         setCurrentPrice(response.data.currentBid);
-                                        setIsLoading(false)
+                                        setLocation([Number(response.data.longitude), Number(response.data.latitude)]);
+                                        setIsLoading(false);
 		                                console.log(response.data);
 
                                     })
@@ -242,7 +243,7 @@ const ProductPage = (props) => {
                                     <AlarmIcon className='current-bidders-icon' />
                             
                                 </div>
-                                {console.log(productInfo.end)}
+                                {/* {console.log(productInfo.end)} */}
                                 <div className='bidders-number-container' style={{
                                     display: 'flex',
                                     alignItems: 'center',
@@ -294,7 +295,7 @@ const ProductPage = (props) => {
 
                             </div>
 
-                            {/* {console.log(dataMenuValue)} */}
+                            {console.log(location)}
 
 
                         

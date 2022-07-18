@@ -79,8 +79,12 @@
 }
 
 .map-container {
+    
     height: 500px;
+    width: 100%;
+    /* margin-top: 20px; */
 
+    /* padding: 40px; */
 }
 
 .product-data-menu-option {

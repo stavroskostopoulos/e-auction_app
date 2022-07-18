@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
 import Stack from '@mui/material/Stack';
-
+import Alert from '@mui/material/Alert';
 
 const CssTextField = withStyles({
     root: {
@@ -57,36 +57,66 @@ const useStyles = makeStyles({
 function Login() {
 
     const classes = useStyles();
+    let navigate = useNavigate();
+
     const [username, setUsername] = React.useState('');
     const [showEmptyUsername, setShowEmptyUsername] = React.useState(false);
 
     const [pass, setPass] = React.useState('');
     const [showEmptyPass, setShowEmptyPass] = React.useState(false);
 
+    const [credentialsError, setCredentialsError] = React.useState(false);
 
-    const sendSignInCredentials =  (e) => {
+    const sendSignInCredentials = async (e) => {
 
         e.preventDefault();
 
-        (!username) ? setShowEmptyUsername(true) : setShowEmptyUsername(false);
+        // (!username) ? setShowEmptyUsername(true) : setShowEmptyUsername(false);
             
-        (!pass) ? setShowEmptyPass(true) : setShowEmptyPass(false);
+        // (!pass) ? setShowEmptyPass(true) : setShowEmptyPass(false);
             
-        if( showEmptyPass === true || setShowEmptyUsername===true ) {
+        if(!username){
+            if(!pass){ 
+                setShowEmptyPass(true); 
+            }else{
+                setShowEmptyPass(false);
+            }
+
+            setShowEmptyUsername(true);
+
             return;
         }
 
-        axios.post('https://localhost:8443/login', {
-            username,
-            pass
-        }).then( res => {
-            localStorage.setItem("jwt", res.data.split(' ').pop());
-            console.log(localStorage.getItem("jwt"));
-        })
-        .catch(error => console.log(error.response.data));
+        if(!pass){
+            setShowEmptyPass(true);
 
-        // const response = await axios.post('https://localhost:8443/login', { username, pass});
-        // console.log(response);
+            return;
+        }
+
+        setShowEmptyUsername(false);
+        setShowEmptyPass(false);
+
+        try{
+
+            const res = await axios.post('https://localhost:8443/login', {
+                username,
+                pass
+            });
+
+            // console.log(res.data.split(' ')[0].split(':')[1]);
+            localStorage.setItem("loggedUserId", res.data.split(' ')[0].split(':')[1]);
+
+            localStorage.setItem("jwt", res.data.split(' ').pop());
+            // console.log(localStorage.getItem("jwt"));
+
+            setCredentialsError(false);
+            navigate("/");
+
+        }catch(err){
+           console.log(err);
+           setCredentialsError(true);
+        }
+
     };
 
     return (
@@ -98,7 +128,7 @@ function Login() {
                         <h2 className='signin-title'>Sign in</h2>
                         <Stack spacing={1.5} className='signup-stack-1'>
 
-                            
+                            {credentialsError && <Alert severity="error" className='signinalert'>Your sign in credentials don't match any account in our system.</Alert>}
                             <CssTextField id="outlined-basic" className={classes.loginField} label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} error={showEmptyUsername} />
                             
                             
