@@ -2,6 +2,7 @@ package com.di.app.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -19,10 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             nativeQuery = true)
     Collection<User> checkUsername(String username);
 
-//    @Query(value = "SELECT * FROM product order by id desc limit :limit", nativeQuery = true)
-//    public List<Product> findTopN(@Param("limit") int limit);
-
-    @Query(value = "SELECT * FROM user LIMIT 10", nativeQuery = true)
-    List<User> getUsersLimit();
+    @Query(value = "SELECT * FROM user LIMIT :limit OFFSET :offset", nativeQuery = true)
+    List<User> getUsersLimit(@Param("limit")Integer limit, @Param("offset")Integer offset);
 
 }

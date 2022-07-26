@@ -36,13 +36,13 @@ Give role to user
 
 ________________
 
-`[GET] api/users`
+`[GET] api/users/{offset}`
 
 GET all users
 
 ________________
 
-`[GET] api/users/{userid}`
+`[GET] api/users/id/{userid}`
 
 GET user from id
 

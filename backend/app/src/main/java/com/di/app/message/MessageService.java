@@ -18,6 +18,21 @@ public class MessageService {
         return messageRepository.findAll();
     }
 
+    public Message GetMessage(Long id){
+        return messageRepository.getById(id);
+    }
+
+    public List<Message> GetInbox(Long receiverId, Integer offset) {
+        Integer limit = 8;
+        return messageRepository.getInbox(receiverId,limit,offset);
+    }
+
+    public List<Message> GetOutbox(Long senderId, Integer offset) {
+        Integer limit = 8;
+        return messageRepository.getOutbox(senderId,limit,offset);
+    }
+
+
     public Message SaveMessage(Message newMess) {
         return messageRepository.save(newMess);
     }

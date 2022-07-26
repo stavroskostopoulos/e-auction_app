@@ -1,7 +1,11 @@
 package com.di.app.user;
 
+import com.di.app.item.Item;
 import com.di.app.role.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +27,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public List<User> GetUsersLimit(){
-        return userRepository.getUsersLimit();
+    public Page<User> GetUsersLimit(Integer offset){
+        Integer limit = 8;
+        List<User> userList = userRepository.getUsersLimit(limit,offset);
+
+        Page<User> page = new PageImpl<>(userList);
+
+        return page;
     }
 
     public Optional<User> GetUserById(Long id){

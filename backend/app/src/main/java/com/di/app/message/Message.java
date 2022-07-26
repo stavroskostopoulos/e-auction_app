@@ -19,6 +19,4 @@ public class Message {
     private String content;
     private Boolean seen=Boolean.FALSE;
 
-
-
 }

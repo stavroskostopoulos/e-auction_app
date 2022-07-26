@@ -77,7 +77,7 @@ public class ItemService {
         items.clear();
         items.addAll(set);
 
-        System.out.println("return "+items);
+//        System.out.println("return "+items);
 
         Page<Item> page = new PageImpl<>(items);
 

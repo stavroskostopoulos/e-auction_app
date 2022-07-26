@@ -3,10 +3,10 @@ package com.di.app.user;
 import com.di.app.role.Role;
 import com.di.app.role.RoleForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RequestMapping(path = "/api")
@@ -23,13 +23,12 @@ public class UserController {
 
     // GET
 
-    @GetMapping(path = "/users")
-    public ResponseEntity<List<User>> GetUsers(){
-        //return ResponseEntity.ok().body(service.GetUsers());
-        return ResponseEntity.ok().body(service.GetUsersLimit());
+    @GetMapping(path = "/users/{offset}")
+    public ResponseEntity<Page<User>> GetUsers(@PathVariable("offset") Integer offset){
+        return ResponseEntity.ok().body(service.GetUsersLimit(offset));
     }
 
-    @GetMapping(path = "/users/{userid}")
+    @GetMapping(path = "/users/id/{userid}")
     public ResponseEntity<Optional<User>> GetUserById(@PathVariable("userid") Long id){
         return ResponseEntity.ok().body(service.GetUserById(id));
     }
