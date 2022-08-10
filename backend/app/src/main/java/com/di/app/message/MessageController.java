@@ -40,7 +40,7 @@ public class MessageController {
 
     // POST
 
-    @PostMapping(path = "messages/save")
+    @PostMapping(path = "/messages/save")
     public ResponseEntity<Message> SaveMessage(@RequestBody Message newMessage){
         return ResponseEntity.ok().body(messageService.SaveMessage(newMessage));
     }

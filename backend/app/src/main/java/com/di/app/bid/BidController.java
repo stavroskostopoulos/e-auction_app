@@ -26,4 +26,11 @@ public class BidController {
         return ResponseEntity.ok().body(bidService.GetBidsById(id));
     }
 
+
+    // POST
+
+    @PostMapping(path = "/bids/save")
+    public ResponseEntity<Bid> SaveBid(@RequestBody Bid newBid){
+        return ResponseEntity.ok().body(bidService.SaveBid(newBid));
+    }
 }

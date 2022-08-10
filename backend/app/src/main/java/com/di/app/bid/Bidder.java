@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor @NoArgsConstructor
 public class Bidder {
 
-    @Id @GeneratedValue
+    @Id
     private Long userId;
 
     private String rating;

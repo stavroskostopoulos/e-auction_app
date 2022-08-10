@@ -152,6 +152,30 @@ send message
 ________________
 
 
+`[POST] api/messages/inbox/0`
+
+1
+
+get inbox (yes send just the id without brackets)
+
+________________
+
+`[POST] api/bids/save`
+
+{
+    "time":12,
+    "amount":90,
+    "bidder":{
+        "userId": 6,
+        "rating": "4",
+        "location": "Goetve",
+        "country": "Denmark"
+    }
+}
+
+save bid
+
+________________
 
 
 Shmeiwseis:

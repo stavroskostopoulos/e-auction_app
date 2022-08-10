@@ -3,6 +3,10 @@ package com.di.app.bid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLUpdate;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,14 +15,14 @@ import java.util.Date;
 @AllArgsConstructor @NoArgsConstructor
 public class Bid {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bidId;
 
-    private Date time;
+    private Integer time;
     private String amount;
 
-//    @Transient
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Bidder bidder;
 
 

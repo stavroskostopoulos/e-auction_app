@@ -17,4 +17,18 @@ public class BidService {
     public Optional<Bid> GetBidsById(Long id) {
         return bidRepository.findById(id);
     }
+
+    public Bid SaveBid(Bid newBid) {
+        System.out.println(newBid);
+
+        Bidder bidder = newBid.getBidder();
+
+        Integer check = bidRepository.checkBidder(bidder.getUserId());
+//        System.out.println("ss"+check);
+//        if(check!=null){
+//            newBid.setBidder(null);
+//        }
+        return bidRepository.save(newBid);
+    }
+
 }
