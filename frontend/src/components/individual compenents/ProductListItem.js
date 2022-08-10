@@ -75,7 +75,7 @@ function ProductListItem(props) {
 
 					}}>
 							<Divider orientation="vertical" variant="middle" flexItem />
-							<span className='current-bidders-text' style={{ paddingLeft: '20px'}}>{props.numberOfBidders} days left</span>
+							<span className='current-bidders-text' style={{ paddingLeft: '20px'}}>{props.daysLeft} days left</span>
 							<AlarmIcon className='current-bidders-icon' style={{ paddingLeft: '20px'}}/>
 						
 					</div>

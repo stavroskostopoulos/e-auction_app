@@ -91,7 +91,8 @@ function NewBidPage() {
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
     const [showEmptyProductLocation, setShowEmptyProductLocation] = React.useState(false);
     
-
+    const [selectedCountry, setSelectedCountry] = React.useState(null);
+    const [showEmptyCountry, setShowEmptyCountry] = React.useState(false);
 
     const handleChangeCategory = (event) => {
         setChosenCategory(event.target.value);
@@ -114,11 +115,12 @@ function NewBidPage() {
 
         (!productTitle) ? setShowEmptyProductTitle(true) : setShowEmptyProductTitle(false);
         (!productDesc) ? setShowEmptyProductDesc(true) : setShowEmptyProductDesc(false);
+        (selectedCountry === null) ? setShowEmptyCountry(true) : setShowEmptyCountry(false);
 
         (location[0]==37.96867087793514 && location[1]==23.76662747322076) ? setShowEmptyProductLocation(true) : setShowEmptyProductLocation(false);
 
 
-        if(showEmptyProductTitle || showEmptyProductDesc || showEmptyProductLocation || (!isNumeric(buyNowPrice))){  return; }
+        if(showEmptyProductTitle || showEmptyProductDesc || showEmptyCountry || showEmptyProductLocation || (!isNumeric(buyNowPrice))){  return; }
 
         //calculate the end and start date of the auction
         let startDate = new Date();
@@ -132,6 +134,7 @@ function NewBidPage() {
         if(chosenCategory==="Electronics") imgID = Math.floor(Math.random()*electronicImages.length);
         if(chosenCategory==="Fashion") imgID = Math.floor(Math.random()*fashionImages.length);
         console.log("ti eipa");
+        console.log(selectedCountry.label);
 
         const result = await axios.post('https://localhost:8443/api/items/save', 
         
@@ -147,7 +150,7 @@ function NewBidPage() {
                 end: endDate,
                 latitude: location[1].toString(),
                 longitude: location[0].toString(),
-                country: "Greece",
+                country: selectedCountry.label,
                 photoId: imgID,
             }
         
@@ -257,7 +260,7 @@ function NewBidPage() {
                                         id="country-select-demo"
                                         sx={{ width: '100%' }}
                                         options={countries}
-                                    
+                                        onChange={(event, value) => setSelectedCountry(value)}
                                         getOptionLabel={(option) => option.label}
                                         renderOption={(props, option) => (
                                             <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
@@ -276,6 +279,7 @@ function NewBidPage() {
                                             {...params}
                                             label="Choose a country"
                                             size="small"
+                                            error={showEmptyCountry}
                                             className="new-bid-textfield" 
                                             inputProps={{
                                                 ...params.inputProps,

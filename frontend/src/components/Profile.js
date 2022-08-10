@@ -73,7 +73,7 @@ function Profile() {
 
         console.log(userId);
 
-        axios.get(`https://localhost:8443/api/users/${userId}`,
+        axios.get(`https://localhost:8443/api/users/id/${userId}`,
             { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
         .then(res => {
             setIsLoading(false);
