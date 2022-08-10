@@ -12,15 +12,35 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 
 
+
+
 function ProductsList(props) {
 
+
+    const getDaysLeft = (productInfo) => {
+
+        let endDate = new Date(productInfo.end);
+        let startDate = new Date(productInfo.start);
+
+        let Difference_In_Time = endDate.getTime() - startDate.getTime();
+  
+        // To calculate the no. of days between two dates
+        let daysLeftNumber = ( Difference_In_Time / (1000 * 3600 * 24));
+
+        return daysLeftNumber.toString();
+        // setDaysLeft(( Difference_In_Time / (1000 * 3600 * 24)))
+        // setDaysLeft(productInfo.end.getTime());
+        
+
+    };
 
 
     return (
         <Stack spacing={3} className='products-stack'>
+            {console.log(props.productsList.length)}
             {(!props.isLoading) && (props.productsList.length!==0) &&
                 props.productsList.map((product) =>	(
-                    <ProductListItem productKey={product.itemId} productname={product.name} category={product.category[0]} photoId={product.photoId} owner='kostopez' numberOfBidders="15" price={product.currentBid}/>
+                    <ProductListItem productKey={product.itemId} productname={product.name} category={product.category[0]} photoId={product.photoId} daysLeft={getDaysLeft(product)} owner='kostopez' numberOfBidders="15" price={product.currentBid}/>
                     
                     ))
                     
