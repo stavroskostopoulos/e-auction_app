@@ -163,6 +163,7 @@ ________________
 `[POST] api/bids/save`
 
 {
+    "itemId": 5,
     "time":12,
     "amount":90,
     "bidder":{
@@ -178,9 +179,29 @@ save bid
 ________________
 
 
+
+`[PUT] api/users/update`
+
+{
+    "username": "kwstop",
+    "pass": "hhh",
+    "realname": "fff",
+    "afm": "Sss",
+    "tele": "335552"
+}
+
+update user fields(username cannot change)
+
+________________
+
+
 Shmeiwseis:
 
--
+[done]-update profile
+
+[done]-bids(history+delete)
+messages(contacts)
+[done]-delete auction
 
  
 

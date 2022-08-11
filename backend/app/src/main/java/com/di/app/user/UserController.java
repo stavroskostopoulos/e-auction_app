@@ -53,6 +53,15 @@ public class UserController {
     }
 
 
+
+    // PUT
+
+    @PutMapping(path = "users/update")
+    public ResponseEntity<User> UpdateUser(@RequestBody User user){
+        return ResponseEntity.ok().body(service.UpdateUser(user));
+    }
+
+
     // DELETE
 
     @DeleteMapping("/users/delete/{userid}")

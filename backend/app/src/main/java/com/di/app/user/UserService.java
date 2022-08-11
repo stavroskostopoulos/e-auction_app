@@ -65,6 +65,39 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
+    public User UpdateUser(User user) {
+        Collection<User> userByUsername = userRepository.checkUsername(user.getUsername());
+        if(userByUsername.isEmpty()){
+            throw new IllegalStateException("You can't change Username!");
+        }
+
+        String email=user.getEmail();
+        String realname=user.getRealname();
+        String surname=user.getSurname();
+        String tele=user.getTele();
+        String afm=user.getAfm();
+
+
+
+        User userToUpdate = userRepository.findByUsername(user.getUsername());
+
+        if(email!=null) userToUpdate.setEmail(email);
+        if(realname!=null) userToUpdate.setRealname(realname);
+        if(surname!=null) userToUpdate.setSurname(surname);
+        if(tele!=null) userToUpdate.setTele(tele);
+        if(afm!=null) userToUpdate.setAfm(afm);
+
+
+        if(user.getPass()!=null) {
+            userToUpdate.setPass(passwordEncoder.encode(user.getPass()));
+        }
+
+
+
+        return userRepository.save(userToUpdate);
+
+    }
+
 
     public void DeleteUser(Long id) {
         User user = userRepository.getById(id);

@@ -26,11 +26,25 @@ public class BidController {
         return ResponseEntity.ok().body(bidService.GetBidsById(id));
     }
 
+    @GetMapping(path = "/bids/item/{offset}")
+    public ResponseEntity<List<Bid>> GetBidsOfAuction(@RequestBody Long id, @PathVariable("offset") Integer offset){
+        return ResponseEntity.ok().body(bidService.GetBidsOfAuction(id,offset));
+    }
+
 
     // POST
 
     @PostMapping(path = "/bids/save")
     public ResponseEntity<Bid> SaveBid(@RequestBody Bid newBid){
         return ResponseEntity.ok().body(bidService.SaveBid(newBid));
+    }
+
+
+    // DELETE
+
+    @DeleteMapping("/bids/delete/{bidId}")
+    public ResponseEntity<?> DeleteBid(@PathVariable("bidId") Long id) {
+        bidService.DeleteBid(id);
+        return ResponseEntity.ok().build();
     }
 }

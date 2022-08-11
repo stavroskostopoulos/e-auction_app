@@ -18,7 +18,9 @@ public class Bid {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bidId;
 
-    private Integer time;
+
+    private Long itemId;
+    private String time;
     private String amount;
 
     @OneToOne(cascade = CascadeType.REFRESH)
