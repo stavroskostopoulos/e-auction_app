@@ -164,22 +164,24 @@ function Bids() {
 		// ⬇ This calls my get request from the server
 		
 		//if price range has been modified
-        if( (priceRange[0].toString() !=="0" ) || (priceRange[1].toString() !=="1000") ) {
+        // if( (priceRange[0].toString() !=="0" ) || (priceRange[1].toString() !=="1000") ) {
 			
-			getProductsbyPrice();
+		// 	getProductsbyPrice();
 			
-        }else{
+        // }else{
 			
-			if(!checkedCateg.length){
+		// 	if(!checkedCateg.length){
 				
-				getProducts();
+		// 		getProducts();
 			
-			}else{
-				getProductsCategories();
-			}
+		// 	}else{
+		// 		getProductsCategories();
+		// 	}
 
 
-		}
+		// }
+		getProducts();
+
 
 		// setIsLoading(false);
 	}, [currentPages, priceRangeToggle]);
@@ -192,25 +194,43 @@ function Bids() {
 
     const getProducts = async () => {
 		
-
+		console.log("DSAFDADSFADSFASDf");
 		// const result = await axios.get(`https://localhost:8443/api/items?page=${currentPages-1}&size=8`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
 		// 							.then(setIsLoading(false))
 		// 							.catch(err => {
 		// 								setIsLoading(true);
 		// 								console.log(err);
 		// 							});
+		let passCategsParam = "[" + checkedCateg.toString() + "]";
 
-		const result = await axios.get(`https://localhost:8443/api/itemswithcats?page=${currentPages-1}&size=8`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
-									.then(setIsLoading(false))
-									.catch(err => {
-										setIsLoading(true);
-										console.log(err);
-									});
+		try{
+			const result = await axios.post(`https://localhost:8443/api/items/filter/kostopez/${currentPages-1}`,
 
-		console.log("getprod")
-		console.log(result.data);
-		setTotalPages(result.data.totalPages);
-		setProductsList(result.data.content);
+			{
+				low: priceRange[0],
+				high: priceRange[1],
+				cats: passCategsParam,
+				word: '',
+
+			},
+
+
+			{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+										
+			setIsLoading(false);
+			setTotalPages(result.data.totalPages);
+			setProductsList(result.data.content);
+			console.log("getprod")
+			console.log(result.data.totalPages)
+			console.log(result.data);
+									
+										
+		}catch(err){
+			console.log(err);
+			setIsLoading(true);
+		}
+
+
 
 	};
 
@@ -287,7 +307,7 @@ function Bids() {
 
 		setCheckedCateg(newChecked);
 
-		setPriceRangeToggle("togg2");
+		setPriceRangeToggle("togg2" + value.toString());
 
 
 	};
@@ -385,7 +405,7 @@ function Bids() {
 						
 						{/* Products */}
 						<div className='bids-products'>
-							<ProductsList pageChangeHandler={pageChangeHandler} productsList={productsList} totalPages={totalPages} isLoading={isLoading} setPriceRange={setPriceRange}/>
+							<ProductsList pageChangeHandler={pageChangeHandler} productsList={productsList} totalPages={4} isLoading={isLoading} setPriceRange={setPriceRange}/>
 						</div>
 
 							

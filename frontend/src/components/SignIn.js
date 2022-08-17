@@ -108,7 +108,7 @@ function Login() {
 
             localStorage.setItem("jwt", res.data.split(' ').pop());
             // console.log(localStorage.getItem("jwt"));
-
+            console.log(localStorage.getItem("jwt"));
             setCredentialsError(false);
             navigate("/");
 
