@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
+import org.springframework.data.domain.PageRequest;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -57,7 +58,7 @@ public class ItemService {
         // If no categories list was given, then search for all categories
         if(Arrays.equals(categoriesArray, emptyarr)) {
 
-            tempList = itemRepository.getItemsByPrice(low, high, limit, limit*offset);
+            tempList = itemRepository.getItemsByPrice(low, high);
 
             items.addAll(tempList);
 
@@ -66,7 +67,7 @@ public class ItemService {
             for (String a:categoriesArray){
                 //System.out.println(a);
 
-                tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""), limit, limit*offset);
+                tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""));
                 items.addAll(tempList);
             }
         }
@@ -197,6 +198,93 @@ public class ItemService {
         itemRepository.delete(item);
     }
 
+    //kostopez
+    public Page<Item> KostopezFilters(String slow, String shigh, String cats, String word, Integer offset){
 
+        // To store data from different queries
+        List<Item> tempList;
+        List<Item> items = new ArrayList<>();
+
+        // Create an array fo the categories
+        String categories = cats.replace("[", "").replace("]", "");
+        String[] categoriesArray = categories.split(",");
+        String[] emptyarr = {""};
+
+        // Set price parameters
+        Integer low = Integer.parseInt(slow);
+        Integer high = Integer.parseInt(shigh);
+
+        // Set the number of the items returned
+        Integer limit = 8;
+
+
+        if(word.isEmpty()){ //if there is NOT a word search | NO WORD
+
+            // If no categories list was given, then search for all categories | NO WORD, NO CATEG
+            if(Arrays.equals(categoriesArray, emptyarr)) {
+
+                //PRICE, NO WORD, NO CATEG
+                tempList = itemRepository.getItemsByPrice(low, high);
+
+                items.addAll(tempList);
+
+            }
+            else{ //NO WORD, CATEG
+                for (String a:categoriesArray){
+                    //System.out.println(a);
+
+                    //PRICE, CATEG, NO WORD
+                    tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""));
+                    items.addAll(tempList);
+                }
+            }
+
+        }else{ //if there is a word search | WORD
+            try {
+                //Prepare word if there is any description search
+                JSONObject obj = new JSONObject(word);
+                word = obj.getString("word");
+
+                char add = '%';
+                word = add + word + add;
+
+                //System.out.println(word);
+
+            }
+            catch (JSONException e){
+                System.out.println("Json Parse error(Word search)");
+            }
+
+            // If no categories list was given, then search for all categories | WORD, NO CATEG
+            if(Arrays.equals(categoriesArray, emptyarr)) {
+
+                //PRICE, WORD, NO CATEG
+                tempList = itemRepository.getItemsByPriceWithWordSearch(low, high, word);
+
+                items.addAll(tempList);
+
+            }
+            else{ //CATEG
+                for (String a:categoriesArray){
+                    //System.out.println(a);
+
+                    //PRICE, WORD, CATEG
+                    tempList = itemRepository.getItemsByPriceWithCatsWithWordSearch(low, high, a.replaceAll("\\s",""), word);
+                    items.addAll(tempList);
+                }
+            }
+        }
+
+
+        // Clear duplicates
+        Set<Item> set = new HashSet<>(items);
+        items.clear();
+        items.addAll(set);
+
+        Page<Item> page = new PageImpl<>(items);
+
+        return page;
+
+    }
 
 }

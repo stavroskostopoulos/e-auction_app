@@ -17,13 +17,22 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             countQuery = "SELECT count(*) FROM item", nativeQuery = true)
     Page<Item> getItemsWithCats(Pageable pageable);
 
-    @Query( value = "SELECT * FROM item WHERE current_bid BETWEEN :low AND :high LIMIT :limit OFFSET :offset", nativeQuery = true)
-    List<Item> getItemsByPrice(@Param("low")Integer low, @Param("high")Integer high, @Param("limit")Integer limit, @Param("offset")Integer offset);
+    @Query( value = "SELECT * FROM item WHERE current_bid BETWEEN :low AND :high", nativeQuery = true)
+    List<Item> getItemsByPrice(@Param("low")Integer low, @Param("high")Integer high);
 
+    //kostopez
 
-    @Query( value = "SELECT * FROM item JOIN item_category ON item.item_id = item_category.item_item_id WHERE (current_bid BETWEEN :low AND :high) AND (category=:cat ) LIMIT :limit OFFSET :offset",
+    @Query( value = "SELECT * FROM item WHERE (item.description LIKE :word) AND (current_bid BETWEEN :low AND :high)", nativeQuery = true)
+    List<Item> getItemsByPriceWithWordSearch(@Param("low")Integer low, @Param("high")Integer high, @Param("word")String word);
+
+    @Query( value = "SELECT * FROM item JOIN item_category ON item.item_id = item_category.item_item_id WHERE (item.description LIKE :word) AND (current_bid BETWEEN :low AND :high) AND (category=:cat )", nativeQuery = true)
+    List<Item> getItemsByPriceWithCatsWithWordSearch(@Param("low")Integer low, @Param("high")Integer high, @Param("cat")String cat, @Param("word")String word);
+
+    //
+
+    @Query( value = "SELECT * FROM item JOIN item_category ON item.item_id = item_category.item_item_id WHERE (current_bid BETWEEN :low AND :high) AND (category=:cat )",
             nativeQuery = true)
-    List<Item> getItemsByPriceWithCats(@Param("low")Integer low, @Param("high")Integer high, @Param("cat")String cat, @Param("limit")Integer limit, @Param("offset")Integer offset);
+    List<Item> getItemsByPriceWithCats(@Param("low")Integer low, @Param("high")Integer high, @Param("cat")String cat);
 
     @Query( value = "Select * from item i where i.item_id IN( " +
             "SELECT item_item_id FROM item_category ic WHERE ic.category=:cat ) LIMIT :limit OFFSET :offset",

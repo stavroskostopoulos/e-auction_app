@@ -93,6 +93,8 @@ function Header() {
 
     function logout () {
         localStorage.removeItem("jwt");
+        localStorage.removeItem("loggedUserId");
+
 		console.log("logging out");
         navigate("/login")
     }
@@ -127,56 +129,63 @@ function Header() {
                     </Tabs>
 
                     {/* if not logged in  */}
-                    {/* <Link to={'/login'} className={classes.linkPosition}>
-                        <Button className={classes.loginBtn} variant="outlined" onClick={()=> setValue(false)}>Login</Button>
-                    </Link> */}
+                    {
+                        !localStorage.getItem("jwt") &&
+
+                        <Link to={'/login'} className={classes.linkPosition}>
+                            <Button className={classes.loginBtn} variant="outlined" onClick={()=> setValue(false)}>Login</Button>
+                        </Link>
+                    }
                     
                     {/* if logged in */}
-                    
-                    <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} onClick={handleOpenUserMenu}/>
-                    <Menu
-                        sx={{ mt: '45px' }}
-                        id="menu-appbar"
-                        anchorEl={anchorElUser}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={Boolean(anchorElUser)}
-                        onClose={handleCloseUserMenu}
-                    >
-                        <MenuItem key="0" onClick={handleCloseUserMenu} className='user-menu-item' component={Link} to={'/profile'}>
-                            {/* <Typography textAlign="center">Profile</Typography> */}
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexWrap: 'wrap',
-                            }}>
-                                <span>Profile</span>
-							    <FaceIcon style={{ marginLeft: '14px'}}/>
-						
-                            </div>
-                        </MenuItem>
-                        <Divider variant="middle" />
-                        <MenuItem key="1" onClick={handleCloseUserMenu} className='user-menu-item' component={Link} to={'/login'}>
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                flexWrap: 'wrap',
-                            }}>
-                                <span>Log out</span>
-							    <LogoutIcon style={{ marginLeft: '8px'}}/>
-						
-                            </div>
-                        </MenuItem>
-                       
-                    </Menu>
-
+                    {
+                        localStorage.getItem("jwt") &&
+                        <>
+                            <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} onClick={handleOpenUserMenu}/>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                <MenuItem key="0" onClick={handleCloseUserMenu} className='user-menu-item' component={Link} to={'/profile'}>
+                                    {/* <Typography textAlign="center">Profile</Typography> */}
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        flexWrap: 'wrap',
+                                    }}>
+                                        <span>Profile</span>
+                                        <FaceIcon style={{ marginLeft: '14px'}}/>
+                                
+                                    </div>
+                                </MenuItem>
+                                <Divider variant="middle" />
+                                <MenuItem key="1" onClick={ () => {handleCloseUserMenu(); logout();} } className='user-menu-item' component={Link} to={'/login'}>
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        flexWrap: 'wrap',
+                                    }}>
+                                        <span>Log out</span>
+                                        <LogoutIcon style={{ marginLeft: '8px'}}/>
+                                
+                                    </div>
+                                </MenuItem>
+                            
+                            </Menu>
+                        </>
+                    }
 
 
 
