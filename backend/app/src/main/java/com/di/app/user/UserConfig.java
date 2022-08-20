@@ -44,9 +44,22 @@ public class UserConfig {
                     new ArrayList<>()
             ));
 
+            userService.SaveUser(new User(null,
+                    "guest",
+                    "null",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    new ArrayList<>()
+            ));
+
             userService.GiveRole("kapphs", "SELLER");
             userService.GiveRole("kapphs", "BIDDER");
             userService.GiveRole("nota", "ADMIN");
+            userService.GiveRole("guest", "GUEST");
+
 
             itemService.SaveItem(new Item(null,
                     2L,

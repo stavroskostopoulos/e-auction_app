@@ -2,6 +2,7 @@ package com.di.app.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -36,9 +37,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/login").permitAll()
                 .antMatchers("/api/users/save").permitAll()
+                .antMatchers("/api/users/id/**").hasAnyAuthority("ADMIN","SELLER","BIDDER")
                 .antMatchers("/api/users/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/api/role/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/api/items/filter/**").hasAnyAuthority("ADMIN","SELLER","BIDDER","GUEST")
+                .antMatchers(HttpMethod.GET, "/api/items/**").hasAnyAuthority("GUEST")
                 .antMatchers("/api/items/**").hasAnyAuthority("ADMIN","SELLER","BIDDER")
                 .antMatchers("/api/messages/**").hasAnyAuthority("ADMIN","SELLER","BIDDER")
                 .antMatchers("/api/bids/**").hasAnyAuthority("ADMIN","SELLER","BIDDER")
