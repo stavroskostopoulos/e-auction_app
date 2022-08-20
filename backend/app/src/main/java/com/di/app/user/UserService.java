@@ -40,6 +40,15 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public Page<User> GetPendingUsers(Integer offset){
+        Integer limit = 8;
+        List<User> userList = userRepository.getPendingUsers(limit,offset);
+
+        Page<User> page = new PageImpl<>(userList);
+
+        return page;
+    }
+
     public User GetUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }

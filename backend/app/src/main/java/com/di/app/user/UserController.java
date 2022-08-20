@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequestMapping(path = "/api")
@@ -31,6 +32,11 @@ public class UserController {
     @GetMapping(path = "/users/id/{userid}")
     public ResponseEntity<Optional<User>> GetUserById(@PathVariable("userid") Long id){
         return ResponseEntity.ok().body(service.GetUserById(id));
+    }
+
+    @GetMapping(path = "/users/pending/{offset}")
+    public ResponseEntity<Page<User>> GetPending(@PathVariable("offset") Integer offset){
+        return ResponseEntity.ok().body(service.GetPendingUsers(offset));
     }
 
 
