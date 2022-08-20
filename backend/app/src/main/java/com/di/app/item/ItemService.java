@@ -58,7 +58,7 @@ public class ItemService {
         // If no categories list was given, then search for all categories
         if(Arrays.equals(categoriesArray, emptyarr)) {
 
-            tempList = itemRepository.getItemsByPrice(low, high);
+            tempList = itemRepository.getItemsByPrice(low, high, limit, offset);
 
             items.addAll(tempList);
 
@@ -67,7 +67,7 @@ public class ItemService {
             for (String a:categoriesArray){
                 //System.out.println(a);
 
-                tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""));
+                tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""), limit, offset);
                 items.addAll(tempList);
             }
         }
@@ -216,7 +216,7 @@ public class ItemService {
 
         // Set the number of the items returned
         Integer limit = 8;
-
+        Integer categ_limit = limit;
 
         if(word.isEmpty()){ //if there is NOT a word search | NO WORD
 
@@ -224,7 +224,7 @@ public class ItemService {
             if(Arrays.equals(categoriesArray, emptyarr)) {
 
                 //PRICE, NO WORD, NO CATEG
-                tempList = itemRepository.getItemsByPrice(low, high);
+                tempList = itemRepository.getItemsByPrice(low, high, limit, offset*limit);
 
                 items.addAll(tempList);
 
@@ -233,33 +233,32 @@ public class ItemService {
                 for (String a:categoriesArray){
                     //System.out.println(a);
 
+                    if(limit - items.size() > 0){
+                        categ_limit = limit - items.size();
+                    }else{
+                        break;
+                    }
+
                     //PRICE, CATEG, NO WORD
-                    tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""));
+                    tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""), categ_limit, offset*limit);
                     items.addAll(tempList);
                 }
             }
 
         }else{ //if there is a word search | WORD
-            try {
-                //Prepare word if there is any description search
-                JSONObject obj = new JSONObject(word);
-                word = obj.getString("word");
+
 
                 char add = '%';
                 word = add + word + add;
 
                 //System.out.println(word);
 
-            }
-            catch (JSONException e){
-                System.out.println("Json Parse error(Word search)");
-            }
 
             // If no categories list was given, then search for all categories | WORD, NO CATEG
             if(Arrays.equals(categoriesArray, emptyarr)) {
 
                 //PRICE, WORD, NO CATEG
-                tempList = itemRepository.getItemsByPriceWithWordSearch(low, high, word);
+                tempList = itemRepository.getItemsByPriceWithWordSearch(low, high, word, limit, offset*limit);
 
                 items.addAll(tempList);
 
@@ -268,8 +267,14 @@ public class ItemService {
                 for (String a:categoriesArray){
                     //System.out.println(a);
 
+                    if(limit - items.size() > 0){
+                        categ_limit = limit - items.size();
+                    }else{
+                        break;
+                    }
+
                     //PRICE, WORD, CATEG
-                    tempList = itemRepository.getItemsByPriceWithCatsWithWordSearch(low, high, a.replaceAll("\\s",""), word);
+                    tempList = itemRepository.getItemsByPriceWithCatsWithWordSearch(low, high, a.replaceAll("\\s",""), word, limit, offset*limit);
                     items.addAll(tempList);
                 }
             }

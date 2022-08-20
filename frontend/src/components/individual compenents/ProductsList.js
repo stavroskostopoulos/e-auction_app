@@ -10,7 +10,7 @@ import ProductListItem from './ProductListItem';
 import Pagination from '@mui/material/Pagination';
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
-
+import Box from '@mui/material/Box';
 
 
 
@@ -60,11 +60,15 @@ function ProductsList(props) {
                 </div>
             }
 
-            {(props.productsList.length > 8) &&
-                <div className='pagination-container-bids'>
-                    <Pagination variant="outlined" className='pagination-admin' count={props.totalPages} color="secondary" onChange={(event, pageNumber) => props.pageChangeHandler(event, pageNumber)}/>
-                </div>
+            {(props.productsList.length === 0) &&
+                <Box sx={{ width: '100%', height: '180px'}}/>
             }
+
+            {/* {(props.productsList.length > 0) && */}
+                <div className='pagination-container-bids'>
+                    <Pagination variant="outlined" className='pagination-admin' count={props.totalPages} color="secondary" page={props.selectedPage} onChange={(event, pageNumber) => props.pageChangeHandler(event, pageNumber)}/>
+                </div>
+            {/* } */}
         </Stack>
     )
 }
