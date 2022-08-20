@@ -110,6 +110,13 @@ public class UserService {
 
     public void DeleteUser(Long id) {
         User user = userRepository.getById(id);
+
+        user.getRoles().remove(roleRepository.getById(1L));
+        user.getRoles().remove(roleRepository.getById(2L));
+        user.getRoles().remove(roleRepository.getById(3L));
+        user.getRoles().remove(roleRepository.getById(4L));
+        user.getRoles().remove(roleRepository.getById(5L));
+
         userRepository.delete(user);
     }
 
