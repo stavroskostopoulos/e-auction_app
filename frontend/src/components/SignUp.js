@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 //import styling
@@ -105,9 +105,14 @@ const useStyles = makeStyles({
 
 function Login() {
 
+    let navigate = useNavigate();
+
+
     const profiletypes = userTypes;
 
     const [profiletype, setProfiletype] = React.useState('Seller');
+    const [profiletypeString, setProfiletypeString] = React.useState('Seller');
+
     const [locationpick, setLocationpick] = React.useState(false);
 
 
@@ -160,6 +165,13 @@ function Login() {
 
     const handleChange = (event) => {
         setProfiletype(event.target.value);
+        
+        let role_value = event.target.value;
+
+        if(role_value===1) setProfiletypeString("ADMIN"); 
+        if(role_value===2) setProfiletypeString("SELLER"); 
+        if(role_value===3) setProfiletypeString("BIDDER"); 
+
     };
 
     const proceedtoStepTwoOfSignUp = (e) => {
@@ -229,7 +241,7 @@ function Login() {
         if(location[0]==37.96867087793514 && location[1]==23.76662747322076 && !tele) return;
 
         try {
-            const res = await axios.post('https://localhost:8443/api/users/save', {
+            await axios.post('https://localhost:8443/api/users/save', {
                     username,
                     pass,
                     email,
@@ -241,7 +253,23 @@ function Login() {
                     longitude: location[0].toString(),
                     type
                 }
-                ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            );
+
+            await axios.post('https://localhost:8443/api/role/give', {
+                    username,
+                    rolename: profiletypeString
+                }
+            );
+
+            await axios.post('https://localhost:8443/api/role/give', {
+                    username,
+                    rolename: "NOT_ACCEPTED"
+                }
+            );
+
+            navigate("/login");
+            
+
         }catch(err){
             console.log(err)
         }

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
 
@@ -48,8 +48,10 @@ const CssTextField = withStyles({
     }
 })(TextField);
 
-function Profile() {
-    
+function Profile(props) {
+
+    const { state } = useLocation();
+
     const profiletypes = userTypes;
 
     const [edit, setEdit] = React.useState(false);
@@ -72,8 +74,9 @@ function Profile() {
         let userId = localStorage.getItem('loggedUserId');
 
         console.log(userId);
+        
 
-        axios.get(`https://localhost:8443/api/users/id/${userId}`,
+        axios.get(`https://localhost:8443/api/users/id/${state.id}`,
             { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
         .then(res => {
             setIsLoading(false);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
 
 
@@ -22,6 +22,7 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Pagination from '@mui/material/Pagination';
+import axios from 'axios';
 
 const CssListItemButton = withStyles({
     root: {
@@ -46,37 +47,60 @@ function RegistrationRequestsList(props){
 
     //AVATAR {`${props.msgusername.charAt(0)}`}
 
-    const [pendingRequestsList, setPendingRequestsList] = React.useState([...props.requests]);
+    // const [pendingRequestsList, setPendingRequestsList] = React.useState([...props.requests]);
+
+    const handleAccept = async (userid) => {
+        try{
+            await axios.delete(`https://localhost:8443/api/role/accepted/${userid}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+        }catch(err){
+            console.log(err);
+        }
+    }
+
+    const handleDecline = async (userid) => {
+        try{
+            const res = await axios.delete(`https://localhost:8443/api/users/delete/${userid}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            console.log(res);
+        }catch(err){
+            console.log(err);
+        }
+    }
 
     const renderUsers = () => {
 
         //if there are users
-        if(pendingRequestsList.length!==0){
+        if(props.requests.length!==0){
             return (
                 <List sx={{ width: '100%' }}>
-                    {(pendingRequestsList.map((user) => (
-                        <>
-                           <CssListItem component={Link} to={'/profile'} >
-								<CssListItemButton className='list-item-button'>
-									<ListItemAvatar>
-										<Avatar sx={{ width: 34 , height: 34 }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-									</ListItemAvatar>
-									<ListItemText primary="Giorgos Koumpis" className='list-item-admin'/>
-									<ListItemSecondaryAction>
-										<Tooltip title={<p>Reject</p>} arrow>
-											<IconButton edge="end" aria-label="cancel" sx={{mr: 1}} scomponent={Link} to={'/login'} className='cancel-icon-admin'>
-												<CloseOutlinedIcon />
-											</IconButton>
-										</Tooltip>
-										<Tooltip title={<p>Approve</p>} arrow>	
-											<IconButton edge="end" aria-label="confirm" component={Link} to={'/login'} className='check-icon-admin'>
-												<CheckIcon />
-											</IconButton>
-										</Tooltip>	
-									</ListItemSecondaryAction>
-								</CssListItemButton>
-							</CssListItem>
+                    {(props.requests.map((user) => (
 
+                        <>
+                            <Link to={ `/profile/${localStorage.getItem('loggedUserId')}`} state={{id: user.id }} style={{ textDecoration: 'none' }} className="linkcomponent">
+
+
+                            
+                                <CssListItem>
+                                    <CssListItemButton className='list-item-button'>
+                                        <ListItemAvatar>
+                                            <Avatar sx={{ width: 34 , height: 34 }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                        </ListItemAvatar>
+                                        <ListItemText primary={user.realname + " " + user.surname} className='list-item-admin'/>
+                                        <ListItemSecondaryAction>
+                                            <Tooltip title={<p>Reject</p>} arrow>
+                                                <IconButton edge="end" aria-label="cancel" sx={{mr: 1}} onClick={() => {handleDecline(user.id)}} component={Link} to={'/administration'} className='cancel-icon-admin'>
+                                                    <CloseOutlinedIcon />
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title={<p>Approve</p>} arrow>	
+                                                <IconButton edge="end" aria-label="confirm" onClick={() => {handleAccept(user.id)}} component={Link} to={'/administration'} className='check-icon-admin'>
+                                                    <CheckIcon />
+                                                </IconButton>
+                                            </Tooltip>	
+                                        </ListItemSecondaryAction>
+                                    </CssListItemButton>
+                                </CssListItem>
+
+                            </Link>
 
                             <Divider variant="middle"  component="li" className='admin-list-divider'/>
                         </>

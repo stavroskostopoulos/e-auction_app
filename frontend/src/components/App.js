@@ -29,10 +29,10 @@ function App() {
           
           <Routes>
 
-            <Route exact path="/" element={<Bids/>}/>
             <Route exact path="/login" element={<Signin/>}/>
+            <Route exact path="/" element={<Bids/>}/>
             <Route exact path="/register" element={<Signup/>}/>
-            <Route exact path="/profile" element={<Profile/>}/>
+            <Route exact path="/profile/:userid" element={<Profile/>}/>
             <Route exact path="/administration" element={<Administration/>}/>
             <Route exact path="/product/:id" element={<ProductPage/>}/>
             <Route exact path="/sell" element={<NewBidPage/>}/>
