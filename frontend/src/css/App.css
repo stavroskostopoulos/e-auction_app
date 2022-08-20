@@ -57,3 +57,7 @@
 .user-menu-item:hover{
     background-color: #9966cc2c !important;
 }
+
+.linkcomponent{
+    color: black !important;
+}

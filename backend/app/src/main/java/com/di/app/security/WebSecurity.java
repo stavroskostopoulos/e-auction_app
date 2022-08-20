@@ -36,6 +36,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/login").permitAll()
                 .antMatchers("/api/users/save").permitAll()
+                .antMatchers("/api/role/give").permitAll()
                 .antMatchers("/api/users/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/api/role/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/api/items/filter/**").hasAnyAuthority("ADMIN","SELLER","BIDDER","GUEST")

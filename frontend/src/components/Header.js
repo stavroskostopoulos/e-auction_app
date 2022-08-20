@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import '../css/App.css'
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -122,7 +123,7 @@ function Header() {
                         >
                         <CustomTab className={classes.menuOption} value="1" label="Auctions" component={Link} to={'/'}/>
                         <CustomTab className={classes.menuOption} value="2" label="Sell" component={Link} to={'/sell'}/>
-                        <CustomTab className={classes.menuOption} value="3" label="Messsages" component={Link} to={'/messages'}/>
+                        <CustomTab className={classes.menuOption} value="3" label="Messages" component={Link} to={'/messages'}/>
                         {!admin &&
                             <CustomTab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'}/>
                         }
@@ -158,18 +159,20 @@ function Header() {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                <MenuItem key="0" onClick={handleCloseUserMenu} className='user-menu-item' component={Link} to={'/profile'}>
-                                    {/* <Typography textAlign="center">Profile</Typography> */}
-                                    <div style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        flexWrap: 'wrap',
-                                    }}>
-                                        <span>Profile</span>
-                                        <FaceIcon style={{ marginLeft: '14px'}}/>
-                                
-                                    </div>
-                                </MenuItem>
+                                <Link to={ `/profile/${localStorage.getItem('loggedUserId')}`} state= {{id: localStorage.getItem('loggedUserId') }} style={{ textDecoration: 'none' }} className="linkcomponent">
+                                    <MenuItem key="0" onClick={handleCloseUserMenu} className='user-menu-item'>
+                                        {/* <Typography textAlign="center">Profile</Typography> */}
+                                        <div style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            flexWrap: 'wrap',
+                                        }}>
+                                            <span>Profile</span>
+                                            <FaceIcon style={{ marginLeft: '14px'}}/>
+                                    
+                                        </div>
+                                    </MenuItem>
+                                </Link>
                                 <Divider variant="middle" />
                                 <MenuItem key="1" onClick={ () => {handleCloseUserMenu(); logout();} } className='user-menu-item' component={Link} to={'/login'}>
                                     <div style={{

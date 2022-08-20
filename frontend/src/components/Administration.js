@@ -27,6 +27,8 @@ import PersonSharpIcon from '@mui/icons-material/PersonSharp';
 
 import UsersList from './individual compenents/UsersList';
 import RegistrationRequestsList from './individual compenents/RegistrationRequestsList';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 
 function Administration() {
@@ -36,6 +38,44 @@ function Administration() {
 
 	const [totalUsersList, setTotalUsersList] = React.useState(["1", "2", "3", "4", "5", "6", "7", "8"]);
 	const [usersRegisterList, setUsersRegisterList] = React.useState(["1", "2", "3", "4", "5", "6", "7", "8"]);
+
+    const [pendingPagination, setPendingPagination] = React.useState(1);
+
+
+
+    React.useEffect(() => {
+
+        if(request){
+            getPendingUsers();
+        }else{
+            allUsers(); 
+        }
+
+    }, [request]);
+
+    const allUsers = async () => {
+        try{
+            const res = await axios.get(`https://localhost:8443/api/users/pending/${pendingPagination-1}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            
+        }catch(err){
+            console.log(err);
+        }
+    }
+
+    const getPendingUsers = async () => {
+        try{
+            const res = await axios.get(`https://localhost:8443/api/users/pending/${pendingPagination-1}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+            setUsersRegisterList(res.data.content);
+            console.log(res.data.content);
+        }catch(err){
+            console.log(err);
+        }
+    }
+
+    const handlePendingPageChange = (pageNumber) => {
+        setPendingPagination(pageNumber);
+    }
 
     return (
       
@@ -95,7 +135,7 @@ function Administration() {
 						{/* pagination */}
 						{request && (usersRegisterList.length > 6) &&
 							<div className='pagination-container'>
-								<Pagination variant="outlined" className='pagination-admin' count={10} color="secondary" />
+								<Pagination variant="outlined" className='pagination-admin' count={10} color="secondary" onChange={(pageNumber) => handlePendingPageChange(pageNumber)}/>
 							</div>
 						}
 						

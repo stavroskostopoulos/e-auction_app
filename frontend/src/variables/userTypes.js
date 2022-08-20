@@ -1,8 +1,9 @@
 const userTypes = [ 
+    'Admin',
     'Seller',
     'Bidder',
-    'Malakas',
-    'Aderfh', 
+    'Guest',
+    'Not_Accepted'
 ];
 
 export default userTypes;

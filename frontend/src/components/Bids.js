@@ -210,7 +210,7 @@ function Bids() {
 				low: priceRange[0],
 				high: priceRange[1],
 				cats: passCategsParam,
-				word: searchLabel,
+				word: '',
 
 			},
 
