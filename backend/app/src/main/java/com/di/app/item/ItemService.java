@@ -224,7 +224,7 @@ public class ItemService {
             if(Arrays.equals(categoriesArray, emptyarr)) {
 
                 //PRICE, NO WORD, NO CATEG
-                tempList = itemRepository.getItemsByPrice(low, high, limit, offset);
+                tempList = itemRepository.getItemsByPrice(low, high, limit, offset*limit);
 
                 items.addAll(tempList);
 
@@ -240,32 +240,25 @@ public class ItemService {
                     }
 
                     //PRICE, CATEG, NO WORD
-                    tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""), categ_limit, offset);
+                    tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""), categ_limit, offset*limit);
                     items.addAll(tempList);
                 }
             }
 
         }else{ //if there is a word search | WORD
-            try {
-                //Prepare word if there is any description search
-                JSONObject obj = new JSONObject(word);
-                word = obj.getString("word");
+
 
                 char add = '%';
                 word = add + word + add;
 
                 //System.out.println(word);
 
-            }
-            catch (JSONException e){
-                System.out.println("Json Parse error(Word search)");
-            }
 
             // If no categories list was given, then search for all categories | WORD, NO CATEG
             if(Arrays.equals(categoriesArray, emptyarr)) {
 
                 //PRICE, WORD, NO CATEG
-                tempList = itemRepository.getItemsByPriceWithWordSearch(low, high, word, limit, offset);
+                tempList = itemRepository.getItemsByPriceWithWordSearch(low, high, word, limit, offset*limit);
 
                 items.addAll(tempList);
 
@@ -281,7 +274,7 @@ public class ItemService {
                     }
 
                     //PRICE, WORD, CATEG
-                    tempList = itemRepository.getItemsByPriceWithCatsWithWordSearch(low, high, a.replaceAll("\\s",""), word, limit, offset);
+                    tempList = itemRepository.getItemsByPriceWithCatsWithWordSearch(low, high, a.replaceAll("\\s",""), word, limit, offset*limit);
                     items.addAll(tempList);
                 }
             }

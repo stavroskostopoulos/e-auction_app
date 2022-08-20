@@ -210,7 +210,7 @@ function Bids() {
 				low: priceRange[0],
 				high: priceRange[1],
 				cats: passCategsParam,
-				word: '',
+				word: searchLabel,
 
 			},
 
@@ -220,6 +220,7 @@ function Bids() {
 			setIsLoading(false);
 			setTotalPages(result.data.totalPages);
 			setProductsList(result.data.content);
+			
 			console.log("getprod")
 			console.log(result.data.totalPages)
 			console.log(result.data);
@@ -308,7 +309,7 @@ function Bids() {
 		setCheckedCateg(newChecked);
 
 		setPriceRangeToggle("togg2" + value.toString());
-
+		setCurrentPages(1);
 
 	};
 
@@ -405,7 +406,7 @@ function Bids() {
 						
 						{/* Products */}
 						<div className='bids-products'>
-							<ProductsList pageChangeHandler={pageChangeHandler} productsList={productsList} totalPages={5} isLoading={isLoading} setPriceRange={setPriceRange}/>
+							<ProductsList pageChangeHandler={pageChangeHandler} productsList={productsList} totalPages={5} selectedPage={currentPages} isLoading={isLoading} setPriceRange={setPriceRange}/>
 						</div>
 
 							
