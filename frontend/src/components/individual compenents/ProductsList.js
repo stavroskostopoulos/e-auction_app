@@ -60,7 +60,7 @@ function ProductsList(props) {
                 </div>
             }
 
-            {(props.productsList.length > 8) &&
+            {(props.productsList.length > 7) &&
                 <div className='pagination-container-bids'>
                     <Pagination variant="outlined" className='pagination-admin' count={props.totalPages} color="secondary" onChange={(event, pageNumber) => props.pageChangeHandler(event, pageNumber)}/>
                 </div>

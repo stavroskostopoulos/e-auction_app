@@ -405,7 +405,7 @@ function Bids() {
 						
 						{/* Products */}
 						<div className='bids-products'>
-							<ProductsList pageChangeHandler={pageChangeHandler} productsList={productsList} totalPages={4} isLoading={isLoading} setPriceRange={setPriceRange}/>
+							<ProductsList pageChangeHandler={pageChangeHandler} productsList={productsList} totalPages={5} isLoading={isLoading} setPriceRange={setPriceRange}/>
 						</div>
 
 							
