@@ -306,7 +306,7 @@ function Bids() {
               	<div className="column-middle" style={{backgroundColor: "#fff"}}>
 					
 					
-						{flag &&
+						{localStorage.getItem("guest") &&
 							<Alert severity="info" className='guest-alert'>
 								<AlertTitle><strong>Registration pending</strong></AlertTitle>
 								Your registration hasn't been accepted yet! You can still browse as a guest until then!

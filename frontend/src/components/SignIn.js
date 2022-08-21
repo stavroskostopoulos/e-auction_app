@@ -107,8 +107,13 @@ function Login() {
             localStorage.setItem("loggedUserId", res.data.split(' ')[0].split(':')[1]);
 
             localStorage.setItem("jwt", res.data.split(' ').pop());
-            // console.log(localStorage.getItem("jwt"));
-            console.log(localStorage.getItem("jwt"));
+
+            const result = await axios.get(`https://localhost:8443/api/users/accepted/${localStorage.getItem("loggedUserId")}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+            if(result.data === 1){
+                localStorage.setItem("guest", true);
+            }
+            
             setCredentialsError(false);
             navigate("/");
 

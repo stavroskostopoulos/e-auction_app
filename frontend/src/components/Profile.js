@@ -64,8 +64,6 @@ function Profile(props) {
 
     const [userInfo, setUserInfo] = React.useState({});
 
-    //silly flag
-    const [flag, setFlag] = React.useState(true);
 
     const handleChange = (event) => {
         setProfiletype(event.target.value);
@@ -100,7 +98,7 @@ function Profile(props) {
             <div className="column-right"/>
             <div className="column-middle" style={{backgroundColor: "#fff"}}>
             
-                {!isLoading && flag &&
+                {!isLoading && localStorage.getItem("guest") &&
                     <Alert severity="info" className='guest-alert'>
                         <AlertTitle><strong>Registration pending</strong></AlertTitle>
                         Your registration hasn't been accepted yet! You can still browse as a guest until then!

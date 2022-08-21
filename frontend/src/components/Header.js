@@ -85,8 +85,6 @@ function Header() {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
 
-    //silly flag
-	const [flag, setFlag] = React.useState(true);
 
     const handleOpenUserMenu = (e) => {
         setAnchorElUser(e.currentTarget);
@@ -99,6 +97,7 @@ function Header() {
     function logout () {
         localStorage.removeItem("jwt");
         localStorage.removeItem("loggedUserId");
+        if(localStorage.getItem("guest")) localStorage.removeItem("guest");
 
 		console.log("logging out");
         navigate("/login")
@@ -126,10 +125,10 @@ function Header() {
                         className={classes.menuOptions}
                         >
                         <CustomTab className={classes.menuOption} value="1" label="Auctions" component={Link} to={'/'}/>
-                        <CustomTab className={classes.menuOption} value="2" label="Sell" component={Link} to={'/sell'} disabled={flag}/>
-                        <CustomTab className={classes.menuOption} value="3" label="Messages" component={Link} to={'/messages'} disabled={flag}/>
+                        <CustomTab className={classes.menuOption} value="2" label="Sell" component={Link} to={'/sell'} disabled={localStorage.getItem("guest")}/>
+                        <CustomTab className={classes.menuOption} value="3" label="Messages" component={Link} to={'/messages'} disabled={localStorage.getItem("guest")}/>
                         {!admin &&
-                            <CustomTab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'} disabled={flag}/>
+                            <CustomTab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'} disabled={localStorage.getItem("guest")}/>
                         }
                     </Tabs>
 
