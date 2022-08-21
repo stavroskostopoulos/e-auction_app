@@ -138,5 +138,15 @@ public class UserService {
         user.getRoles().remove(roleRepository.getById(5L));
     }
 
+    public Integer GetIfPending(Long id) {
+        User user = userRepository.getById(id);
+
+        List<User> userList = userRepository.getPendingUsers(80,0);
+
+        if(userList.contains(user)) return 1;
+        return 0;
+    }
+
+
 
 }

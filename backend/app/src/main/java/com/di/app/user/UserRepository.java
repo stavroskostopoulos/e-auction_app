@@ -27,4 +27,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "SELECT user_id FROM user_roles WHERE roles_roleid=5 ) LIMIT :limit OFFSET :offset", nativeQuery = true)
     List<User> getPendingUsers(@Param("limit")Integer limit, @Param("offset")Integer offset);
 
+
 }
