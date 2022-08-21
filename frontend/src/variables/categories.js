@@ -3,7 +3,7 @@ const productCategories = [
     'Unused', 
     'Electronics', 
     'Fashion', 
-    'Health & Beauty' 
+    'Health' 
 ];
 
 export default productCategories;

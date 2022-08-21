@@ -15,6 +15,8 @@ import Map from './individual compenents/Map';
 
 //import images
 import electronicImages from '../images/image exports/ElectronicImages'
+import fashionImages from '../images/image exports/FashionImages';
+import healthImages from '../images/image exports/HealthImages';
 
 //import material UI components
 import Tab from '@mui/material/Tab';
@@ -186,9 +188,10 @@ const ProductPage = (props) => {
 
 
                             <div className='product-image'>
-                                {productInfo.category==='Electronics' && <img draggable="false" src={electronicImages[productInfo.photId]}></img>}
-                                {productInfo.category==='Fashion' && <img draggable="false" src={fashionImages[productInfo.photId]}></img>}
-
+                                {productInfo.category[0]==='Electronics' && <img draggable="false" src={electronicImages[productInfo.photoId]}></img>}
+                                {productInfo.category[0]==='Fashion' && <img draggable="false" src={fashionImages[productInfo.photoId]}></img>}
+                                {productInfo.category[0]==='Health' && <img draggable="false" src={healthImages[productInfo.photoId]}></img>}
+                            
                             </div>
 
                             <div className='product-title'>
@@ -244,7 +247,7 @@ const ProductPage = (props) => {
                                     flexWrap: 'wrap',
                                 }}>
                                     {/* <span className='current-bidders-text' >{typeof(productInfo.end)!== "undefined" && productInfo.newDate.getTime()} days left</span> */}
-                                    <span className='current-bidders-text' >{typeof(productInfo.end)!== "undefined" && getDaysLeft()} days left</span>
+                                    <span className='current-bidders-text'>{typeof(productInfo.end)!== "undefined" && getDaysLeft()} days left</span>
 
                                     <AlarmIcon className='current-bidders-icon' />
                             
