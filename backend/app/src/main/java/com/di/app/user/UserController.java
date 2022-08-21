@@ -39,6 +39,11 @@ public class UserController {
         return ResponseEntity.ok().body(service.GetPendingUsers(offset));
     }
 
+    @GetMapping(path = "/users/accepted/{userid}")
+    public ResponseEntity<Integer> GetUserPending(@PathVariable("userid") Long id){
+        return ResponseEntity.ok().body(service.GetIfPending(id));
+    }
+
 
     // POST
 

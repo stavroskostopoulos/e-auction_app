@@ -59,6 +59,8 @@ public class UserConfig {
             userService.GiveRole("kapphs", "BIDDER");
             userService.GiveRole("nota", "ADMIN");
             userService.GiveRole("guest", "GUEST");
+            userService.GiveRole("guest", "NOT_ACCEPTED");
+
 
 
             itemService.SaveItem(new Item(null,
