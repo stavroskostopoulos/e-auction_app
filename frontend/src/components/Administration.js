@@ -65,7 +65,7 @@ function Administration() {
             const res = await axios.get(`https://localhost:8443/api/users/${totalUsersPagination-1}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
             setTotalUsersList(res.data.content)
-            // setForbiddenFlag(false);
+            setForbiddenFlag(false);
             setIsLoading(false);
 
         }catch(err){
@@ -90,7 +90,7 @@ function Administration() {
             const res = await axios.get(`https://localhost:8443/api/users/pending/${pendingPagination-1}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
             setUsersRegisterList(res.data.content);
-            // setForbiddenFlag(false);
+            setForbiddenFlag(false);
             setIsLoading(false);
 
             console.log(res.data.content);

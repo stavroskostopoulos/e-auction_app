@@ -102,7 +102,7 @@ function Profile(props) {
                     <Alert severity="info" className='guest-alert'>
                         <AlertTitle><strong>Registration pending</strong></AlertTitle>
                         Your registration hasn't been accepted yet! You can still browse as a guest until then!
-                       </Alert>
+                    </Alert>
                 }
                     
                 {isLoading && 

@@ -205,7 +205,7 @@ const ProductPage = (props) => {
                                 </div>
                                 { (productInfo.buyPrice!=="0") &&
                                     <div className='product-buynow-container'>
-                                        <Button endIcon={<LocalMallIcon/>} className='buy-now-button' onClick={handleClickOpenDialogBuyNow}>Buy now {productInfo.buyPrice}€</Button>
+                                        <Button endIcon={<LocalMallIcon/>} className='buy-now-button' onClick={handleClickOpenDialogBuyNow} disabled={localStorage.getItem("guest")}>Buy now {productInfo.buyPrice}€</Button>
                                     </div>
                                 }
                             </div>
@@ -234,7 +234,7 @@ const ProductPage = (props) => {
                                             />
                                         </FormControl>
 
-                                        <Button variant="contained" size="small" disabled={invalidNewBid} endIcon={<PanToolIcon/>} className='product-bid-button' onClick={handleClickOpenDialogBid}>
+                                        <Button variant="contained" size="small" disabled={invalidNewBid || localStorage.getItem("guest")} endIcon={<PanToolIcon/>} className='product-bid-button' onClick={handleClickOpenDialogBid}>
                                             bid
                                         </Button>
                                     </Stack>

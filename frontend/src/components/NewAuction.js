@@ -24,6 +24,8 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 
 //import images by category to choose an image for this product
@@ -191,182 +193,202 @@ function NewBidPage() {
 
                 <div className='new-bid-container'>
 
-                    <div className='new-bid-title-container'>
-                        <h1 className='admin-title'>Create an auction</h1>
-                    </div>
-                    
-                    <div className='new-bid-rules-container'>
+                    {localStorage.getItem("guest") &&
+                        <>
+                        
+                            <Alert severity="info" className='guest-alert'>
+                                <AlertTitle><strong>Registration pending</strong></AlertTitle>
+                                Your registration hasn't been accepted yet! You can still browse as a guest until then!
+                            </Alert>
+                            <div className='forbidden-container'>
+                                <Stack spacing={2} className="forbidden-stack">
+                                    <img className="forbidden-img" src="/forbidden.png"></img>
+                                    <p className='forbidden-msg'>You are not authorized to be here!</p>
+                                
+                                </Stack>
+                            </div>
+                        </>
+                    }
+                    {!localStorage.getItem("guest") && 
+                        <>
+                            <div className='new-bid-title-container'>
+                                <h1 className='admin-title'>Create an auction</h1>
+                            </div>
+                            
+                            <div className='new-bid-rules-container'>
 
-                        <p>In order to sell a product, your auction needs to satisfy the following terms:</p>
-                    
-                        <ol style={{ marginLeft: '50px', marginTop: '25px' }}>
-                            <li>The duration of the auction must be within 4 to 60 days</li>
-                            <li>The auction product must fit to one of the given product category options</li>
-                            <li>You need to provide a description of the product, declaring its state, its availability, and any further details</li>
-                            <li>You can optionally provide a "Buy now price", giving the opportunity to customers to instantly buy your product, <br/>without having to participate to the auction </li>
-                        </ol>
+                                <p>In order to sell a product, your auction needs to satisfy the following terms:</p>
+                            
+                                <ol style={{ marginLeft: '50px', marginTop: '25px' }}>
+                                    <li>The duration of the auction must be within 4 to 60 days</li>
+                                    <li>The auction product must fit to one of the given product category options</li>
+                                    <li>You need to provide a description of the product, declaring its state, its availability, and any further details</li>
+                                    <li>You can optionally provide a "Buy now price", giving the opportunity to customers to instantly buy your product, <br/>without having to participate to the auction </li>
+                                </ol>
 
-                        <p style={{ marginTop: '25px' }}>Please note that once your auction is created, it cannot be canceled!</p>
+                                <p style={{ marginTop: '25px' }}>Please note that once your auction is created, it cannot be canceled!</p>
 
-                    </div>
+                            </div>
 
-                    <div className='new-bid-textfields-container'>
+                            <div className='new-bid-textfields-container'>
 
-                        <div className='textfields-1'>
-                            <Stack spacing={3}>
-                                <CssTextField 
-                                    className="new-bid-textfield" 
-                                    label="Product title" 
-                                    type='text'
-                                    size="small"
-                                    value={productTitle}
-                                    onChange={(e) => setProductTitle(e.target.value)}
-                                    error={showEmptyProductTitle}
-                                />
-                                <CssTextField 
-                                    id="outlined-multiline-static" 
-                                    className="new-bid-textfield description-textfield" 
-                                    label="Product description"
-                                    type='text'
-                                    multiline
-                                    rows={10}
-                                    inputProps={{ maxLength: 240 }}
-                                    size="small"
-                                    value={productDesc}
-                                    onChange={(e) => setProductDesc(e.target.value)}
-                                    error={showEmptyProductDesc}
-                                />
-                                <div className='shrinked-textfield'>
-
-                                    <CssTextField
-                                        id="outlined-select-currency"
-                                        className="new-bid-textfield" 
-                                        select
-                                        label="Auction duration days"
-                                        // value={`${chosenDuration} days`}
-                                        value={chosenDuration}
-
-                                        onChange={handleChangeDuration} 
-                                        size="small"
-
-                                    >
-                                        {durations.map((option) => (
-                                            <MenuItem key={option} value={option}>
-                                            {option}
-                                            </MenuItem>
-                                        ))}
-                                    </CssTextField>
-                                </div>
-
-                                <div className='shrinked-textfield'>
-
-                                    <Autocomplete
-                                        id="country-select-demo"
-                                        sx={{ width: '100%' }}
-                                        options={countries}
-                                        onChange={(event, value) => setSelectedCountry(value)}
-                                        getOptionLabel={(option) => option.label}
-                                        renderOption={(props, option) => (
-                                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                            <img
-                                                loading="lazy"
-                                                width="20"
-                                                src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                                                srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                                                alt=""
-                                            />
-                                            {option.label} ({option.code}) +{option.phone}
-                                            </Box>
-                                        )}
-                                        renderInput={(params) => (
-                                            <CssTextField
-                                            {...params}
-                                            label="Choose a country"
-                                            size="small"
-                                            error={showEmptyCountry}
+                                <div className='textfields-1'>
+                                    <Stack spacing={3}>
+                                        <CssTextField 
                                             className="new-bid-textfield" 
-                                            inputProps={{
-                                                ...params.inputProps,
-                                                autoComplete: 'new-password', // disable autocomplete and autofill
-                                            }}
-                                            />
-                                        )}
+                                            label="Product title" 
+                                            type='text'
+                                            size="small"
+                                            value={productTitle}
+                                            onChange={(e) => setProductTitle(e.target.value)}
+                                            error={showEmptyProductTitle}
                                         />
-
-                                </div>
-
-                            </Stack>
-
-                        </div>
-
-
-                        <div className='textfields-2'>
-
-                            <Stack spacing={3}>
-                                <CssTextField
-                                    id="outlined-select-currency"
-                                    className="new-bid-textfield" 
-                                    select
-                                    label="Product category"
-                                    value={chosenCategory}
-                                    onChange={handleChangeCategory} 
-                                    size="small"
-
-                                >
-                                    {categories.map((option) => (
-                                        <MenuItem key={option} value={option}>
-                                        {option}
-                                        </MenuItem>
-                                    ))}
-                                </CssTextField> 
-
-                                <div style={{width: '380px', height: '250px'}} className="new-bid-input-map">
-                                    <InputMap inputMapSetLocation={setLocation} mapWidth="100%" mapHeight="195px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container" textfieldError={showEmptyProductLocation}/>
-                                </div>
-                                
-                                <div className='shrinked-textfield-second'>
-
-                                    <FormControl className='new-bid-textfield'>
-
-                                        <CustomInputLabel htmlFor="outlined-adornment-amount">Buy now price</CustomInputLabel>
-                                        <CustomOutlinedInput
-                                            id="outlined-adornment-amount"
-                                            value={buyNowPrice}
-                                            type="number"
-                                            size='small'
-                                            onChange={(e) => setBuyNowPrice(e.target.value)}
-                                            startAdornment={<InputAdornment position="start">€</InputAdornment>}
-                                            label="Buy now price"
-                                            className='new-bid-textfield'
-                                            error={!isNumeric(buyNowPrice)}
-                                            
-                                            
+                                        <CssTextField 
+                                            id="outlined-multiline-static" 
+                                            className="new-bid-textfield description-textfield" 
+                                            label="Product description"
+                                            type='text'
+                                            multiline
+                                            rows={10}
+                                            inputProps={{ maxLength: 240 }}
+                                            size="small"
+                                            value={productDesc}
+                                            onChange={(e) => setProductDesc(e.target.value)}
+                                            error={showEmptyProductDesc}
                                         />
-                                        <FormHelperText>Setting this to 0 will not provide a buy now option</FormHelperText>
-                                    </FormControl>
+                                        <div className='shrinked-textfield'>
+
+                                            <CssTextField
+                                                id="outlined-select-currency"
+                                                className="new-bid-textfield" 
+                                                select
+                                                label="Auction duration days"
+                                                // value={`${chosenDuration} days`}
+                                                value={chosenDuration}
+
+                                                onChange={handleChangeDuration} 
+                                                size="small"
+
+                                            >
+                                                {durations.map((option) => (
+                                                    <MenuItem key={option} value={option}>
+                                                    {option}
+                                                    </MenuItem>
+                                                ))}
+                                            </CssTextField>
+                                        </div>
+
+                                        <div className='shrinked-textfield'>
+
+                                            <Autocomplete
+                                                id="country-select-demo"
+                                                sx={{ width: '100%' }}
+                                                options={countries}
+                                                onChange={(event, value) => setSelectedCountry(value)}
+                                                getOptionLabel={(option) => option.label}
+                                                renderOption={(props, option) => (
+                                                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                                    <img
+                                                        loading="lazy"
+                                                        width="20"
+                                                        src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                                                        srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                                                        alt=""
+                                                    />
+                                                    {option.label} ({option.code}) +{option.phone}
+                                                    </Box>
+                                                )}
+                                                renderInput={(params) => (
+                                                    <CssTextField
+                                                    {...params}
+                                                    label="Choose a country"
+                                                    size="small"
+                                                    error={showEmptyCountry}
+                                                    className="new-bid-textfield" 
+                                                    inputProps={{
+                                                        ...params.inputProps,
+                                                        autoComplete: 'new-password', // disable autocomplete and autofill
+                                                    }}
+                                                    />
+                                                )}
+                                                />
+
+                                        </div>
+
+                                    </Stack>
+
+                                </div>
+
+
+                                <div className='textfields-2'>
+
+                                    <Stack spacing={3}>
+                                        <CssTextField
+                                            id="outlined-select-currency"
+                                            className="new-bid-textfield" 
+                                            select
+                                            label="Product category"
+                                            value={chosenCategory}
+                                            onChange={handleChangeCategory} 
+                                            size="small"
+
+                                        >
+                                            {categories.map((option) => (
+                                                <MenuItem key={option} value={option}>
+                                                {option}
+                                                </MenuItem>
+                                            ))}
+                                        </CssTextField> 
+
+                                        <div style={{width: '380px', height: '250px'}} className="new-bid-input-map">
+                                            <InputMap inputMapSetLocation={setLocation} mapWidth="100%" mapHeight="195px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container" textfieldError={showEmptyProductLocation}/>
+                                        </div>
+                                        
+                                        <div className='shrinked-textfield-second'>
+
+                                            <FormControl className='new-bid-textfield'>
+
+                                                <CustomInputLabel htmlFor="outlined-adornment-amount">Buy now price</CustomInputLabel>
+                                                <CustomOutlinedInput
+                                                    id="outlined-adornment-amount"
+                                                    value={buyNowPrice}
+                                                    type="number"
+                                                    size='small'
+                                                    onChange={(e) => setBuyNowPrice(e.target.value)}
+                                                    startAdornment={<InputAdornment position="start">€</InputAdornment>}
+                                                    label="Buy now price"
+                                                    className='new-bid-textfield'
+                                                    error={!isNumeric(buyNowPrice)}
+                                                    
+                                                    
+                                                />
+                                                <FormHelperText>Setting this to 0 will not provide a buy now option</FormHelperText>
+                                            </FormControl>
+
+                                        </div>
+                                        
+                                        
+
+                                    </Stack>
 
                                 </div>
                                 
+
+
+                            </div>
+
+                            <div className='new-bid-button-container'>
+                                <Button variant="contained" size="small" endIcon={<DoneIcon/>} className='new-bid-button' onClick={postProduct}>
+                                    Create auction
+                                </Button>
                                 
-
-                            </Stack>
-
-                        </div>
-                        
-
-
-                    </div>
-
-                    <div className='new-bid-button-container'>
-                        <Button variant="contained" size="small" endIcon={<DoneIcon/>} className='new-bid-button' onClick={postProduct}>
-                            Create auction
-                        </Button>
-                        
-                    </div>
+                            </div>
+                        </>
+                    }
+                </div>
 
                     
 
-                </div>
 
             </div>
         </div>
