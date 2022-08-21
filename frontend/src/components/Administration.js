@@ -23,6 +23,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Pagination from '@mui/material/Pagination';
 import PersonSharpIcon from '@mui/icons-material/PersonSharp';
+import CircularProgress from '@mui/material/CircularProgress';
+import { Stack } from '@mui/material';
 
 
 import UsersList from './individual compenents/UsersList';
@@ -39,9 +41,14 @@ function Administration() {
 	const [totalUsersList, setTotalUsersList] = React.useState(["1", "2", "3", "4", "5", "6", "7", "8"]);
 	const [usersRegisterList, setUsersRegisterList] = React.useState(["1", "2", "3", "4", "5", "6", "7", "8"]);
 
+    //is Loading
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    //pagination state variables
     const [pendingPagination, setPendingPagination] = React.useState(1);
+    const [totalUsersPagination, setTotalUsersPagination] = React.useState(1);
 
-
+    const [forbiddenFlag, setForbiddenFlag] = React.useState(true);
 
     React.useEffect(() => {
 
@@ -55,10 +62,26 @@ function Administration() {
 
     const allUsers = async () => {
         try{
-            const res = await axios.get(`https://localhost:8443/api/users/pending/${pendingPagination-1}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
-            
+            const res = await axios.get(`https://localhost:8443/api/users/${totalUsersPagination-1}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+            setTotalUsersList(res.data.content)
+            // setForbiddenFlag(false);
+            setIsLoading(false);
+
         }catch(err){
+
             console.log(err);
+            setIsLoading(true);
+
+            if(err.response.status === 403){
+
+                console.log("forbidden");
+                setForbiddenFlag(true);
+                setIsLoading(false);
+
+            }
+            
+
         }
     }
 
@@ -67,14 +90,33 @@ function Administration() {
             const res = await axios.get(`https://localhost:8443/api/users/pending/${pendingPagination-1}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
             setUsersRegisterList(res.data.content);
+            // setForbiddenFlag(false);
+            setIsLoading(false);
+
             console.log(res.data.content);
         }catch(err){
+
             console.log(err);
+            setIsLoading(true);
+
+            if(err.response.status === 403){
+
+                console.log("forbidden");
+                setForbiddenFlag(true);
+                setIsLoading(false);
+
+            }
+            
+
         }
     }
 
     const handlePendingPageChange = (pageNumber) => {
         setPendingPagination(pageNumber);
+    }
+
+    const handleTotalUsersPageChange = (pageNumber) => {
+        setTotalUsersPagination(pageNumber);
     }
 
     return (
@@ -113,15 +155,31 @@ function Administration() {
 
 						{/* if we are on the "ALL USERS" requets tab */}
 
+                        {isLoading && 
+                            <div className='profile-loading'>
+                                <CircularProgress color="secondary" />
+                            </div>
+                        }
 
-						{!request &&
+                        {!isLoading && forbiddenFlag &&
+                            <div className='forbidden-container'>
+                                <Stack spacing={2} className="forbidden-stack">
+                                    <img className="forbidden-img" src="/forbidden.png"></img>
+                                    <p className='forbidden-msg'>You are not authorized to be here!</p>
+                                
+                                </Stack>
+                            </div>
+                        }
+
+
+						{!forbiddenFlag && !isLoading && !request &&
 							<UsersList totalUsersList={totalUsersList}/>
 						}
 						
 						{/* pagination */}
-						{!request && (totalUsersList.length > 6) &&
+						{!forbiddenFlag && !isLoading && !request && (totalUsersList.length > 6) &&
 							<div className='pagination-container'>
-								<Pagination variant="outlined" className='pagination-admin' count={10} color="secondary" />
+								<Pagination variant="outlined" className='pagination-admin' count={10} color="secondary" onChange={(pageNumber) => handleTotalUsersPageChange(pageNumber)}/>
 							</div>
 						}
 						
@@ -129,11 +187,11 @@ function Administration() {
 
 
 						{/* if we are on the "REGISTRATIONS REQUESTS" tab */}
-						{request && 
+						{!forbiddenFlag && !isLoading && request && 
 							<RegistrationRequestsList requests={usersRegisterList}/>
 						}
 						{/* pagination */}
-						{request && (usersRegisterList.length > 6) &&
+						{!forbiddenFlag && !isLoading && request && (usersRegisterList.length > 6) &&
 							<div className='pagination-container'>
 								<Pagination variant="outlined" className='pagination-admin' count={10} color="secondary" onChange={(pageNumber) => handlePendingPageChange(pageNumber)}/>
 							</div>

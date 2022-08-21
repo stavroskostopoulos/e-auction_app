@@ -24,7 +24,8 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import FilterListIcon from '@mui/icons-material/FilterList';
-
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 const PriceTextField = withStyles({
     root: {
@@ -120,6 +121,7 @@ function Bids() {
 
 	// search
 	const [searchLabel, setSearchLabel] = React.useState("Search");
+	const [searchContents, setSearchContents] = React.useState("");
 
 	// filters
 	const [checkedCateg, setCheckedCateg] = React.useState([]);
@@ -151,11 +153,11 @@ function Bids() {
 	const [priceRange, setPriceRange] = React.useState(["0", "1000"]);
 	const [priceRangeToggle, setPriceRangeToggle] = React.useState(false);
 	
-
-
-
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
 
+
+	//silly flag
+	const [flag, setFlag] = React.useState(true);
 
 	React.useEffect(() => {
 
@@ -210,7 +212,7 @@ function Bids() {
 				low: priceRange[0],
 				high: priceRange[1],
 				cats: passCategsParam,
-				word: '',
+				word: searchContents,
 
 			},
 
@@ -329,7 +331,11 @@ function Bids() {
 
 	};
 
-
+	const handleSearch = (value) => {
+		console.log(value);
+		setPriceRangeToggle(value);
+		setSearchContents(value);
+	}
 
 
 	const ShowOrHideFilters = () => {
@@ -360,6 +366,12 @@ function Bids() {
               	<div className="column-middle" style={{backgroundColor: "#fff"}}>
 					
 					
+						{flag &&
+							<Alert severity="info" className='guest-alert'>
+								<AlertTitle><strong>Registration pending</strong></AlertTitle>
+								Your registration hasn't been accepted yet! You can still browse as a guest until then!
+						   	</Alert>
+						}
 					<div ref={container} className="bids-container">
 
 
@@ -383,7 +395,8 @@ function Bids() {
 										}} 
 										size='small'
 										className='search-bar'
-										onFocus={() => setSearchLabel('')}									
+										onFocus={() => setSearchLabel('')}
+										onChange={(e) => handleSearch(e.target.value)}									
 										
 							/>
 						</div>

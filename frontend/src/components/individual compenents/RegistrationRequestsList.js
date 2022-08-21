@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
+import axios from 'axios';
 
 
 import "../../css/Administration.css"
@@ -22,7 +23,6 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Pagination from '@mui/material/Pagination';
-import axios from 'axios';
 
 const CssListItemButton = withStyles({
     root: {
@@ -75,7 +75,7 @@ function RegistrationRequestsList(props){
                     {(props.requests.map((user) => (
 
                         <>
-                            <Link to={ `/profile/${localStorage.getItem('loggedUserId')}`} state={{id: user.id }} style={{ textDecoration: 'none' }} className="linkcomponent">
+                            <Link to={ `/profile/${user.id}`} state={{id: user.id }} style={{ textDecoration: 'none' }} className="linkcomponent">
 
 
                             

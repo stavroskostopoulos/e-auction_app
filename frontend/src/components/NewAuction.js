@@ -152,6 +152,7 @@ function NewBidPage() {
                 longitude: location[0].toString(),
                 country: selectedCountry.label,
                 photoId: imgID,
+                sellerId: localStorage.getItem('loggedUserId'),
             }
         
         

@@ -29,7 +29,7 @@ public class UserService {
 
     public Page<User> GetUsersLimit(Integer offset){
         Integer limit = 8;
-        List<User> userList = userRepository.getUsersLimit(limit,offset);
+        List<User> userList = userRepository.getUsersLimit(limit,offset*limit);
 
         Page<User> page = new PageImpl<>(userList);
 

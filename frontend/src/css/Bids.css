@@ -94,6 +94,13 @@
     justify-content: center;
 }
 
+.guest-alert {
+    position: fixed!important;
+    top: 84px;
+    right: 24px;
+    width: 360px;
+}
+
 .bids-title{
     grid-area: title;
     /* background-color: red; */
@@ -270,6 +277,12 @@
     .filtertags {
         padding-bottom: 16px;
         padding-left: 0px;
+    }
+
+    .guest-alert {
+        position: static!important;
+        width: 100%!important;
+        margin-top: 20px;
     }
 
 }

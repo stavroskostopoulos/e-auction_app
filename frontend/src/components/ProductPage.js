@@ -122,6 +122,10 @@ const ProductPage = (props) => {
 									.catch(err => {
 										setIsLoading(true);
 										console.log(err);
+                                        if(err.response.status === 403){
+
+                                            console.log("forbidden");
+                                        }
 									});
 
 
@@ -182,7 +186,9 @@ const ProductPage = (props) => {
 
 
                             <div className='product-image'>
-                                <img draggable="false" src={electronicImages[2]}></img>
+                                {productInfo.category==='Electronics' && <img draggable="false" src={electronicImages[productInfo.photId]}></img>}
+                                {productInfo.category==='Fashion' && <img draggable="false" src={fashionImages[productInfo.photId]}></img>}
+
                             </div>
 
                             <div className='product-title'>

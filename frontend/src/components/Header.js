@@ -84,6 +84,10 @@ function Header() {
     const [admin, setAdmin] = React.useState(false);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+
+    //silly flag
+	const [flag, setFlag] = React.useState(true);
+
     const handleOpenUserMenu = (e) => {
         setAnchorElUser(e.currentTarget);
     };
@@ -122,10 +126,10 @@ function Header() {
                         className={classes.menuOptions}
                         >
                         <CustomTab className={classes.menuOption} value="1" label="Auctions" component={Link} to={'/'}/>
-                        <CustomTab className={classes.menuOption} value="2" label="Sell" component={Link} to={'/sell'}/>
-                        <CustomTab className={classes.menuOption} value="3" label="Messages" component={Link} to={'/messages'}/>
+                        <CustomTab className={classes.menuOption} value="2" label="Sell" component={Link} to={'/sell'} disabled={flag}/>
+                        <CustomTab className={classes.menuOption} value="3" label="Messages" component={Link} to={'/messages'} disabled={flag}/>
                         {!admin &&
-                            <CustomTab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'}/>
+                            <CustomTab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'} disabled={flag}/>
                         }
                     </Tabs>
 

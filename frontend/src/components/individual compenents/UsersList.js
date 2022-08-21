@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
+import axios from 'axios';
 
 
 import "../../css/Administration.css"
@@ -43,35 +44,45 @@ const CssListItem = withStyles({
 
 function UsersList(props) {
 
-    const [totalUsersList, setTotalUsersList] = React.useState([...props.totalUsersList]);
-
+    const handleDelete = async (userid) => {
+        try{
+            const res = await axios.delete(`https://localhost:8443/api/users/delete/${userid}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            console.log(res);
+        }catch(err){
+            console.log(err);
+        }
+    }
 
     const renderUsers = () => {
 
         //if there are users
-        if(totalUsersList.length!==0){
+        if(props.totalUsersList.length!==0){
             return (
                 <List sx={{ width: '100%' }}>
-                    {(totalUsersList.map((user) => (
+                    {(props.totalUsersList.map((user) => (
                         <>
-                            <CssListItem	component={Link} to={'/profile'} >
-                                <CssListItemButton className='list-item-button'>
-                                    <ListItemAvatar>
-                                        <Avatar sx={{ width: 34 , height: 34 }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                                    </ListItemAvatar>
-                                    <ListItemText primary="Vasilis Pasios" className='list-item-admin'/>
-                                    <ListItemSecondaryAction>
-                                        <Tooltip title={<p>Delete user</p>} arrow>
-                                            <IconButton edge="end" aria-label="delete" component={Link} to={'/login'} className='delete-icon-admin'>
-                                                <DeleteIcon />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </ListItemSecondaryAction>
-                                </CssListItemButton>
-                            </CssListItem>
+                            <Link to={ `/profile/${user.id}`} state={{id: user.id }} style={{ textDecoration: 'none' }} className="linkcomponent">
+
+                                <CssListItem	component={Link} to={'/profile'} >
+                                    <CssListItemButton className='list-item-button'>
+                                        <ListItemAvatar>
+                                            <Avatar sx={{ width: 34 , height: 34 }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                        </ListItemAvatar>
+                                        <ListItemText primary={user.realname + " " + user.surname} className='list-item-admin'/>
+                                        <ListItemSecondaryAction>
+                                            <Tooltip title={<p>Delete user</p>} arrow>
+                                                <IconButton edge="end" aria-label="delete" onClick={() => {handleDelete(user.id)}} component={Link} to={'/administration'} className='delete-icon-admin'>
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </ListItemSecondaryAction>
+                                    </CssListItemButton>
+                                </CssListItem>
 
 
-                            <Divider variant="middle"  component="li" className='admin-list-divider'/>
+                                <Divider variant="middle"  component="li" className='admin-list-divider'/>
+                            </Link>
+                        
                         </>
 
                     )))}

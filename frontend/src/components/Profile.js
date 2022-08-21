@@ -23,7 +23,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 import Divider from '@mui/material/Divider';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 //import custom components
 import InputMap from './individual compenents/InputMap';
@@ -63,6 +64,9 @@ function Profile(props) {
 
     const [userInfo, setUserInfo] = React.useState({});
 
+    //silly flag
+    const [flag, setFlag] = React.useState(true);
+
     const handleChange = (event) => {
         setProfiletype(event.target.value);
     };
@@ -96,10 +100,20 @@ function Profile(props) {
             <div className="column-right"/>
             <div className="column-middle" style={{backgroundColor: "#fff"}}>
             
+                {!isLoading && flag &&
+                    <Alert severity="info" className='guest-alert'>
+                        <AlertTitle><strong>Registration pending</strong></AlertTitle>
+                        Your registration hasn't been accepted yet! You can still browse as a guest until then!
+                       </Alert>
+                }
                     
-                {isLoading && <CircularProgress color="secondary" />}
+                {isLoading && 
+                    <div className='profile-loading'>
+                        <CircularProgress color="secondary" />
+                    </div>
+                }
+
                 {!isLoading && 
-                
                 
 
                     <div className="profile-container">
