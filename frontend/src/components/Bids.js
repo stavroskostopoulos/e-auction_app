@@ -156,8 +156,7 @@ function Bids() {
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
 
 
-	//silly flag
-	const [flag, setFlag] = React.useState(true);
+
 
 	React.useEffect(() => {
 
