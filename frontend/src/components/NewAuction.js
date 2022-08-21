@@ -29,6 +29,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 //import images by category to choose an image for this product
 import electronicImages from '../images/image exports/ElectronicImages';
 import fashionImages from '../images/image exports/FashionImages';
+import healthImages from '../images/image exports/HealthImages';
 
 const CssTextField = withStyles({
     root: {
@@ -133,6 +134,8 @@ function NewBidPage() {
 
         if(chosenCategory==="Electronics") imgID = Math.floor(Math.random()*electronicImages.length);
         if(chosenCategory==="Fashion") imgID = Math.floor(Math.random()*fashionImages.length);
+        if(chosenCategory==="Health") imgID = Math.floor(Math.random()*healthImages.length);
+        
         console.log("ti eipa");
         console.log(selectedCountry.label);
 

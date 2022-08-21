@@ -237,70 +237,10 @@ function Bids() {
 
 	};
 
-	const getProductsCategories = async () => {
-		
-
-		// const result = await axios.get(`https://localhost:8443/api/items?page=${currentPages-1}&size=8`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
-		// 							.then(setIsLoading(false))
-		// 							.catch(err => {
-		// 								setIsLoading(true);
-		// 								console.log(err);
-		// 							});
-
-		const result = await axios.post(`https://localhost:8443/api/items/filter/cat/${currentPages-1}`,
-
-                            {
-                                cats: checkedCateg,
-
-                            },
+	
 
 
-                            { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
-
-                            .then(setIsLoading(false))
-
-                            .catch(err => {
-                                setIsLoading(true);
-                                console.log(err);
-                            });
-
-		console.log("getprodCats")
-		console.log(result.data);
-		setTotalPages(result.data.totalPages);
-		setProductsList(result.data.content);
-
-	};
-
-
-	const getProductsbyPrice = async () => {
-		
-		let passCategsParam = "[" + checkedCateg.toString() + "]";
-		
-		const result = await axios.post(`https://localhost:8443/api/items/filter/price/${currentPages-1}`,
-
-                            {
-                                low: priceRange[0],
-                                high: priceRange[1],
-								cats: passCategsParam,
-
-                            },
-
-
-                            { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
-
-                            .then(setIsLoading(false))
-
-                            .catch(err => {
-                                setIsLoading(true);
-                                console.log(err);
-                            });
-
-		console.log("getprodPRice")
-		console.log(result.data);
-		setTotalPages(result.data.totalPages);
-		setProductsList(result.data.content);
-
-	};
+	
 
 	const handleDelete = (value) => {
 		const currentIndex = checkedCateg.indexOf(value);
