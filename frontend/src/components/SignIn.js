@@ -11,6 +11,7 @@ import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
 import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 
 const CssTextField = withStyles({
     root: {
@@ -113,7 +114,7 @@ function Login() {
             if(result.data === 1){
                 localStorage.setItem("guest", true);
             }
-            
+
             setCredentialsError(false);
             navigate("/");
 
@@ -141,6 +142,8 @@ function Login() {
                             
                             <Button className={classes.loginFormBtn} variant="contained" onClick={sendSignInCredentials}>Login</Button>
                             <p className='register-advice-text'>New here? <Link to={'/register'}>Create an account</Link></p>
+                            <Button endIcon={<DirectionsRunIcon/>} className="guest-button" variant="contained" >Continue as a guest</Button>
+                            
                         </Stack>
 
                     </form>

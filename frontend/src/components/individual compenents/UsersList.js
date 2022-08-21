@@ -63,7 +63,7 @@ function UsersList(props) {
                         <>
                             <Link to={ `/profile/${user.id}`} state={{id: user.id }} style={{ textDecoration: 'none' }} className="linkcomponent">
 
-                                <CssListItem	component={Link} to={'/profile'} >
+                                <CssListItem >
                                     <CssListItemButton className='list-item-button'>
                                         <ListItemAvatar>
                                             <Avatar sx={{ width: 34 , height: 34 }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />

@@ -45,6 +45,7 @@ const CssListItem = withStyles({
 
 function RegistrationRequestsList(props){
 
+
     //AVATAR {`${props.msgusername.charAt(0)}`}
 
     // const [pendingRequestsList, setPendingRequestsList] = React.useState([...props.requests]);
@@ -52,6 +53,7 @@ function RegistrationRequestsList(props){
     const handleAccept = async (userid) => {
         try{
             await axios.delete(`https://localhost:8443/api/role/accepted/${userid}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            props.refreshFunctions(userid)
         }catch(err){
             console.log(err);
         }
