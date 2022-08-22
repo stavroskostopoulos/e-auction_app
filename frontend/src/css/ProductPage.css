@@ -146,6 +146,11 @@
 
 }
 
+.buy-now-button:disabled{
+    background-color: #d1d1d1 !important;
+    color: #9b9b9b !important;
+}
+
 .buy-now-button:hover {
     background-color: rgb(110, 161, 111) !important;
 }

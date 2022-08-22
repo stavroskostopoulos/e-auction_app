@@ -66,7 +66,9 @@ function Login() {
     const [pass, setPass] = React.useState('');
     const [showEmptyPass, setShowEmptyPass] = React.useState(false);
 
+    //errors
     const [credentialsError, setCredentialsError] = React.useState(false);
+    const [guestError, setGuestError] = React.useState(false);
 
     const sendSignInCredentials = async (e) => {
 
@@ -104,6 +106,14 @@ function Login() {
                 pass
             });
 
+            //there is a possibility a guest user decides to sign in 
+            if(localStorage.getItem("jwt")) localStorage.removeItem("jwt");
+            if(localStorage.getItem("loggedUserId")) localStorage.removeItem("loggedUserId");
+            if(localStorage.getItem("guest")) localStorage.removeItem("guest");
+            if(localStorage.getItem("guest_user")) localStorage.removeItem("guest_user");
+
+
+
             // console.log(res.data.split(' ')[0].split(':')[1]);
             localStorage.setItem("loggedUserId", res.data.split(' ')[0].split(':')[1]);
 
@@ -125,6 +135,27 @@ function Login() {
 
     };
 
+    const signInAsGuest = async () => {
+        try{
+            const res = await axios.post('https://localhost:8443/login', {
+                username: "guest",
+                pass: "null"
+            });
+
+            localStorage.setItem("loggedUserId", res.data.split(' ')[0].split(':')[1]);
+            localStorage.setItem("jwt", res.data.split(' ').pop());
+            localStorage.setItem("guest", true);
+            localStorage.setItem("guest_user", true);
+
+            navigate("/");
+
+        }catch(err){
+            console.log(err);
+            setGuestError(true);
+
+        }
+    };
+
     return (
         <div className='signin-container'>
             <div className='signinart'/>
@@ -135,6 +166,8 @@ function Login() {
                         <Stack spacing={1.5} className='signup-stack-1'>
 
                             {credentialsError && <Alert severity="error" className='signinalert'>Your sign in credentials don't match any account in our system.</Alert>}
+                            {guestError && <Alert severity="error" className='signinalert'>Browsing as a guest is temporarily unavailable!</Alert>}
+                            
                             <CssTextField id="outlined-basic" className={classes.loginField} label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} error={showEmptyUsername} />
                             
                             
@@ -142,7 +175,7 @@ function Login() {
                             
                             <Button className={classes.loginFormBtn} variant="contained" onClick={sendSignInCredentials}>Login</Button>
                             <p className='register-advice-text'>New here? <Link to={'/register'}>Create an account</Link></p>
-                            <Button endIcon={<DirectionsRunIcon/>} className="guest-button" variant="contained" >Continue as a guest</Button>
+                            <Button endIcon={<DirectionsRunIcon/>} className="guest-button" variant="contained" onClick={signInAsGuest}>Continue as a guest</Button>
                             
                         </Stack>
 

@@ -193,7 +193,7 @@ function NewBidPage() {
 
                 <div className='new-bid-container'>
 
-                    {localStorage.getItem("guest") &&
+                    {localStorage.getItem("guest") && !localStorage.getItem("guest_user") &&
                         <>
                         
                             <Alert severity="info" className='guest-alert'>
@@ -209,6 +209,24 @@ function NewBidPage() {
                             </div>
                         </>
                     }
+
+                    {localStorage.getItem("guest_user") &&
+                        <>
+                        
+                            <Alert severity="info" className='guest-alert'>
+                                <AlertTitle><strong>Guest browsing</strong></AlertTitle>
+								You are browsing BidMe as a guest! Log in or Register to participate in real-time auctions!
+                            </Alert>
+                            <div className='forbidden-container'>
+                                <Stack spacing={2} className="forbidden-stack">
+                                    <img className="forbidden-img" src="/forbidden.png"></img>
+                                    <p className='forbidden-msg'>You are not authorized to be here!</p>
+                                
+                                </Stack>
+                            </div>
+                        </>
+                    }
+
                     {!localStorage.getItem("guest") && 
                         <>
                             <div className='new-bid-title-container'>

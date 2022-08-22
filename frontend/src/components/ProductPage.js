@@ -109,26 +109,27 @@ const ProductPage = (props) => {
 	}, []);
 
     const getProductInfo = async () => {	
-		
-		const result = await axios.get(`https://localhost:8443/api/items/${state.id}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
-									.then(response => {
-                                        
-                                        setProductInfo(response.data)
-                                        setNewBid(response.data.currentBid+1);
-                                        setCurrentPrice(response.data.currentBid);
-                                        setLocation([Number(response.data.longitude), Number(response.data.latitude)]);
-                                        setIsLoading(false);
-		                                console.log(response.data);
+		try{
+            const result = await axios.get(`https://localhost:8443/api/items/${state.id}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
-                                    })
-									.catch(err => {
-										setIsLoading(true);
-										console.log(err);
-                                        if(err.response.status === 403){
+            setProductInfo(result.data)
+            setNewBid(result.data.currentBid+1);
+            setCurrentPrice(result.data.currentBid);
+            setLocation([Number(result.data.longitude), Number(result.data.latitude)]);
+            setIsLoading(false);
+            console.log(result.data);
 
-                                            console.log("forbidden");
-                                        }
-									});
+        }catch(err){
+
+            setIsLoading(true);
+            console.log(err);
+            if(err.response.status === 403){
+    
+                console.log("forbidden");
+            }
+        }
+									
+									
 
 
         //store product's info

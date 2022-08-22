@@ -98,6 +98,7 @@ function Header() {
         localStorage.removeItem("jwt");
         localStorage.removeItem("loggedUserId");
         if(localStorage.getItem("guest")) localStorage.removeItem("guest");
+        if(localStorage.getItem("guest_user")) localStorage.removeItem("guest_user");
 
 		console.log("logging out");
         navigate("/login")
@@ -134,7 +135,7 @@ function Header() {
 
                     {/* if not logged in  */}
                     {
-                        !localStorage.getItem("jwt") &&
+                        (!localStorage.getItem("jwt") || localStorage.getItem("guest_user")) &&
 
                         <Link to={'/login'} className={classes.linkPosition}>
                             <Button className={classes.loginBtn} variant="outlined" onClick={()=> setValue(false)}>Login</Button>
@@ -143,7 +144,7 @@ function Header() {
                     
                     {/* if logged in */}
                     {
-                        localStorage.getItem("jwt") &&
+                        localStorage.getItem("jwt") && !localStorage.getItem("guest_user") &&
                         <>
                             <Avatar alt="Travis Howard" src="/faithplusone.jpg" className={classes.avatarImg} onClick={handleOpenUserMenu}/>
                             <Menu

@@ -305,10 +305,17 @@ function Bids() {
               	<div className="column-middle" style={{backgroundColor: "#fff"}}>
 					
 					
-						{localStorage.getItem("guest") &&
+						{localStorage.getItem("guest") && !localStorage.getItem("guest_user") &&
 							<Alert severity="info" className='guest-alert'>
 								<AlertTitle><strong>Registration pending</strong></AlertTitle>
 								Your registration hasn't been accepted yet! You can still browse as a guest until then!
+						   	</Alert>
+						}
+
+						{localStorage.getItem("guest_user") &&
+							<Alert severity="info" className='guest-alert'>
+								<AlertTitle><strong>Guest browsing</strong></AlertTitle>
+								You are browsing BidMe as a guest! Log in or Register to participate in real-time auctions!
 						   	</Alert>
 						}
 					<div ref={container} className="bids-container">

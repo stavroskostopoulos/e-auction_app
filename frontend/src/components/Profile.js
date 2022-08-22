@@ -56,19 +56,29 @@ function Profile(props) {
     const profiletypes = userTypes;
 
     const [edit, setEdit] = React.useState(false);
-    const [profiletype, setProfiletype] = React.useState('Seller');
-
+    
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
-
+    
 	const [isLoading, setIsLoading] = React.useState(true);
-
+    
     const [userInfo, setUserInfo] = React.useState({});
+
+    const [firstName, setFirstName] = React.useState("");
+    const [surName, setSurName] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [tele, setTele] = React.useState("");
+    const [profiletype, setProfiletype] = React.useState("Seller");
+    const [afm, setAfm] = React.useState("");
 
 
     const handleChange = (event) => {
         setProfiletype(event.target.value);
     };
 
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
 
     React.useEffect(() => {
@@ -82,14 +92,65 @@ function Profile(props) {
             { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
         .then(res => {
             setIsLoading(false);
+
+            //save the initial data, because we might need to retrieve it if the user edits and then cancels (data backup)
             setUserInfo(res.data);
-            setLocation([12, 12])
+            
+            //Store the data to the editable textfields
+            setFirstName(res.data.realname);
+            setSurName(res.data.surname);
+            setEmail(res.data.email);
+            setTele(res.data.tele);
+            setProfiletype(capitalizeFirstLetter(res.data.roles[0].name.toLowerCase()));
+            setAfm(res.data.afm);
+
+            setLocation([12, 12]);
             console.log(res.data);
         })
         .catch(err => console.log(err));
 
 
-    }, [])
+    }, [state])
+
+
+    const handleCancel = () => {
+
+        //restore the initial data using our backup userInfo
+        setFirstName(userInfo.realname);
+        setSurName(userInfo.surname);
+        setEmail(userInfo.email);
+        setTele(userInfo.tele);
+        setProfiletype(capitalizeFirstLetter(userInfo.roles[0].name.toLowerCase()));
+        setAfm(userInfo.afm);
+        setEdit(false);
+
+    }
+
+    const handleConfirm = async () => {
+
+        //restore the initial data using our backup userInfo
+        try{
+
+            const res = await axios.put('https://localhost:8443/api/users/update',
+            {
+                username: userInfo.username,
+                email,
+                realname: firstName,
+                surname: surName,
+                tele,
+                afm,
+            },
+            { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+        }catch(err){
+            console.log(err);
+        }
+
+
+
+        setEdit(false);
+        
+    }
 
     return (
       
@@ -133,8 +194,9 @@ function Profile(props) {
                                             disabled={!edit}
                                             id="outlined-disabled"
                                             label="First name"
-                                            defaultValue={userInfo.realname}
+                                            value={firstName}
                                             className="profileinfo-tf"
+                                            onChange={(e)=> setFirstName(e.target.value)}
                                             sx={{ mt: 5}} 
                                         />
                                     }
@@ -142,16 +204,18 @@ function Profile(props) {
                                         disabled={!edit}
                                         id="outlined-disabled"
                                         label="Email"
-                                        defaultValue={userInfo.email}
+                                        value={email}
                                         className="profileinfo-tf" 
+                                        onChange={(e)=> setEmail(e.target.value)}
                                         sx={{ mt: 5}}
                                     />
                                     <CssTextField
                                         disabled={!edit}
                                         id="outlined-disabled"
                                         label="Phone number"
-                                        defaultValue={userInfo.tele}
-                                        className="profileinfo-tf" 
+                                        value={tele}
+                                        className="profileinfo-tf"
+                                        onChange={(e)=> setTele(e.target.value)}
                                         sx={{ mt: 5}}
                                     />
                                     {edit &&
@@ -159,7 +223,7 @@ function Profile(props) {
                                             disabled={!edit}
                                             id="outlined-disabled"
                                             label="Longitude, Latitude"
-                                            defaultValue={`${location[0]}, ${location[1]}`}
+                                            value={`${location[0]}, ${location[1]}`}
                                             className="profileinfo-tf" 
                                             sx={{ mt: 5}}
                                         />
@@ -172,8 +236,9 @@ function Profile(props) {
                                             disabled={!edit}
                                             id="outlined-disabled"
                                             label="Last name"
-                                            defaultValue={userInfo.surname}
+                                            value={surName}
                                             className="profileinfo-tf" 
+                                            onChange={(e)=> setSurName(e.target.value)}
                                             sx={{ mt: 5}}  
                                         />
                                     
@@ -199,8 +264,9 @@ function Profile(props) {
                                         disabled={!edit}
                                         id="outlined-disabled"
                                         label="ΑΦΜ"
-                                        defaultValue={userInfo.afm}
-                                        className="profileinfo-tf" 
+                                        value={afm}
+                                        className="profileinfo-tf"
+                                        onChange={(e)=> setAfm(e.target.value)}
                                         sx={{ mt: 5}}
                                     />  
                                 </div>
@@ -213,7 +279,7 @@ function Profile(props) {
                             <Map longitude={location[0]} latitude={location[1]}/>
                         </div>
                         <div className="profile-buttons">
-                            { !edit &&
+                            { !edit && (localStorage.getItem("loggedUserId")===state.id) &&
                                 <Tooltip title="Edit">
                                     <IconButton color="primary" sx={{ mt: 2}} aria-label="Edit profile info" className="edit-btn" onClick={() => setEdit(true)}>
                                         <EditIcon/>
@@ -223,7 +289,7 @@ function Profile(props) {
 
                             { edit &&  
                                 <Tooltip title="Cancel">    
-                                    <IconButton color="primary" sx={{ mt: 2}} aria-label="Cancel changes" className="edit-btn cancel-btn" onClick={() => setEdit(false)}>
+                                    <IconButton color="primary" sx={{ mt: 2}} aria-label="Cancel changes" className="edit-btn cancel-btn" onClick={() => handleCancel()}>
                                         <CloseOutlinedIcon/>
                                     </IconButton>
                                 </Tooltip> 
@@ -232,7 +298,7 @@ function Profile(props) {
                             }
                             { edit &&   
                                 <Tooltip title="Confirm">
-                                    <IconButton color="primary" sx={{ mt: 2}} aria-label="Confirm changes" className="edit-btn confirm-btn" onClick={() => setEdit(false)}>
+                                    <IconButton color="primary" sx={{ mt: 2}} aria-label="Confirm changes" className="edit-btn confirm-btn" onClick={() => handleConfirm()}>
                                         <CheckIcon/>
                                     </IconButton>
                                 </Tooltip>
