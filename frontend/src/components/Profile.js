@@ -58,7 +58,10 @@ function Profile(props) {
     const [edit, setEdit] = React.useState(false);
     
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
+    const [locationStr, setLocationStr] = React.useState([37.96867087793514, 23.76662747322076]);
+    const [showEmptyLocationStr, setShowEmptyLocationStr] = React.useState(false);
     
+
 	const [isLoading, setIsLoading] = React.useState(true);
     
     const [userInfo, setUserInfo] = React.useState({});
@@ -79,6 +82,47 @@ function Profile(props) {
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
+
+    const parseLocation = () => {
+
+
+        //errror checking
+
+        //if there was no location given
+        if(!locationStr){   
+            setShowEmptyLocationStr(true);
+            return true; 
+        }
+
+        //if the format is not correct
+        //contains ","
+        if(!locationStr.includes(",")){   
+            setShowEmptyLocationStr(true);
+            return true; 
+        }
+
+        let parsedlocation = locationStr.replace(/ /g,'').split(',');
+        
+        //if there are more than one "," or there is nothing before or after the ","
+        if(parsedlocation.length!=2 || parsedlocation[0] === "" || parsedlocation[1] === ""){
+            setShowEmptyLocationStr(true);
+            return true; 
+        }
+
+        //if these are not numbers
+        if( isNaN(parsedlocation[0]) || isNaN(parseFloat(parsedlocation[0])) || isNaN(parsedlocation[1]) || isNaN(parseFloat(parsedlocation[1])) ) {
+            setShowEmptyLocationStr(true);
+            return true;
+        }
+
+        setShowEmptyLocationStr(false);
+
+
+        console.log(parsedlocation);
+
+        setLocation([parsedlocation[0], parsedlocation[1]]);
+
+    };
 
 
     React.useEffect(() => {
@@ -103,8 +147,8 @@ function Profile(props) {
             setTele(res.data.tele);
             setProfiletype(capitalizeFirstLetter(res.data.roles[0].name.toLowerCase()));
             setAfm(res.data.afm);
+            setLocationStr([res.data.longitude.toString(), res.data.latitude.toString()]);
 
-            setLocation([12, 12]);
             console.log(res.data);
         })
         .catch(err => console.log(err));
@@ -122,14 +166,21 @@ function Profile(props) {
         setTele(userInfo.tele);
         setProfiletype(capitalizeFirstLetter(userInfo.roles[0].name.toLowerCase()));
         setAfm(userInfo.afm);
+        setLocationStr([userInfo.longitude.toString(), userInfo.latitude.toString()])
         setEdit(false);
 
     }
 
     const handleConfirm = async () => {
 
+        
+        //check location input
+        if(parseLocation()) return;
         //restore the initial data using our backup userInfo
         try{
+            console.log(location[0].toString());
+            console.log(location[1].toString());
+            
 
             const res = await axios.put('https://localhost:8443/api/users/update',
             {
@@ -138,7 +189,16 @@ function Profile(props) {
                 realname: firstName,
                 surname: surName,
                 tele,
+                latitude: '12',
+                longitude: '15',
                 afm,
+            },
+            { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+            await axios.put('https://localhost:8443/api/role/update',
+            {
+                username: userInfo.username,
+                rolename: profiletype.toUpperCase(),
             },
             { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
@@ -223,8 +283,11 @@ function Profile(props) {
                                             disabled={!edit}
                                             id="outlined-disabled"
                                             label="Longitude, Latitude"
-                                            value={`${location[0]}, ${location[1]}`}
+                                            // value={`${location[0]}, ${location[1]}`}
+                                            value={locationStr}
                                             className="profileinfo-tf" 
+                                            onChange={(e)=> setLocationStr(e.target.value)}
+                                            error={showEmptyLocationStr}
                                             sx={{ mt: 5}}
                                         />
                                     }

@@ -13,6 +13,7 @@ import Divider from '@mui/material/Divider';
 import electronicImages from '../../images/image exports/ElectronicImages';
 import fashionImages from '../../images/image exports/FashionImages';
 import healthImages from '../../images/image exports/HealthImages';
+import usedImages from '../../images/image exports/UsedImages';
 
 function ProductListItem(props) {
 	
@@ -38,6 +39,7 @@ function ProductListItem(props) {
 				{props.category==='Electronics' && <img draggable="false" src={electronicImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
 				{props.category==='Fashion' && <img draggable="false" src={fashionImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
 				{props.category==='Health' && <img draggable="false" src={healthImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
+				{props.category==='Used' && <img draggable="false" src={usedImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
 			
 			</div>
 			

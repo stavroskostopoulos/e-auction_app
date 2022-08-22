@@ -17,6 +17,7 @@ import Map from './individual compenents/Map';
 import electronicImages from '../images/image exports/ElectronicImages'
 import fashionImages from '../images/image exports/FashionImages';
 import healthImages from '../images/image exports/HealthImages';
+import usedImages from '../images/image exports/UsedImages';
 
 //import material UI components
 import Tab from '@mui/material/Tab';
@@ -192,6 +193,7 @@ const ProductPage = (props) => {
                                 {productInfo.category[0]==='Electronics' && <img draggable="false" src={electronicImages[productInfo.photoId]}></img>}
                                 {productInfo.category[0]==='Fashion' && <img draggable="false" src={fashionImages[productInfo.photoId]}></img>}
                                 {productInfo.category[0]==='Health' && <img draggable="false" src={healthImages[productInfo.photoId]}></img>}
+                                {productInfo.category[0]==='Used' && <img draggable="false" src={usedImages[productInfo.photoId]}></img>}
                             
                             </div>
 

@@ -53,7 +53,6 @@ function RegistrationRequestsList(props){
     const handleAccept = async (userid) => {
         try{
             await axios.delete(`https://localhost:8443/api/role/accepted/${userid}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
-            props.refreshFunctions(userid)
         }catch(err){
             console.log(err);
         }

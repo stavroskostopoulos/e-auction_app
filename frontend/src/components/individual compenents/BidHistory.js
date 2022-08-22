@@ -60,7 +60,7 @@ function BidHistory(props) {
                             <TableCell className='tablecell-title'><p>Name</p></TableCell>
                             <TableCell className='tablecell-title' align="right"><p>Username</p></TableCell>
                             <TableCell className='tablecell-title' align="right"><p>Date</p></TableCell>
-                            <TableCell className='tablecell-title' align="right"><p>Bid number</p></TableCell>
+                            {/* <TableCell className='tablecell-title' align="right"><p>Bid number</p></TableCell> */}
                             <TableCell className='tablecell-title' align="right"><p>Amount&nbsp;(€)</p></TableCell>
                             
                         </TableRow>
@@ -76,7 +76,7 @@ function BidHistory(props) {
                         </TableCell>
                         <TableCell align="right" ><p className='data-table-link'>vaspio</p></TableCell>
                         <TableCell align="right">12/03/2022</TableCell>
-                        <TableCell align="right">4</TableCell>
+                        {/* <TableCell align="right">4</TableCell> */}
                         <TableCell align="right">20</TableCell>
                         
                         </TableRow>

@@ -32,6 +32,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import electronicImages from '../images/image exports/ElectronicImages';
 import fashionImages from '../images/image exports/FashionImages';
 import healthImages from '../images/image exports/HealthImages';
+import usedImages from '../images/image exports/UsedImages';
 
 const CssTextField = withStyles({
     root: {
@@ -137,6 +138,7 @@ function NewBidPage() {
         if(chosenCategory==="Electronics") imgID = Math.floor(Math.random()*electronicImages.length);
         if(chosenCategory==="Fashion") imgID = Math.floor(Math.random()*fashionImages.length);
         if(chosenCategory==="Health") imgID = Math.floor(Math.random()*healthImages.length);
+        if(chosenCategory==="Used") imgID = Math.floor(Math.random()*usedImages.length);
         
         console.log("ti eipa");
         console.log(selectedCountry.label);
