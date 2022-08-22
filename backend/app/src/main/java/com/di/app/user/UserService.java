@@ -105,6 +105,20 @@ public class UserService {
 
     }
 
+    public User UpdateRole(RoleForm role){
+        User user = userRepository.findByUsername(role.getUsername());
+
+        user.getRoles().remove(roleRepository.getById(1L));
+        user.getRoles().remove(roleRepository.getById(2L));
+        user.getRoles().remove(roleRepository.getById(3L));
+        user.getRoles().remove(roleRepository.getById(4L));
+        user.getRoles().remove(roleRepository.getById(5L));
+
+        GiveRole(role.getUsername(), role.getRolename());
+
+        return user;
+    }
+
 
     public void DeleteUser(Long id) {
         User user = userRepository.getById(id);

@@ -29,6 +29,8 @@ public class UserConfig {
                     "Kopos",
                     "6988772829",
                     "23323",
+                    "35",
+                    "17",
                     new ArrayList<>()
 
             ));
@@ -41,12 +43,16 @@ public class UserConfig {
                     "Stam",
                     "6952252",
                     "222222",
+                    "35",
+                    "8",
                     new ArrayList<>()
             ));
 
             userService.SaveUser(new User(null,
                     "guest",
                     "null",
+                    null,
+                    null,
                     null,
                     null,
                     null,

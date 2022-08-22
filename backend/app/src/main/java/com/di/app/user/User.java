@@ -26,6 +26,8 @@ public class User {
     private String surname;
     private String tele;
     private String afm;
+    private String latitude;
+    private String longitude;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)

@@ -71,6 +71,10 @@ public class UserController {
         return ResponseEntity.ok().body(service.UpdateUser(user));
     }
 
+    @PutMapping(path = "role/update")
+    public ResponseEntity<User> UpdateRole(@RequestBody RoleForm role){
+        return ResponseEntity.ok().body(service.UpdateRole(role));
+    }
 
     // DELETE
 
