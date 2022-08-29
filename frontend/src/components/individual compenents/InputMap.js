@@ -84,7 +84,7 @@ function InputMap(props) {
         setShowEmptyLocationStr(false);
 
 
-        console.log(parsedlocation);
+        // console.log(parsedlocation);
 
         setLocation([parsedlocation[0], parsedlocation[1]]);
         props.inputMapSetLocation([parsedlocation[0], parsedlocation[1]]);

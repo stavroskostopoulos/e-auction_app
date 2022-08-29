@@ -117,7 +117,6 @@ function MessagesPage() {
             setShowEmptyReceiver(false);
         }
 
-        console.log("proxwraw");
         // http request
         handleClose();
     };

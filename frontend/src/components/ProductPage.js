@@ -118,7 +118,7 @@ const ProductPage = (props) => {
             setCurrentPrice(result.data.currentBid);
             setLocation([Number(result.data.longitude), Number(result.data.latitude)]);
             setIsLoading(false);
-            console.log(result.data);
+            // console.log(result.data);
 
         }catch(err){
 
@@ -185,6 +185,7 @@ const ProductPage = (props) => {
               	<div className="column-right"/>
                 <div className="column-middle" style={{backgroundColor: "#fff"}}>
                 
+                {/* {console.log(productInfo.photoId)} */}
                     {!(isLoading) &&
                         <div className='product-container'>
 
@@ -192,7 +193,7 @@ const ProductPage = (props) => {
                             <div className='product-image'>
                                 {productInfo.category[0]==='Electronics' && <img draggable="false" src={electronicImages[productInfo.photoId]}></img>}
                                 {productInfo.category[0]==='Fashion' && <img draggable="false" src={fashionImages[productInfo.photoId]}></img>}
-                                {productInfo.category[0]==='Health' && <img draggable="false" src={healthImages[productInfo.photoId]}></img>}
+                                {productInfo.category[0]==='Health&Beauty' && <img draggable="false" src={healthImages[productInfo.photoId]}></img>}
                                 {productInfo.category[0]==='Used' && <img draggable="false" src={usedImages[productInfo.photoId]}></img>}
                             
                             </div>
@@ -307,7 +308,7 @@ const ProductPage = (props) => {
 
                             </div>
 
-                            {console.log(location)}
+                            {/* {console.log(location)} */}
 
 
                         

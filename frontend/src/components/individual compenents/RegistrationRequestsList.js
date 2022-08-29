@@ -61,7 +61,7 @@ function RegistrationRequestsList(props){
     const handleDecline = async (userid) => {
         try{
             const res = await axios.delete(`https://localhost:8443/api/users/delete/${userid}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
-            console.log(res);
+            // console.log(res);
         }catch(err){
             console.log(err);
         }

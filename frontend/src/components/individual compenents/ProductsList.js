@@ -37,7 +37,7 @@ function ProductsList(props) {
 
     return (
         <Stack spacing={3} className='products-stack'>
-            {console.log(props.productsList.length)}
+            {/* {console.log(props.productsList.length)} */}
             {(!props.isLoading) && (props.productsList.length!==0) &&
                 props.productsList.map((product) =>	(
                     <ProductListItem productKey={product.itemId} productname={product.name} category={product.category[0]} photoId={product.photoId} daysLeft={getDaysLeft(product)} owner='kostopez' numberOfBidders="15" price={product.currentBid}/>

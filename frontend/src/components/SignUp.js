@@ -176,7 +176,7 @@ function Login() {
 
     const proceedtoStepTwoOfSignUp = (e) => {
         e.preventDefault();
-        console.log("tzimakos");
+        // console.log("tzimakos");
         (!email) ? setShowEmptyEmail(true) : setShowEmptyEmail(false);
         (!realname) ? setShowEmptyRealname(true) : setShowEmptyRealname(false);
         (!surname) ? setShowEmptySurname(true) : setShowEmptySurname(false);
@@ -278,7 +278,7 @@ function Login() {
     
     return (
         <div className='signin-container signup-container'>
-            {console.log(location)}
+            {/* {console.log(location)} */}
                 <div className='signupart'/>
                 <div className='signform'>
 

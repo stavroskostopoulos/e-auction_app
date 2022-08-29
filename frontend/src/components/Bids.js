@@ -161,7 +161,6 @@ function Bids() {
 	React.useEffect(() => {
 
 		
-		console.log(priceRangeToggle)
 		// ⬇ This calls my get request from the server
 		
 		//if price range has been modified
@@ -195,7 +194,6 @@ function Bids() {
 
     const getProducts = async () => {
 		
-		console.log("DSAFDADSFADSFASDf");
 		// const result = await axios.get(`https://localhost:8443/api/items?page=${currentPages-1}&size=8`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
 		// 							.then(setIsLoading(false))
 		// 							.catch(err => {
@@ -222,9 +220,9 @@ function Bids() {
 			setTotalPages(result.data.totalPages);
 			setProductsList(result.data.content);
 			
-			console.log("getprod")
-			console.log(result.data.totalPages)
-			console.log(result.data);
+			// console.log("getprod")
+			// console.log(result.data.totalPages)
+			// console.log(result.data);
 									
 										
 		}catch(err){
@@ -271,7 +269,7 @@ function Bids() {
 	};
 
 	const handleSearch = (value) => {
-		console.log(value);
+		// console.log(value);
 		setPriceRangeToggle(value);
 		setSearchContents(value);
 	}

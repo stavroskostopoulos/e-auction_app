@@ -38,7 +38,7 @@ function ProductListItem(props) {
 				{/* {console.log(props.category)} */}
 				{props.category==='Electronics' && <img draggable="false" src={electronicImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
 				{props.category==='Fashion' && <img draggable="false" src={fashionImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
-				{props.category==='Health' && <img draggable="false" src={healthImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
+				{props.category==='Health&Beauty' && <img draggable="false" src={healthImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
 				{props.category==='Used' && <img draggable="false" src={usedImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
 			
 			</div>

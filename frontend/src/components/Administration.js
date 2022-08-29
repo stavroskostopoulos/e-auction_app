@@ -93,7 +93,7 @@ function Administration() {
             setForbiddenFlag(false);
             setIsLoading(false);
 
-            console.log(res.data.content);
+            // console.log(res.data.content);
         }catch(err){
 
             console.log(err);

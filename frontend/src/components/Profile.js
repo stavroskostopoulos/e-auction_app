@@ -91,14 +91,14 @@ function Profile(props) {
         //if there was no location given
         if(!locationStr){   
             setShowEmptyLocationStr(true);
-            return true; 
+            return false; 
         }
 
         //if the format is not correct
         //contains ","
         if(!locationStr.includes(",")){   
             setShowEmptyLocationStr(true);
-            return true; 
+            return false; 
         }
 
         let parsedlocation = locationStr.replace(/ /g,'').split(',');
@@ -106,13 +106,13 @@ function Profile(props) {
         //if there are more than one "," or there is nothing before or after the ","
         if(parsedlocation.length!=2 || parsedlocation[0] === "" || parsedlocation[1] === ""){
             setShowEmptyLocationStr(true);
-            return true; 
+            return false; 
         }
 
         //if these are not numbers
         if( isNaN(parsedlocation[0]) || isNaN(parseFloat(parsedlocation[0])) || isNaN(parsedlocation[1]) || isNaN(parseFloat(parsedlocation[1])) ) {
             setShowEmptyLocationStr(true);
-            return true;
+            return false;
         }
 
         setShowEmptyLocationStr(false);
@@ -120,7 +120,7 @@ function Profile(props) {
 
         console.log(parsedlocation);
 
-        setLocation([parsedlocation[0], parsedlocation[1]]);
+        return parsedlocation;
 
     };
 
@@ -129,7 +129,7 @@ function Profile(props) {
     
         let userId = localStorage.getItem('loggedUserId');
 
-        console.log(userId);
+        // console.log(userId);
         
 
         axios.get(`https://localhost:8443/api/users/id/${state.id}`,
@@ -148,8 +148,9 @@ function Profile(props) {
             setProfiletype(capitalizeFirstLetter(res.data.roles[0].name.toLowerCase()));
             setAfm(res.data.afm);
             setLocationStr([res.data.longitude.toString(), res.data.latitude.toString()]);
+            setLocation([Number(res.data.longitude), Number(res.data.latitude)]);
 
-            console.log(res.data);
+            // console.log(res.data);
         })
         .catch(err => console.log(err));
 
@@ -175,12 +176,14 @@ function Profile(props) {
 
         
         //check location input
-        if(parseLocation()) return;
+        const parsedlocation = parseLocation();
+        
+        if(!parsedlocation) return;
+        setLocation(Number(parsedlocation[0]), Number(parsedlocation[1]));
+
         //restore the initial data using our backup userInfo
         try{
-            console.log(location[0].toString());
-            console.log(location[1].toString());
-            
+                
 
             const res = await axios.put('https://localhost:8443/api/users/update',
             {
@@ -189,8 +192,8 @@ function Profile(props) {
                 realname: firstName,
                 surname: surName,
                 tele,
-                latitude: '12',
-                longitude: '15',
+                latitude: parsedlocation[1],
+                longitude: parsedlocation[0],
                 afm,
             },
             { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });

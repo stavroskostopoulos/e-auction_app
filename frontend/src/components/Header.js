@@ -120,8 +120,7 @@ function Header() {
                     <Tabs 
                         textColor="inherit"
                         value={value}
-                        onChange={(e,value) => {setValue(value);
-                            {console.log(value)}; }}
+                        onChange={(e,value) => {setValue(value);}}
                         TabIndicatorProps={{ sx: { backgroundColor: "#e4d9ff"} }}
                         className={classes.menuOptions}
                         >

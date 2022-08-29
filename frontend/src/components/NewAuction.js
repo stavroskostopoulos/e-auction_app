@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 //import styling
 import '../css/NewAuction.css';
@@ -72,6 +73,8 @@ const CustomInputLabel = withStyles({
 
 function NewBidPage() {
 
+    let navigate = useNavigate();
+
     //if empty
 
     const categories = productCategories;
@@ -115,7 +118,6 @@ function NewBidPage() {
         
         e.preventDefault();
 
-        console.log("ti les");
 
         (!productTitle) ? setShowEmptyProductTitle(true) : setShowEmptyProductTitle(false);
         (!productDesc) ? setShowEmptyProductDesc(true) : setShowEmptyProductDesc(false);
@@ -137,50 +139,53 @@ function NewBidPage() {
 
         if(chosenCategory==="Electronics") imgID = Math.floor(Math.random()*electronicImages.length);
         if(chosenCategory==="Fashion") imgID = Math.floor(Math.random()*fashionImages.length);
-        if(chosenCategory==="Health") imgID = Math.floor(Math.random()*healthImages.length);
+        if(chosenCategory==="Health&Beauty") imgID = Math.floor(Math.random()*healthImages.length);
         if(chosenCategory==="Used") imgID = Math.floor(Math.random()*usedImages.length);
         
-        console.log("ti eipa");
-        console.log(selectedCountry.label);
+        // console.log(selectedCountry.label);
 
-        const result = await axios.post('https://localhost:8443/api/items/save', 
-        
+        try{
+
+            const result = await axios.post('https://localhost:8443/api/items/save', 
+            
+                {
+                
+                    name: productTitle,
+                    buyPrice: buyNowPrice,
+                    description: productDesc,
+                    firstBid: null,
+                    currentBid: "0",
+                    bidCount: "0",
+                    start: startDate,
+                    end: endDate,
+                    latitude: location[1].toString(),
+                    longitude: location[0].toString(),
+                    country: selectedCountry.label,
+                    photoId: imgID,
+                    sellerId: localStorage.getItem('loggedUserId'),
+                }
+            
+            
+            ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            
+            const result_cat = await axios.post('https://localhost:8443/api/items/save/cat', 
+            
             {
             
-                name: productTitle,
-                buyPrice: buyNowPrice,
-                description: productDesc,
-                firstBid: null,
-                currentBid: "0",
-                bidCount: "0",
-                start: startDate,
-                end: endDate,
-                latitude: location[1].toString(),
-                longitude: location[0].toString(),
-                country: selectedCountry.label,
-                photoId: imgID,
-                sellerId: localStorage.getItem('loggedUserId'),
+                itemId: result.data.itemId,
+                cats: [chosenCategory],
+            
             }
         
         
-        ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} }).catch(err => {
-            console.log(err);
-        });
-        
-        const result_cat = await axios.post('https://localhost:8443/api/items/save/cat', 
-        
-        {
-        
-            itemId: result.data.itemId,
-            cats: [chosenCategory],
-        
+        ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+        }catch(err){
+            console.log(err)
         }
-    
-    
-    ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
-        console.log(result.data);
-
+        // console.log(result.data);
+        navigate("/")
     }
 
 
@@ -239,14 +244,14 @@ function NewBidPage() {
 
                                 <p>In order to sell a product, your auction needs to satisfy the following terms:</p>
                             
-                                <ol style={{ marginLeft: '50px', marginTop: '25px' }}>
+                                <ol style={{ marginLeft: '50px', marginTop: '25px', marginBottom: '20px' }}>
                                     <li>The duration of the auction must be within 4 to 60 days</li>
                                     <li>The auction product must fit to one of the given product category options</li>
                                     <li>You need to provide a description of the product, declaring its state, its availability, and any further details</li>
                                     <li>You can optionally provide a "Buy now price", giving the opportunity to customers to instantly buy your product, <br/>without having to participate to the auction </li>
                                 </ol>
 
-                                <p style={{ marginTop: '25px' }}>Please note that once your auction is created, it cannot be canceled!</p>
+                                {/* <p style={{ marginTop: '25px' }}>Please note that once your auction is created, it cannot be canceled!</p> */}
 
                             </div>
 
