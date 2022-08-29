@@ -20,6 +20,6 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
     Bidder getBidder(@Param("cid")Long cid);
 
 
-    @Query(value = "SELECT * FROM bid b WHERE b.item_id = :itemid LIMIT :limit OFFSET :offset", nativeQuery = true)
-    List<Bid> getBidsAuction(@Param("itemid")Long itemid, @Param("limit")Integer limit, @Param("offset")Integer offset);
+    @Query(value = "SELECT * FROM bid b WHERE b.item_id = :itemid ORDER BY b.amount DESC", nativeQuery = true)
+    List<Bid> getBidsAuction(@Param("itemid")Long itemid);
 }

@@ -40,6 +40,11 @@ import AlarmIcon from '@mui/icons-material/Alarm';
 import PersonSharpIcon from '@mui/icons-material/PersonSharp';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 
+
+function createData(id, name, username, bidDate, amount) {
+    return { id, name, username, bidDate, amount };
+}
+
 const CustomOutlinedInput = withStyles({
     root: {
         '&.Mui-focused fieldset': {
@@ -74,7 +79,7 @@ const ProductPage = (props) => {
     // .TOFIXED(2)
 
 
-	const [previousBids, setPreviousBids] = React.useState(["1", "2", "3", "4", "5", "6", "7"]);
+	const [previousBids, setPreviousBids] = React.useState();
 
     
     const [dataMenuValue, setDataMenuValue] = React.useState("1");
@@ -98,6 +103,9 @@ const ProductPage = (props) => {
     const [invalidNewBid, setInvalidNewBid] = React.useState(false);
 
     const [currentPrice, setCurrentPrice] = React.useState(0);
+
+    const [refreshString, setRefreshString] = React.useState("refresh")
+
     React.useEffect(() => {
 
 		// console.log(currentPages)
@@ -105,9 +113,9 @@ const ProductPage = (props) => {
         // ⬇ This calls my get request from the server
 		getProductInfo();
 	
-		
+		getBidInfo();
 
-	}, []);
+	}, [refreshString]);
 
     const getProductInfo = async () => {	
 		try{
@@ -125,7 +133,6 @@ const ProductPage = (props) => {
             setIsLoading(true);
             console.log(err);
             if(err.response.status === 403){
-    
                 console.log("forbidden");
             }
         }
@@ -137,6 +144,34 @@ const ProductPage = (props) => {
         // setProductInfo(result.data)
         
 	};
+
+    const getBidInfo = async () => {	
+		try{
+            const result = await axios.get(`https://localhost:8443/api/bids/item/${state.id}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+            setPreviousBids(result.data);
+            console.log(result.data);
+
+            const rows = [];
+
+            if(result.data.length === 0){
+                console.log("ADEIO")
+            }else{
+                result.data.forEach(element => {
+                    rows.push(createData( element.bidder.userId, element.bidder.realname + " " + element.bidder.surname, element.bidder.username, element.time.toString(), element.amount))
+                });
+            }
+
+            setPreviousBids(rows);
+
+        }catch(err){
+
+            setIsLoading(true);
+            console.log(err);
+            
+		
+	    }
+    };
 
     const handleClickOpenDialogBid = () => {
       setOpenDialogBid(true);
@@ -178,6 +213,51 @@ const ProductPage = (props) => {
         
 
     };
+
+    const submitBid = async () => {
+
+        
+        let bidDate = new Date();
+        
+        
+        try{
+            
+            const result = await axios.get(`https://localhost:8443/api/users/id/${localStorage.getItem('loggedUserId')}`,
+            { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
+            
+            
+            const bidder = {
+                userId: localStorage.getItem('loggedUserId'),
+                username: result.data.username,
+                realname: result.data.realname,
+                surname: result.data.surname,
+                country: result.data.country
+            }
+
+
+            await axios.post('https://localhost:8443/api/bids/save/', 
+            
+                                {
+                                    itemId: productInfo.itemId,
+                                    amount: newBid,
+                                    bidder,
+                                    time: bidDate
+                                }
+                        
+                        
+                                ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+
+
+            
+
+        }catch(err){
+            console.log(err)
+        }
+
+        setRefreshString("submit" + newBid);
+    }
+
 
     return (
             <div className="main-container">
@@ -295,7 +375,7 @@ const ProductPage = (props) => {
 
                                 <div className='data'>
                                     {(dataMenuValue==1) ? 
-                                        <BidHistory bids={previousBids}/> 
+                                        <BidHistory rows={previousBids}/> 
                                     : 
                                         <div className='map-container'>
                                             {/* <p>{"Longitude: "+ location[0] + ", Latitude: " + location[1]}</p> */}
@@ -335,7 +415,7 @@ const ProductPage = (props) => {
                     </DialogContent>
                     <DialogActions>
                     <Button onClick={handleCloseDialogBid} endIcon={<CloseOutlinedIcon/>} className='dialog-disagree-btn'>Disagree</Button>
-                    <Button onClick={handleCloseDialogBid} endIcon={<CheckIcon/>} autoFocus className='dialog-agree-btn'>
+                    <Button onClick={() => {handleCloseDialogBid(); submitBid();}} endIcon={<CheckIcon/>} autoFocus className='dialog-agree-btn'>
                         Agree
                     </Button>
                     </DialogActions>

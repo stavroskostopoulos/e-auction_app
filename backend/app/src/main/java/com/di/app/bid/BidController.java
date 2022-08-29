@@ -26,9 +26,9 @@ public class BidController {
         return ResponseEntity.ok().body(bidService.GetBidsById(id));
     }
 
-    @GetMapping(path = "/bids/item/{offset}")
-    public ResponseEntity<List<Bid>> GetBidsOfAuction(@RequestBody Long id, @PathVariable("offset") Integer offset){
-        return ResponseEntity.ok().body(bidService.GetBidsOfAuction(id,offset));
+    @GetMapping(path = "/bids/item/{id}")
+    public ResponseEntity<List<Bid>> GetBidsOfAuction(@PathVariable("id") Long id){
+        return ResponseEntity.ok().body(bidService.GetBidsOfAuction(id));
     }
 
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
 
 import Tab from '@mui/material/Tab';
@@ -29,26 +29,25 @@ import Paper from '@mui/material/Paper';
 
 
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-  
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
 
-  ];
+
 
 
 function BidHistory(props) {
 
-    
+    // const rows = [];
+
+    // React.useEffect(() => {
+
+	// 	if(props.bids.length === 0){
+    //         console.log("ADEIO")
+    //     }else{
+    //         props.bids.forEach(element => {
+    //             rows.push(createData(element.bidder.realname + element.bidder.surname, element.bidder.username, element.time.toString(), element.amount))
+    //         });
+    //     }
+
+	// }, []);
 
     return (
         <div>
@@ -66,20 +65,22 @@ function BidHistory(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {rows.map((row) => (
-                        <TableRow
-                        key={row.name}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                        <TableCell component="th" scope="row" >
-                            <p className='data-table-link'>Vasilis Pasios</p>
-                        </TableCell>
-                        <TableCell align="right" ><p className='data-table-link'>vaspio</p></TableCell>
-                        <TableCell align="right">12/03/2022</TableCell>
-                        {/* <TableCell align="right">4</TableCell> */}
-                        <TableCell align="right">20</TableCell>
+                    {props.rows.map((row) => (
                         
-                        </TableRow>
+                            <TableRow
+                            key={row.username}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row" >
+                                        <Link to={ `/profile/${row.id}`} state={{id: row.id }} style={{ textDecoration: 'none' }} className="linkcomponent"><p className='data-table-link'>{row.name}</p></Link>
+                                </TableCell>
+                                <TableCell align="right" ><Link to={ `/profile/${row.id}`} state={{id: row.id }} style={{ textDecoration: 'none' }} className="linkcomponent"><p className='data-table-link'>{row.username}</p></Link></TableCell>
+                                <TableCell align="right">{row.bidDate}</TableCell>
+                                {/* <TableCell align="right">4</TableCell> */}
+                                <TableCell align="right">{row.amount}</TableCell>
+                                
+                            </TableRow>
+                        
                     ))}
                     </TableBody>
                 </Table>

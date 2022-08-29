@@ -16,6 +16,9 @@ public class Bidder {
 
     private Long userId;
 
+    private String username;
+    private String realname;
+    private String surname;
     private String rating;
     private String location;
     private String country;

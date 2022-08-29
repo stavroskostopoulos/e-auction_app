@@ -23,8 +23,8 @@ public class BidService {
         return bidRepository.findById(id);
     }
 
-    public List<Bid> GetBidsOfAuction(Long id, Integer offset) {
-       return bidRepository.getBidsAuction(id,8,offset);
+    public List<Bid> GetBidsOfAuction(Long id) {
+       return bidRepository.getBidsAuction(id);
     }
 
     public Bid SaveBid(Bid newBid) {
