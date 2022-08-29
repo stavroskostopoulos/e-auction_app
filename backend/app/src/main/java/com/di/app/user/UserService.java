@@ -85,7 +85,7 @@ public class UserService {
         String afm=user.getAfm();
         String lat=user.getLatitude();
         String lng=user.getLongitude();
-        
+
 
         User userToUpdate = userRepository.findByUsername(user.getUsername());
 
@@ -94,8 +94,8 @@ public class UserService {
         if(surname!=null) userToUpdate.setSurname(surname);
         if(tele!=null) userToUpdate.setTele(tele);
         if(afm!=null) userToUpdate.setAfm(afm);
-        if(lat!=null) userToUpdate.setAfm(lat);
-        if(lng!=null) userToUpdate.setAfm(lng);
+        if(lat!=null) userToUpdate.setLatitude(lat);
+        if(lng!=null) userToUpdate.setLongitude(lng);
 
 
         if(user.getPass()!=null) {
