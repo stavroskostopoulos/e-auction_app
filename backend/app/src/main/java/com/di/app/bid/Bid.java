@@ -17,8 +17,8 @@ public class Bid {
 
 
     private Long itemId;
-    private String time;
-    private String amount;
+    private Date time;
+    private Integer amount;
 
     @OneToOne(cascade = CascadeType.REFRESH)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)

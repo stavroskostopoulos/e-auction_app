@@ -1,5 +1,7 @@
 package com.di.app.bid;
 
+import com.di.app.item.Item;
+import com.di.app.item.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.Optional;
 public class BidService {
 
     private final BidRepository bidRepository;
+    private final ItemRepository itemRepository;
+
 
 
     public Optional<Bid> GetBidsById(Long id) {
@@ -24,6 +28,14 @@ public class BidService {
     }
 
     public Bid SaveBid(Bid newBid) {
+
+        Item item = itemRepository.getById(newBid.getItemId());
+
+        item.setCurrentBid(newBid.getAmount());
+
+        Integer bidCount = item.getBidCount() + 1;
+        item.setBidCount(bidCount);
+
         return bidRepository.save(newBid);
     }
 
