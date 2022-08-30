@@ -52,6 +52,4 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> getItemsBySearch(@Param("word")String word,@Param("limit")Integer limit, @Param("offset")Integer offset);
 
 
-
-
 }

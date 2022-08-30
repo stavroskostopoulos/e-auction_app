@@ -51,6 +51,8 @@ function UsersList(props) {
         }catch(err){
             console.log(err);
         }
+        props.setRefreshStringFunction("delete" + userid);
+
     }
 
     const renderUsers = () => {

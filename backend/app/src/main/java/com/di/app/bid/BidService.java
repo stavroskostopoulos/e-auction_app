@@ -33,10 +33,12 @@ public class BidService {
 
         item.setCurrentBid(newBid.getAmount());
 
-        Integer bidCount = item.getBidCount() + 1;
-        item.setBidCount(bidCount);
+        Bid newBidTemp = bidRepository.save(newBid);
 
-        return bidRepository.save(newBid);
+        //update number of bidder (DISTINCT)
+        item.setBidCount(bidRepository.getDistinctBiddersNumber(newBid.getItemId()));
+
+        return newBidTemp;
     }
 
     public void DeleteBid(Long id) {

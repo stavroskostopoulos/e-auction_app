@@ -55,7 +55,7 @@ const useStyles = makeStyles({
     }
 });
 
-function Login() {
+function Login(props) {
 
     const classes = useStyles();
     let navigate = useNavigate();
@@ -69,6 +69,13 @@ function Login() {
     //errors
     const [credentialsError, setCredentialsError] = React.useState(false);
     const [guestError, setGuestError] = React.useState(false);
+
+    React.useEffect(() => {
+
+        //reset header choice (NavBar focus)
+        props.setHeaderChoice(false);
+
+    }, []);
 
     const sendSignInCredentials = async (e) => {
 
@@ -126,7 +133,7 @@ function Login() {
             }
 
             setCredentialsError(false);
-            navigate("/");
+            navigate("/auctions");
 
         }catch(err){
            console.log(err);
@@ -147,7 +154,8 @@ function Login() {
             localStorage.setItem("guest", true);
             localStorage.setItem("guest_user", true);
 
-            navigate("/");
+            props.setHeaderChoice("1");
+            navigate("/auctions");
 
         }catch(err){
             console.log(err);

@@ -56,6 +56,7 @@ function RegistrationRequestsList(props){
         }catch(err){
             console.log(err);
         }
+        props.setRefreshStringFunction("accept" + userid);
     }
 
     const handleDecline = async (userid) => {
@@ -65,6 +66,7 @@ function RegistrationRequestsList(props){
         }catch(err){
             console.log(err);
         }
+        props.setRefreshStringFunction("decline" + userid);
     }
 
     const renderUsers = () => {

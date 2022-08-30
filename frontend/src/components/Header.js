@@ -74,14 +74,13 @@ const useStyles = makeStyles({
 
 
 
-function Header() {
+function Header(props) {
 
     const classes = useStyles();
     let navigate = useNavigate();
 
 
     const [value, setValue] = React.useState(false);
-    const [admin, setAdmin] = React.useState(false);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
 
@@ -112,24 +111,23 @@ function Header() {
                 <Toolbar>
 
                     {/* Logo */}
-                    <IconButton component={Link} to={'/'}>
+                    <IconButton component={Link} to={'/auctions'}>
                         <StoreIcon className={classes.logo}/>
                     </IconButton>
 
                     {/* Menu options */}
                     <Tabs 
                         textColor="inherit"
-                        value={value}
-                        onChange={(e,value) => {setValue(value);}}
+                        value={props.headerChoice}
+                        onChange={(e,value) => {props.setHeaderChoice(value);}}
                         TabIndicatorProps={{ sx: { backgroundColor: "#e4d9ff"} }}
                         className={classes.menuOptions}
                         >
-                        <CustomTab className={classes.menuOption} value="1" label="Auctions" component={Link} to={'/'}/>
-                        <CustomTab className={classes.menuOption} value="2" label="Sell" component={Link} to={'/sell'} disabled={localStorage.getItem("guest")}/>
-                        <CustomTab className={classes.menuOption} value="3" label="Messages" component={Link} to={'/messages'} disabled={localStorage.getItem("guest")}/>
-                        {!admin &&
-                            <CustomTab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'} disabled={localStorage.getItem("guest")}/>
-                        }
+                        <CustomTab className={classes.menuOption} value="1" label="Auctions" component={Link} to={'/auctions'} disabled={!localStorage.getItem("jwt")}/>
+                        <CustomTab className={classes.menuOption} value="2" label="Sell" component={Link} to={'/sell'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>
+                        <CustomTab className={classes.menuOption} value="3" label="Messages" component={Link} to={'/messages'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>             
+                        <CustomTab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>
+                        
                     </Tabs>
 
                     {/* if not logged in  */}

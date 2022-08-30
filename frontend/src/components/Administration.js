@@ -33,7 +33,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 
 
-function Administration() {
+function Administration(props) {
   
     const [value, setValue] = React.useState("1");
 	const [request, setRequest] = React.useState(false);
@@ -50,7 +50,12 @@ function Administration() {
 
     const [forbiddenFlag, setForbiddenFlag] = React.useState(true);
 
+    const [refreshString, setRefreshString] = React.useState("refresh")
+
+
     React.useEffect(() => {
+
+        
 
         if(request){
             getPendingUsers();
@@ -58,7 +63,7 @@ function Administration() {
             allUsers(); 
         }
 
-    }, [request]);
+    }, [request, refreshString]);
 
     const allUsers = async () => {
         try{
@@ -139,7 +144,8 @@ function Administration() {
                     <div className='admin-menu'>
                         <Tabs
                             value={value}
-                            onChange={(e,value) => {setValue(value);}}                        textColor="secondary"
+                            onChange={(e,value) => {setValue(value);}}                        
+                            textColor="secondary"
                             indicatorColor="secondary"
                             aria-label="secondary tabs example"
                             >
@@ -173,7 +179,7 @@ function Administration() {
 
 
 						{!forbiddenFlag && !isLoading && !request &&
-							<UsersList totalUsersList={totalUsersList}/>
+							<UsersList totalUsersList={totalUsersList} setRefreshStringFunction={setRefreshString}/>
 						}
 						
 						{/* pagination */}
@@ -188,7 +194,7 @@ function Administration() {
 
 						{/* if we are on the "REGISTRATIONS REQUESTS" tab */}
 						{!forbiddenFlag && !isLoading && request && 
-							<RegistrationRequestsList requests={usersRegisterList}/>
+							<RegistrationRequestsList requests={usersRegisterList} setRefreshStringFunction={setRefreshString}/>
 						}
 						{/* pagination */}
 						{!forbiddenFlag && !isLoading && request && (usersRegisterList.length > 6) &&

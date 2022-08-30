@@ -127,10 +127,14 @@ function Profile(props) {
 
     React.useEffect(() => {
     
+        //reset header choice (NavBar focus)
+        props.setHeaderChoice(false);
+
         let userId = localStorage.getItem('loggedUserId');
 
         // console.log(userId);
         
+
 
         axios.get(`https://localhost:8443/api/users/id/${state.id}`,
             { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })

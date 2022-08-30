@@ -71,7 +71,7 @@ const CustomInputLabel = withStyles({
     }
 })(InputLabel);
 
-function NewBidPage() {
+function NewBidPage(props) {
 
     let navigate = useNavigate();
 
@@ -139,7 +139,7 @@ function NewBidPage() {
 
         if(chosenCategory==="Electronics") imgID = Math.floor(Math.random()*electronicImages.length);
         if(chosenCategory==="Fashion") imgID = Math.floor(Math.random()*fashionImages.length);
-        if(chosenCategory==="Health&Beauty") imgID = Math.floor(Math.random()*healthImages.length);
+        if(chosenCategory==="Health & Beauty") imgID = Math.floor(Math.random()*healthImages.length);
         if(chosenCategory==="Used") imgID = Math.floor(Math.random()*usedImages.length);
         
         // console.log(selectedCountry.label);
@@ -185,7 +185,8 @@ function NewBidPage() {
         }
 
         // console.log(result.data);
-        navigate("/")
+        props.setHeaderChoice("1");
+        navigate("/auctions")
     }
 
 
@@ -217,6 +218,17 @@ function NewBidPage() {
                         </>
                     }
 
+                    {/* if the one navigating isn't even a guest */}
+                    {!localStorage.getItem("jwt") && 
+                        <div className='forbidden-container'>
+                            <Stack spacing={2} className="forbidden-stack">
+                                <img className="forbidden-img" src="/forbidden.png"></img>
+                                <p className='forbidden-msg'>You are not authorized to be here!</p>
+                            
+                            </Stack>
+                        </div>
+                    }
+
                     {localStorage.getItem("guest_user") &&
                         <>
                         
@@ -234,7 +246,7 @@ function NewBidPage() {
                         </>
                     }
 
-                    {!localStorage.getItem("guest") && 
+                    {!localStorage.getItem("guest") &&  localStorage.getItem("jwt") && 
                         <>
                             <div className='new-bid-title-container'>
                                 <h1 className='admin-title'>Create an auction</h1>

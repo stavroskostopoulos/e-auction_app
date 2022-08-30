@@ -22,4 +22,8 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
 
     @Query(value = "SELECT * FROM bid b WHERE b.item_id = :itemid ORDER BY b.amount DESC", nativeQuery = true)
     List<Bid> getBidsAuction(@Param("itemid")Long itemid);
+
+    @Query(value = "SELECT COUNT(DISTINCT user_id) FROM bid JOIN bidder ON bid.bidder_id = bidder.id WHERE item_id=:itemid", nativeQuery = true)
+    Integer getDistinctBiddersNumber(@Param("itemid")Long itemid);
+
 }

@@ -39,10 +39,19 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import AlarmIcon from '@mui/icons-material/Alarm';
 import PersonSharpIcon from '@mui/icons-material/PersonSharp';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
+import Fab from '@mui/material/Fab';
+import Tooltip from '@mui/material/Tooltip';
+import Zoom from '@mui/material/Zoom';
+import DeleteIcon from '@mui/icons-material/Delete';
 
+const fabStyle = {
+    position: 'fixed',
+    top: 84,
+    right: 24,
+};
 
-function createData(id, name, username, bidDate, amount) {
-    return { id, name, username, bidDate, amount };
+function createData(rowid, id, name, username, bidDate, amount) {
+    return { rowid, id, name, username, bidDate, amount };
 }
 
 const CustomOutlinedInput = withStyles({
@@ -79,7 +88,7 @@ const ProductPage = (props) => {
     // .TOFIXED(2)
 
 
-	const [previousBids, setPreviousBids] = React.useState();
+	const [previousBids, setPreviousBids] = React.useState([]);
 
     
     const [dataMenuValue, setDataMenuValue] = React.useState("1");
@@ -106,10 +115,15 @@ const ProductPage = (props) => {
 
     const [refreshString, setRefreshString] = React.useState("refresh")
 
+    
     React.useEffect(() => {
 
 		// console.log(currentPages)
-		
+
+		//reset header choice (NavBar focus)
+        props.setHeaderChoice(false);
+
+
         // ⬇ This calls my get request from the server
 		getProductInfo();
 	
@@ -150,18 +164,17 @@ const ProductPage = (props) => {
             const result = await axios.get(`https://localhost:8443/api/bids/item/${state.id}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
             setPreviousBids(result.data);
-            console.log(result.data);
+            // console.log(result.data);
 
-            const rows = [];
+            let rows = [];
 
-            if(result.data.length === 0){
-                console.log("ADEIO")
-            }else{
+            if(result.data.length){
                 result.data.forEach(element => {
-                    rows.push(createData( element.bidder.userId, element.bidder.realname + " " + element.bidder.surname, element.bidder.username, element.time.toString(), element.amount))
+                    rows.push(createData(element.bidId ,element.bidder.userId, element.bidder.realname + " " + element.bidder.surname, element.bidder.username, element.time.toString(), element.amount))
                 });
             }
-
+            // console.log(rows)
+            // console.log(previousBids)
             setPreviousBids(rows);
 
         }catch(err){
@@ -169,7 +182,6 @@ const ProductPage = (props) => {
             setIsLoading(true);
             console.log(err);
             
-		
 	    }
     };
 
@@ -265,8 +277,18 @@ const ProductPage = (props) => {
               	<div className="column-right"/>
                 <div className="column-middle" style={{backgroundColor: "#fff"}}>
                 
-                {/* {console.log(productInfo.photoId)} */}
-                    {!(isLoading) &&
+                    {/* if the one navigating isn't even a guest */}
+                    {!localStorage.getItem("jwt") && 
+                        <div className='forbidden-container'>
+                            <Stack spacing={2} className="forbidden-stack">
+                                <img className="forbidden-img" src="/forbidden.png"></img>
+                                <p className='forbidden-msg'>You are not authorized to be here!</p>
+                            
+                            </Stack>
+                        </div>
+                    }
+                    
+                    {!(isLoading) && localStorage.getItem("jwt") &&
                         <div className='product-container'>
 
 
@@ -302,7 +324,7 @@ const ProductPage = (props) => {
                                 <div className="new-bid-product-stack-container">
 
                                     <Stack direction="row" spacing={1} className="new-bid-product-stack">
-                                        <FormControl >
+                                        <FormControl>
 
                                             <CustomInputLabel htmlFor="outlined-adornment-amount">Amount</CustomInputLabel>
                                             <CustomOutlinedInput
@@ -342,7 +364,7 @@ const ProductPage = (props) => {
                                     alignItems: 'center',
                                     flexWrap: 'wrap',
                                 }}>
-                                    <span className='current-bidders-text' >15 bidders</span>
+                                    <span className='current-bidders-text' >{productInfo.bidCount} bidders</span>
                                     <PersonSharpIcon className='current-bidders-icon' />
                                 </div>
 
@@ -444,6 +466,14 @@ const ProductPage = (props) => {
                     </Button>
                     </DialogActions>
                 </Dialog>
+
+                {(localStorage.getItem("loggedUserId")==productInfo.sellerId) &&
+                    <Tooltip title={<p className='tooltip-text'>Delete auction</p>} placement="left" arrow>
+                        <Fab size="large" TransitionComponent={Zoom} sx={fabStyle} color="error" aria-label="add" >
+                            <DeleteIcon/>
+                        </Fab>
+                    </Tooltip>
+                }
 
 
 
