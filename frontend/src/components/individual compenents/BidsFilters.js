@@ -221,7 +221,7 @@ function BidsFilters(props) {
                                 <p className='filter-title'>Search by location</p>
 
                                 <div style={{width: '100%', height: '500px', paddingTop: '40px'}}>
-                                    <InputMap inputMapSetLocation={setLocation} mapWidth="100%" mapHeight="290px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container" textfieldError={false}/>
+                                    <InputMap inputMapSetLocation={props.setNewLocation} mapWidth="100%" mapHeight="290px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container" textfieldError={false} bidsFiltersFlag={true} refreshFunction={props.setPriceRangeToggle}/>
                                 </div>
                                 
                             </div>

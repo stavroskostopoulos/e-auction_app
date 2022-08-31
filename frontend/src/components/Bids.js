@@ -202,6 +202,15 @@ function Bids() {
 		// 							});
 		let passCategsParam = "[" + checkedCateg.toString() + "]";
 
+		let longitude = null;
+		let latitude = null;
+
+		//if the location is the default one
+		if(location[0]!==37.96867087793514) longitude = location[0];
+		if(location[1]!==23.76662747322076) latitude = location[1];
+
+		console.log(longitude + " " + latitude)
+
 		try{
 			const result = await axios.post(`https://localhost:8443/api/items/filter/kostopez/${currentPages-1}`,
 
@@ -292,6 +301,16 @@ function Bids() {
 		}
 	}
 
+	const handleDeleteLongitude = () => {
+		setLocation([37.96867087793514, location[1]])
+		setPriceRangeToggle("longitude" + location)
+	};
+
+	const handleDeleteLatitude = () => {
+		setLocation([location[0], 23.76662747322076])
+		setPriceRangeToggle("latitude" + location)
+	};
+
     return (
       
        
@@ -374,7 +393,10 @@ function Bids() {
 								))}
 								{ (priceRange[0].toString() !=="0") && <Chip label={`> ${priceRange[0]}`} color="primary"  size='small' onDelete={() => handleDeletePriceTag("min")} className="price-chip-min"/>}
 								{ (priceRange[1].toString() !=="1000") && <Chip label={`< ${priceRange[1]}`} color="primary"  size='small' onDelete={() => handleDeletePriceTag("max")} className="price-chip-max"/>}
-
+								{ (location[0]!==37.96867087793514) && <Chip label={`Longitude: ${location[0]}`} color="primary"  size='small' onDelete={() => handleDeleteLongitude("min")} className="map-chip"/>}
+								{ (location[1]!==23.76662747322076) && <Chip label={`Latitude: ${location[1]}`} color="primary"  size='small' onDelete={() => handleDeleteLatitude("min")} className="map-chip"/>}
+								
+								
 							</Stack>
 						</div>
 

@@ -353,7 +353,7 @@ function Login() {
                                 
     
 
-                                <InputMap inputMapSetLocation={setLocation} mapWidth="400px" mapHeight="320px" fieldSize="medium" textFieldClass="location-textfield" buttonClass="location-button" containsStackClass="signup-stack-1" buttonContainerClass="location-button-container" textfieldError={showEmptyLocation} />
+                                <InputMap inputMapSetLocation={setLocation} mapWidth="400px" mapHeight="320px" fieldSize="medium" textFieldClass="location-textfield" buttonClass="location-button" containsStackClass="signup-stack-1" buttonContainerClass="location-button-container" bidsFiltersFlag={false} textfieldError={showEmptyLocation} />
                                 
 
                                 <CssTextField id="outlined-basic"

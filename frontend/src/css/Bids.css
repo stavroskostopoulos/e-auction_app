@@ -241,6 +241,11 @@
     background-color: #894ec4 !important;
 }
 
+.map-chip{
+    background-color: #1982c4 !important;
+}
+
+
 @media (max-width: 1750px) {
     .bids-container {
         display: grid;

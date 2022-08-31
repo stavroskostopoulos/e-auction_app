@@ -378,7 +378,7 @@ function NewBidPage(props) {
                                         </CssTextField> 
 
                                         <div style={{width: '380px', height: '250px'}} className="new-bid-input-map">
-                                            <InputMap inputMapSetLocation={setLocation} mapWidth="100%" mapHeight="195px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container" textfieldError={showEmptyProductLocation}/>
+                                            <InputMap inputMapSetLocation={setLocation} mapWidth="100%" mapHeight="195px" fieldSize="small" textFieldClass="filters-location-textfield" buttonClass="filters-location-button" containsStackClass="filters-stack-1" buttonContainerClass="filters-location-button-container" bidsFiltersFlag={false} textfieldError={showEmptyProductLocation}/>
                                         </div>
                                         
                                         <div className='shrinked-textfield-second'>

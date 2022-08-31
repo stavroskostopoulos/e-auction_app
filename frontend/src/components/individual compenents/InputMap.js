@@ -9,6 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
+import BidsFilters from './BidsFilters';
 
 const icon = L.icon({
     iconUrl: "./mymarker.png",
@@ -83,6 +84,7 @@ function InputMap(props) {
 
         setShowEmptyLocationStr(false);
 
+        if(props.bidsFiltersFlag){ props.refreshFunction("map"+parsedlocation) }
 
         // console.log(parsedlocation);
 
