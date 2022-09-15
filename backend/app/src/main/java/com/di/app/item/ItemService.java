@@ -199,7 +199,7 @@ public class ItemService {
     }
 
     //kostopez
-    public Page<Item> KostopezFilters(String slow, String shigh, String cats, String word, Integer offset){
+    public Page<Item> KostopezFilters(String slow, String shigh, String cats, String word, String longitude, String lat, Integer offset){
 
         // To store data from different queries
         List<Item> tempList;
@@ -223,10 +223,19 @@ public class ItemService {
             // If no categories list was given, then search for all categories | NO WORD, NO CATEG
             if(Arrays.equals(categoriesArray, emptyarr)) {
 
-                //PRICE, NO WORD, NO CATEG
-                tempList = itemRepository.getItemsByPrice(low, high, limit, offset*limit);
+                //if no location parameter was passed
+                if(longitude==null && lat==null){
+                    //PRICE, NO WORD, NO CATEG, NO LOCATION
+                    tempList = itemRepository.getItemsByPrice(low, high, limit, offset*limit);
 
-                items.addAll(tempList);
+                    items.addAll(tempList);
+                }else{
+                    //PRICE, NO WORD, NO CATEG, LOCATION
+                    tempList = itemRepository.getItemsByPriceWithLocation(low, high, limit, Integer.parseInt(longitude), Integer.parseInt(lat), offset*limit);
+
+                    items.addAll(tempList);
+                }
+
 
             }
             else{ //NO WORD, CATEG
@@ -239,8 +248,15 @@ public class ItemService {
                         break;
                     }
 
-                    //PRICE, CATEG, NO WORD
-                    tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""), categ_limit, offset*limit);
+                    //if no location parameter was passed
+                    if(longitude==null && lat==null) {
+                        //PRICE, CATEG, NO WORD, NO LOCATION
+                        tempList = itemRepository.getItemsByPriceWithCats(low, high, a.replaceAll("\\s",""), categ_limit, offset*limit);
+                    }else{
+                        //PRICE, CATEG, NO WORD, LOCATION
+                        tempList = itemRepository.getItemsByPriceWithCatsWithLocation(low, high, a.replaceAll("\\s",""), Integer.parseInt(longitude), Integer.parseInt(lat), categ_limit, offset*limit);
+                    }
+
                     items.addAll(tempList);
                 }
             }
@@ -257,10 +273,19 @@ public class ItemService {
             // If no categories list was given, then search for all categories | WORD, NO CATEG
             if(Arrays.equals(categoriesArray, emptyarr)) {
 
-                //PRICE, WORD, NO CATEG
-                tempList = itemRepository.getItemsByPriceWithWordSearch(low, high, word, limit, offset*limit);
+                //if no location parameter was passed
+                if(longitude==null && lat==null){
+                    //PRICE, WORD, NO CATEG, NO LOCATION
+                    tempList = itemRepository.getItemsByPriceWithWordSearch(low, high, word, limit, offset*limit);
 
-                items.addAll(tempList);
+                    items.addAll(tempList);
+                }else{
+                    //PRICE, WORD, NO CATEG, LOCATION
+                    tempList = itemRepository.getItemsByPriceWithWordSearchWithLocation(low, high, word, Integer.parseInt(longitude), Integer.parseInt(lat), limit, offset*limit);
+
+                    items.addAll(tempList);
+                }
+
 
             }
             else{ //CATEG
@@ -273,8 +298,15 @@ public class ItemService {
                         break;
                     }
 
-                    //PRICE, WORD, CATEG
-                    tempList = itemRepository.getItemsByPriceWithCatsWithWordSearch(low, high, a.replaceAll("\\s",""), word, limit, offset*limit);
+                    //if no location parameter was passed
+                    if(longitude==null && lat==null){
+                        //PRICE, WORD, CATEG, NO LOCATION
+                        tempList = itemRepository.getItemsByPriceWithCatsWithWordSearch(low, high, a.replaceAll("\\s",""), word, limit, offset*limit);
+                    }else{
+                        //PRICE, WORD, CATEG, LOCATION
+                        tempList = itemRepository.getItemsByPriceWithCatsWithWordSearchWithLocation(low, high, a.replaceAll("\\s",""), word, Integer.parseInt(longitude), Integer.parseInt(lat), limit, offset*limit);
+                    }
+
                     items.addAll(tempList);
                 }
             }

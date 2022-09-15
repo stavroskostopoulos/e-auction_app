@@ -55,7 +55,7 @@ public class ItemController {
     //kostopez
     @PostMapping(path = "/items/filter/kostopez/{offset}")
     public ResponseEntity<Page<Item>> KostopezFilters(@RequestBody Map<String, String> json, @PathVariable("offset") Integer offset){
-        return ResponseEntity.ok().body(itemService.KostopezFilters(json.get("low"), json.get("high"), json.get("cats"), json.get("word"), offset));
+        return ResponseEntity.ok().body(itemService.KostopezFilters(json.get("low"), json.get("high"), json.get("cats"), json.get("word"), json.get("longitude"), json.get("lat"), offset));
     }
 
     @PostMapping(path = "/items/filter/loc/{offset}")

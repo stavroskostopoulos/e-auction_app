@@ -214,10 +214,20 @@ const ProductPage = (props) => {
         let endDate = new Date(productInfo.end);
         let startDate = new Date(productInfo.start);
 
+        console.log(productInfo.end)
+        console.log(productInfo.start)
+        
+
         let Difference_In_Time = endDate.getTime() - startDate.getTime();
   
+        console.log(Difference_In_Time)
+
+
         // To calculate the no. of days between two dates
-        let daysLeftNumber = ( Difference_In_Time / (1000 * 3600 * 24));
+        let daysLeftNumber = Math.round( Difference_In_Time / (1000 * 3600 * 24));
+
+        console.log(daysLeftNumber)
+
 
         return daysLeftNumber.toString();
         // setDaysLeft(( Difference_In_Time / (1000 * 3600 * 24)))

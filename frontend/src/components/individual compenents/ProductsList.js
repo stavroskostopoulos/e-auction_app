@@ -25,7 +25,7 @@ function ProductsList(props) {
         let Difference_In_Time = endDate.getTime() - startDate.getTime();
   
         // To calculate the no. of days between two dates
-        let daysLeftNumber = ( Difference_In_Time / (1000 * 3600 * 24));
+        let daysLeftNumber = Math.round( Difference_In_Time / (1000 * 3600 * 24));
 
         return daysLeftNumber.toString();
         // setDaysLeft(( Difference_In_Time / (1000 * 3600 * 24)))
