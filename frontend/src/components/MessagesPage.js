@@ -65,6 +65,9 @@ function MessagesPage() {
     const [inboxMessages, setInboxMessages] = React.useState([]);
     const [sentMessages, setSentMessages] = React.useState([]);
 
+    const [newMessage, setNewMessage] = React.useState('');
+    
+
     const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
@@ -76,16 +79,15 @@ function MessagesPage() {
             getSent();
         }
 
-    }, [tab]);
+    }, [tab, newMessage]);
 
     const getInbox = async () => {
         try{
-            const result = await axios.get(`https://localhost:8443/api/messages/inbox/${localStorage.getItem('loggedUserId')}`
-    
-                                    ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            const result = await axios.get(`https://localhost:8443/api/messages/inbox/${localStorage.getItem('loggedUserId')}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
-            setInboxMessages(result);
+            setInboxMessages(result.data);
             console.log(result);
+            if(result.data.length){setCurrentMessage(result.data[0])}
         }catch(err){
             console.log(err);
         }
@@ -98,8 +100,9 @@ function MessagesPage() {
     
                                     ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
             
-            setSentMessages(result);
+            setSentMessages(result.data);
             console.log(result);
+            if(result.data.length){setCurrentMessage(result.data[0])}
             
         }catch(err){
             console.log(err);
@@ -118,6 +121,7 @@ function MessagesPage() {
     const [contacts, setContacts] = React.useState([]);
     const [chosenReceiver, setChosenReceiver] = React.useState(false)
     const [showEmptyReceiver, setShowEmptyReceiver] = React.useState(false);
+    const [currentMessage, setCurrentMessage] = React.useState();
     
     
     const handleClickOpen = () => {
@@ -173,20 +177,25 @@ function MessagesPage() {
         // http request
         try{
             const res = await axios.get(`https://localhost:8443/api/users/username/${chosenReceiver}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
-            receiverId = res.data;
+            let receiverId = res.data.id;
+            
+            let currentDate = new Date();
 
+            
             // http request
             await axios.post(`https://localhost:8443/api/messages/save`, 
             {
 
-                receiverId,
-                senderId: localStorage.getItem('loggedUserId'),
+                receiverId: Number(receiverId),
+                senderId: Number(localStorage.getItem('loggedUserId')),
                 title: newMailTitle,
                 content: newMailText,
-
+                username: chosenReceiver,
+                msgDate: currentDate
             }
             ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
+            setNewMessage(currentDate);
 
         }catch(err){
             console.log(err);
@@ -194,6 +203,16 @@ function MessagesPage() {
 
 
         handleClose();
+    };
+
+    const handleCurrentMessageInbox = (e, index) => {
+        setCurrentMessage(inboxMessages[index]);
+        console.log("otidhpote"+index);
+    };
+
+    const handleCurrentMessageSent = (e, index) => {
+        setCurrentMessage(sentMessages[index]);
+        console.log("otidhpote2"+index);
     };
 
 
@@ -244,10 +263,10 @@ function MessagesPage() {
                             <div className='msg-content'>
                                 <div className='msg-list-container'>
                                     <Stack spacing={1}>
-                                        {messages.map((msg) => (
+                                        {inboxMessages.map((msg, index) => (
                                             
                                             <>
-                                                <MessageListItem msgusername="vaspio" unreadFlag={true}/>
+                                                <MessageListItem msgusername={msg.username} messageTitle={msg.title} unreadFlag={true} onClick={e => handleCurrentMessageInbox(e, index) } />
                                                 <Divider/>
                                             </>    
 
@@ -257,7 +276,9 @@ function MessagesPage() {
                                     </Stack>
                                 </div>
                                 <div className='msg-text-container'>
-                                    <MessageBody msgname="Giorgos Koumpis" msgusername="gkmp" date="12/5/2022"/>
+                                    {/* <MessageBody msgId={msg.senderId} msgusername={msg.username} date="12/5/2022"/> */}
+
+                                    <MessageBody msgId={currentMessage.senderId} msgContent={currentMessage.content} msgUsername={currentMessage.username} msgTitle={currentMessage.title} date={new Date(currentMessage.msgDate).toDateString()}/>
                                 </div>
                                 
                             </div>
@@ -274,10 +295,10 @@ function MessagesPage() {
                         <div className='msg-content'>
                             <div className='msg-list-container'>
                                 <Stack spacing={1}>
-                                    {messages.map((msg) => (
+                                    {sentMessages.map((msg, index) => (
                                         
                                         <>
-                                            <MessageListItem msgusername="gkmp" unreadFlag={false}/>
+                                            <MessageListItem msgusername={msg.username} messageTitle={msg.title} unreadFlag={false} onClick={e => {handleCurrentMessageSent(e, index)} }/>
                                             <Divider/>
                                         </>    
 
@@ -287,7 +308,9 @@ function MessagesPage() {
                                 </Stack>
                             </div>
                             <div className='msg-text-container'>
-                                <MessageBody msgname="Vasilis Pasios" msgusername="vaspio" date="6/7/2021"/>
+                                {/* <MessageBody msgiId={msg.receiverId} msgusername={msg.username} date="6/7/2021"/> */}
+                                <MessageBody msgId={currentMessage.receiverId} msgContent={currentMessage.content} msgUsername={currentMessage.username} msgTitle={currentMessage.title} date={new Date(currentMessage.msgDate).toDateString()}/>
+
                             </div>
                         
                         </div>
@@ -346,6 +369,7 @@ function MessagesPage() {
                                 rows={10}
                                 size="small"
                                 value={newMailText}
+                                inputProps={{ maxLength: 240 }}
                                 onChange={(e) => setNewMailText(e.target.value)}
                                 error={showEmptyText}
 
