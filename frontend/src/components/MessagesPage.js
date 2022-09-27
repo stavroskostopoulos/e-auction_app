@@ -28,6 +28,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import SendIcon from '@mui/icons-material/Send';
 import CancelIcon from '@mui/icons-material/Cancel';
+import axios from 'axios';
 
 const fabStyle = {
     position: 'fixed',
@@ -61,9 +62,50 @@ function MessagesPage() {
 
     const messages = [...Array(6).keys()];
 
+    const [inboxMessages, setInboxMessages] = React.useState([]);
+    const [sentMessages, setSentMessages] = React.useState([]);
+
     const [open, setOpen] = React.useState(false);
 
+    React.useEffect(() => {
+
+
+        if(tab==="1"){
+            getInbox();
+        }else{
+            getSent();
+        }
+
+    }, [tab]);
+
+    const getInbox = async () => {
+        try{
+            const result = await axios.get(`https://localhost:8443/api/messages/inbox/${localStorage.getItem('loggedUserId')}`
     
+                                    ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+            setInboxMessages(result);
+            console.log(result);
+        }catch(err){
+            console.log(err);
+        }
+
+    };
+
+    const getSent = async () => {
+        try{
+            const result = await axios.get(`https://localhost:8443/api/messages/sent/${localStorage.getItem('loggedUserId')}`
+    
+                                    ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            
+            setSentMessages(result);
+            console.log(result);
+            
+        }catch(err){
+            console.log(err);
+        }
+        
+    };
     
     //newMail
     const [newMailTitle, setNewMailTitle] = React.useState("");
@@ -73,17 +115,28 @@ function MessagesPage() {
     const [showEmptyText, setShowEmptyText] = React.useState(false);
 
 
-    const [contacts, setContacts] = React.useState(["vaspio", "gkmp", "kostopez", "nota"])
+    const [contacts, setContacts] = React.useState([]);
     const [chosenReceiver, setChosenReceiver] = React.useState(false)
     const [showEmptyReceiver, setShowEmptyReceiver] = React.useState(false);
     
     
     const handleClickOpen = () => {
       setOpen(true);
+      getContacts();
     };
   
     const handleClose = () => {
       setOpen(false);
+    };
+
+    const getContacts = async() => {
+        try{
+            const res = await axios.get(`https://localhost:8443/api/contacts/${localStorage.getItem('loggedUserId')}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
+            setContacts(res.data);
+            console.log(res);
+        }catch(err){
+            console.log(err);
+        }
     };
 
     const handleChangeReceiver = (event) => {
@@ -118,8 +171,32 @@ function MessagesPage() {
         }
 
         // http request
+        try{
+            const res = await axios.get(`https://localhost:8443/api/users/username/${chosenReceiver}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            receiverId = res.data;
+
+            // http request
+            await axios.post(`https://localhost:8443/api/messages/save`, 
+            {
+
+                receiverId,
+                senderId: localStorage.getItem('loggedUserId'),
+                title: newMailTitle,
+                content: newMailText,
+
+            }
+            ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+
+        }catch(err){
+            console.log(err);
+        }
+
+
         handleClose();
     };
+
+
 
 
     return (
@@ -157,29 +234,43 @@ function MessagesPage() {
 
                     {   (tab==="1") ? 
                     
-                        <div className='msg-content'>
-                            <div className='msg-list-container'>
-                                <Stack spacing={1}>
-                                    {messages.map((msg) => (
-                                        
-                                        <>
-                                            <MessageListItem msgusername="vaspio" unreadFlag={true}/>
-                                            <Divider/>
-                                        </>    
-
-
-                                    ))}
-
-                                </Stack>
+                        (!inboxMessages.length) ? 
+                            <div className='empty-msg-content'>
+                                <div className='empty-auctions'>
+                                    <p>Looks like your inbox is empty!</p>
+                                </div>
                             </div>
-                            <div className='msg-text-container'>
-                                <MessageBody msgname="Giorgos Koumpis" msgusername="gkmp" date="12/5/2022"/>
+                            :
+                            <div className='msg-content'>
+                                <div className='msg-list-container'>
+                                    <Stack spacing={1}>
+                                        {messages.map((msg) => (
+                                            
+                                            <>
+                                                <MessageListItem msgusername="vaspio" unreadFlag={true}/>
+                                                <Divider/>
+                                            </>    
+
+
+                                        ))}
+
+                                    </Stack>
+                                </div>
+                                <div className='msg-text-container'>
+                                    <MessageBody msgname="Giorgos Koumpis" msgusername="gkmp" date="12/5/2022"/>
+                                </div>
+                                
                             </div>
-                            
-                        </div>
                     
                     :
 
+                        (!sentMessages.length) ? 
+                        <div className='empty-msg-content'>
+                            <div className='empty-auctions'>
+                                <p>Looks like you haven't sent any messages yet!</p>
+                            </div>
+                        </div>
+                        :
                         <div className='msg-content'>
                             <div className='msg-list-container'>
                                 <Stack spacing={1}>

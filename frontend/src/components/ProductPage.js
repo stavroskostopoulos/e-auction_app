@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
@@ -77,6 +77,7 @@ function priceRangetext(value) {
 
 const ProductPage = (props) => {
 
+    let navigate = useNavigate();
     const { state } = useLocation();
 
     // const product = props.location.state.productKey;
@@ -97,6 +98,7 @@ const ProductPage = (props) => {
 
     
     const [openDialogBid, setOpenDialogBid] = React.useState(false);
+    const [openDeleteBid, setOpenDeleteBid] = React.useState(false);
     const [openDialogBuyNow, setOpenDialogBuyNow] = React.useState(false);
     
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
@@ -193,6 +195,10 @@ const ProductPage = (props) => {
       setOpenDialogBid(false);
     };
 
+    const handleCloseDeleteBid = () => {
+        setOpenDeleteBid(false);
+      };
+
     const handleClickOpenDialogBuyNow = () => {
         setOpenDialogBuyNow(true);
     };
@@ -280,6 +286,14 @@ const ProductPage = (props) => {
         setRefreshString("submit" + newBid);
     }
 
+    const handleDeleteAuction = async () => {
+        setOpenDeleteBid(true);
+    };
+    
+    const deleteAuction = async () => {
+        await axios.delete(`https://localhost:8443/api/items/delete/${state.id}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+        navigate("/auctions");
+    };
 
     return (
             <div className="main-container">
@@ -441,7 +455,7 @@ const ProductPage = (props) => {
                     </DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        <p>Please confirm your bid on Product Item 1 auction. Once confirmed, your bid cannot be canceled!<br/><br/>Bid amount: {newBid}€</p> 
+                        <p>Please confirm your bid on {productInfo.name} auction. Once confirmed, your bid cannot be canceled!<br/><br/>Bid amount: {newBid}€</p> 
                         
                     </DialogContentText>
                     </DialogContent>
@@ -465,7 +479,7 @@ const ProductPage = (props) => {
                     </DialogTitle>
                     <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        <p>Please you're willing to purchase Product Item 1 using the "Buy Now" option. Once confirmed, your purchase cannot be refunded!<br/><br/>Purchase amount: {productInfo.buyPrice}€</p> 
+                        <p>Please you're willing to purchase {productInfo.name} using the "Buy Now" option. Once confirmed, your purchase cannot be refunded!<br/><br/>Purchase amount: {productInfo.buyPrice}€</p> 
                         
                     </DialogContentText>
                     </DialogContent>
@@ -477,9 +491,33 @@ const ProductPage = (props) => {
                     </DialogActions>
                 </Dialog>
 
+                <Dialog
+                    open={openDeleteBid}
+                    onClose={handleCloseDeleteBid}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    className='bid-dialog'
+                >
+                    <DialogTitle id="alert-dialog-title">
+                    Delete auction
+                    </DialogTitle>
+                    <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <p>Please confirm that you want to delete this auction. All offers will be lost!</p> 
+                        
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleCloseDeleteBid} endIcon={<CloseOutlinedIcon/>} className='dialog-disagree-btn'>Disagree</Button>
+                    <Button onClick={() => {handleCloseDeleteBid(); deleteAuction();}} endIcon={<CheckIcon/>} autoFocus className='dialog-agree-btn'>
+                        Agree
+                    </Button>
+                    </DialogActions>
+                </Dialog>
+
                 {(localStorage.getItem("loggedUserId")==productInfo.sellerId) &&
                     <Tooltip title={<p className='tooltip-text'>Delete auction</p>} placement="left" arrow>
-                        <Fab size="large" TransitionComponent={Zoom} sx={fabStyle} color="error" aria-label="add" >
+                        <Fab size="large" TransitionComponent={Zoom} sx={fabStyle} color="error" aria-label="add" onClick={handleDeleteAuction} >
                             <DeleteIcon/>
                         </Fab>
                     </Tooltip>

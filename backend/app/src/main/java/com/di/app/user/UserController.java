@@ -33,6 +33,11 @@ public class UserController {
         return ResponseEntity.ok().body(service.GetUserById(id));
     }
 
+    @GetMapping(path = "/users/username/{username}")
+    public ResponseEntity<User> GetUserByUsername(@PathVariable("username") String username){
+        return ResponseEntity.ok().body(service.GetUserByUsername(username));
+    }
+
     @GetMapping(path = "/users/pending/{offset}")
     public ResponseEntity<Page<User>> GetPending(@PathVariable("offset") Integer offset){
         return ResponseEntity.ok().body(service.GetPendingUsers(offset));

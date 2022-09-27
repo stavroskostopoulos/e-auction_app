@@ -21,6 +21,19 @@
                             "msgcontent msgcontent";
 }
 
+.empty-msg-content{
+    grid-area: msgcontent;
+    width: 100%;
+    height: 200px;
+    padding-top: 80px;
+    /* background-color: #D83A56; */
+    /* center text horizontally and vertically */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
 .msg-title-container {
     grid-area: msgtitle;
     /* background-color: aquamarine; */
@@ -96,23 +109,22 @@
     background-color: #4E944F !important;
     border-radius: 10px !important;
     color: #fff !important;
-
+    width: 120px !important;
 }
 
 .send-button:hover {
     background-color: rgb(110, 161, 111) !important;
-
 }
 
 .cancel-button {
     background-color: #D83A56 !important;
     border-radius: 10px !important;
     color: #fff !important;
+    width: 120px !important;
 }
 
 .cancel-button:hover {
     background-color: #ff616ea1 !important;
-
 }
 
 /* Message List Item */
