@@ -42,10 +42,5 @@ public class Item {
     private List<String> category;
 
 
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    @ManyToMany
-    private List<Bid> Bids;
-
-
 }
 
