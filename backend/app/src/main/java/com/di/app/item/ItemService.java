@@ -184,7 +184,7 @@ public class ItemService {
 
 
     public Item SaveItem(Item newItem) {
-        contactRepository.save(new Contact(newItem.getSellerId(),new ArrayList<>()));
+//        contactRepository.save(new Contact(newItem.getSellerId(),new ArrayList<>()));
 
         return itemRepository.save(newItem);
     }

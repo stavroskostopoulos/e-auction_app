@@ -3,6 +3,8 @@ package com.di.app.bid;
 import com.di.app.contact.ContactService;
 import com.di.app.item.Item;
 import com.di.app.item.ItemRepository;
+import com.di.app.user.User;
+import com.di.app.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class BidService {
     private final BidRepository bidRepository;
     private final ItemRepository itemRepository;
     private final ContactService contactService;
+    private final UserService userService;
 
 
     public Optional<Bid> GetBidsById(Long id) {
@@ -40,11 +43,16 @@ public class BidService {
 
         // For contacts
         Bidder bidder = newBid.getBidder();
-        String peerUser = bidder.getUsername();
+        String peerUsername = bidder.getUsername();
         Long sellerId = item.getSellerId();
 
-        contactService.AddContact(sellerId,peerUser);
+        contactService.AddContact(sellerId,peerUsername);
 
+        Long peerId = bidder.getUserId();
+        Optional<User> seller = userService.GetUserById(sellerId);
+        String sellerUsername = seller.get().getUsername();
+
+        contactService.AddContact(peerId,sellerUsername);
 
         return bidRepository.save(newBid);
     }

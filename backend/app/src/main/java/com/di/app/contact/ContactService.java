@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,12 +19,23 @@ public class ContactService {
     }
 
     public void AddContact(Long id, String peerUsername) {
-        Contact con = contactRepository.getById(id);
+        Contact test = contactRepository.contactExists(id);
+
+        Contact con;
+        if(test == null){
+            con = new Contact(id,new ArrayList<>());
+        }
+        else {
+            con = contactRepository.getById(id);
+        }
 
         List<String> peers = con.getPeers();
-        peers.add(peerUsername);
-        contactRepository.save(con);
 
+        if(!peers.contains(peerUsername)){
+            peers.add(peerUsername);
+        }
+
+        contactRepository.save(con);
     }
 
 }
