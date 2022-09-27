@@ -22,14 +22,12 @@ public class MessageService {
         return messageRepository.getById(id);
     }
 
-    public List<Message> GetInbox(Long receiverId, Integer offset) {
-        Integer limit = 8;
-        return messageRepository.getInbox(receiverId,limit,offset);
+    public List<Message> GetInbox(Long receiverId) {
+        return messageRepository.getInbox(receiverId);
     }
 
-    public List<Message> GetOutbox(Long senderId, Integer offset) {
-        Integer limit = 8;
-        return messageRepository.getOutbox(senderId,limit,offset);
+    public List<Message> GetOutbox(Long senderId) {
+        return messageRepository.getOutbox(senderId);
     }
 
 

@@ -17,6 +17,7 @@ public class Message {
     private Long receiverId;
     private Long senderId;
     private String content;
+    private String title;
     private Boolean seen=Boolean.FALSE;
 
 }

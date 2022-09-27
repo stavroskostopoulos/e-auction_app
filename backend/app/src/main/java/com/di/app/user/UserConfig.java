@@ -3,7 +3,7 @@ package com.di.app.user;
 import com.di.app.item.Item;
 import com.di.app.item.ItemService;
 import com.di.app.role.Role;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.di.app.xml.SaxHandler;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.*;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -172,26 +170,21 @@ public class UserConfig {
 //    }
 //
 //
-////    @Bean
-//	public void ParseXMLFiles() throws IOException, XMLStreamException {
-////		ObjectMapper xmlMapper = new XmlMapper();
-////
-////		File file =
-//
-////		System.out.println(item);
-//		XMLInputFactory f = XMLInputFactory.newFactory();
-//		File inputFile = new File("backend/app/src/main/resources/static/items-0.xml");;
-//		XMLStreamReader sr = f.createXMLStreamReader(new FileInputStream(inputFile));
-//
-//		XmlMapper mapper = new XmlMapper();
-//		sr.next(); // to point to <root>
-//		sr.next(); // to point to root-element under root
-//		Item value1 = mapper.readValue(sr, Item.class);
-//// sr now points to matching END_ELEMENT, so move forward
-////		sr.next(); // should verify it's either closing root or new start, left as exercise
-////		Item value = mapper.readValue(sr, Item.class);
-////// and more, as needed, then
-////		sr.close();
-//	}
+    @Bean
+	public void ParseXMLFiles() {
+        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+        try {
+            SAXParser saxParser = saxParserFactory.newSAXParser();
+            SaxHandler handler = new SaxHandler();
+            saxParser.parse(new File("backend/app/src/main/resources/static/items-0.xml"), handler);
+            // Get Employees list
+//            List<Employee> empList = handler.getEmpList();
+//            // print employee information
+//            for (Employee emp : empList)
+//                System.out.println(emp);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+	}
 
 }

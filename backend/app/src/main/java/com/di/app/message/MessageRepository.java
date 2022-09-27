@@ -11,10 +11,10 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
 
-    @Query( value = "SELECT * FROM message WHERE receiver_id = :receiverId LIMIT :limit OFFSET :offset", nativeQuery = true)
-    List<Message> getInbox(@Param("receiverId") Long receiverId, @Param("limit")Integer limit, @Param("offset")Integer offset);
+    @Query( value = "SELECT * FROM message WHERE receiver_id = :receiverId", nativeQuery = true)
+    List<Message> getInbox(@Param("receiverId") Long receiverId);
 
-    @Query( value = "SELECT * FROM message WHERE sender_id = :senderId LIMIT :limit OFFSET :offset", nativeQuery = true)
-    List<Message> getOutbox(@Param("senderId") Long senderId, @Param("limit")Integer limit, @Param("offset")Integer offset);
+    @Query( value = "SELECT * FROM message WHERE sender_id = :senderId", nativeQuery = true)
+    List<Message> getOutbox(@Param("senderId") Long senderId);
 
 }

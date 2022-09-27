@@ -21,14 +21,14 @@ public class MessageController {
 
     // GET
 
-    @PostMapping(path = "/messages/inbox/{offset}")
-    public ResponseEntity<List<Message>> GetInbox(@RequestBody Long receiverId, @PathVariable("offset") Integer offset){
-        return ResponseEntity.ok().body(messageService.GetInbox(receiverId, offset));
+    @PostMapping(path = "/messages/inbox/{userid}")
+    public ResponseEntity<List<Message>> GetInbox(@PathVariable("userid") Long receiverId){
+        return ResponseEntity.ok().body(messageService.GetInbox(receiverId));
     }
 
-    @PostMapping(path = "/messages/sent/{offset}")
-    public ResponseEntity<List<Message>> GetOutbox(@RequestBody Long senderId, @PathVariable("offset") Integer offset){
-        return ResponseEntity.ok().body(messageService.GetOutbox(senderId, offset));
+    @PostMapping(path = "/messages/sent/{userid}")
+    public ResponseEntity<List<Message>> GetOutbox(@PathVariable("userid") Long senderId){
+        return ResponseEntity.ok().body(messageService.GetOutbox(senderId));
     }
 
     @GetMapping(path = "/messages/message/{messageId}")
