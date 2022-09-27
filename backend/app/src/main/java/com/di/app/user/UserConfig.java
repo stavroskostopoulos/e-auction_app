@@ -148,19 +148,19 @@ public class UserConfig {
 //                System.out.println(name);
 //
 //                // Get the value of all sub-elements.
-////                String firstname = elem.getElementsByTagName("Firstname")
-////                        .item(0).getChildNodes().item(0).getNodeValue();
-////
-////                String lastname = elem.getElementsByTagName("Lastname").item(0)
-////                        .getChildNodes().item(0).getNodeValue();
-////
-////                Integer age = Integer.parseInt(elem.getElementsByTagName("Age")
-////                        .item(0).getChildNodes().item(0).getNodeValue());
-////
-////                Double salary = Double.parseDouble(elem.getElementsByTagName("Salary")
-////                        .item(0).getChildNodes().item(0).getNodeValue());
+//                String firstname = elem.getElementsByTagName("Firstname")
+//                        .item(0).getChildNodes().item(0).getNodeValue();
 //
-////                employees.add(new Item(ID, firstname, lastname, age, salary));
+//                String lastname = elem.getElementsByTagName("Lastname").item(0)
+//                        .getChildNodes().item(0).getNodeValue();
+//
+//                Integer age = Integer.parseInt(elem.getElementsByTagName("Age")
+//                        .item(0).getChildNodes().item(0).getNodeValue());
+//
+//                Double salary = Double.parseDouble(elem.getElementsByTagName("Salary")
+//                        .item(0).getChildNodes().item(0).getNodeValue());
+//
+//                employees.add(new Item(ID, firstname, lastname, age, salary));
 //            }
 //        }
 //
@@ -168,23 +168,23 @@ public class UserConfig {
 ////        for (Item empl: employees)
 ////            System.out.println(empl.toString());
 //    }
+
+
+//    @Bean
+//	public void ParseXMLFiles() throws ParserConfigurationException, SAXException, IOException {
+//        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+//        try {
+//            SAXParser saxParser = saxParserFactory.newSAXParser();
+//            SaxHandler handler = new SaxHandler();
+//            saxParser.parse(new File("backend/app/src/main/resources/static/items-0.xml"), handler);
 //
-//
-    @Bean
-	public void ParseXMLFiles() {
-        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-        try {
-            SAXParser saxParser = saxParserFactory.newSAXParser();
-            SaxHandler handler = new SaxHandler();
-            saxParser.parse(new File("backend/app/src/main/resources/static/items-0.xml"), handler);
-            // Get Employees list
-//            List<Employee> empList = handler.getEmpList();
+//            List<Item> empList = handler.getEmpList();
 //            // print employee information
-//            for (Employee emp : empList)
+//            for (Item emp : empList)
 //                System.out.println(emp);
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-        }
-	}
+//        } catch (ParserConfigurationException | SAXException | IOException e) {
+//            e.printStackTrace();
+//        }
+//	}
 
 }

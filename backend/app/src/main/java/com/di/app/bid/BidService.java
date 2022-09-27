@@ -1,5 +1,6 @@
 package com.di.app.bid;
 
+import com.di.app.contact.ContactService;
 import com.di.app.item.Item;
 import com.di.app.item.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class BidService {
 
     private final BidRepository bidRepository;
     private final ItemRepository itemRepository;
-
+    private final ContactService contactService;
 
 
     public Optional<Bid> GetBidsById(Long id) {
@@ -29,12 +30,21 @@ public class BidService {
 
     public Bid SaveBid(Bid newBid) {
 
+        // Increment bid count
         Item item = itemRepository.getById(newBid.getItemId());
 
         item.setCurrentBid(newBid.getAmount());
 
         Integer bidCount = item.getBidCount() + 1;
         item.setBidCount(bidCount);
+
+        // For contacts
+        Bidder bidder = newBid.getBidder();
+        String peerUser = bidder.getUsername();
+        Long sellerId = item.getSellerId();
+
+        contactService.AddContact(sellerId,peerUser);
+
 
         return bidRepository.save(newBid);
     }
@@ -43,6 +53,8 @@ public class BidService {
         Bid bid = bidRepository.getById(id);
         bidRepository.delete(bid);
     }
+
+
 
 
 

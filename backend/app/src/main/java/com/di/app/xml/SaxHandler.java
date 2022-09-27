@@ -24,31 +24,31 @@ public class SaxHandler extends DefaultHandler {
     boolean bGender = false;
     boolean bRole = false;
 
-    @Override
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-
-        if (qName.equalsIgnoreCase("Item")) {
-            // create a new Item and put it in Map
-            String id = attributes.getValue("id");
-            // initialize Item object and set id attribute
-            emp = new Item();
-            emp.setItemId(Long.parseLong(id));
-            // initialize list
-            if (empList == null)
-                empList = new ArrayList<>();
-        } else if (qName.equalsIgnoreCase("name")) {
-            // set boolean values for fields, will be used in setting Item variables
-            bName = true;
-        } else if (qName.equalsIgnoreCase("age")) {
-            bAge = true;
-        } else if (qName.equalsIgnoreCase("gender")) {
-            bGender = true;
-        } else if (qName.equalsIgnoreCase("role")) {
-            bRole = true;
-        }
-        // create the data container
-        data = new StringBuilder();
-    }
+//    @Override
+//    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+//
+//        if (qName.equalsIgnoreCase("Item")) {
+//            // create a new Item and put it in Map
+//            String id = attributes.getValue("id");
+//            // initialize Item object and set id attribute
+//            emp = new Item();
+//            emp.setItemId(Long.parseLong(id));
+//            // initialize list
+//            if (empList == null)
+//                empList = new ArrayList<>();
+//        } else if (qName.equalsIgnoreCase("name")) {
+//            // set boolean values for fields, will be used in setting Item variables
+//            bName = true;
+//        } else if (qName.equalsIgnoreCase("age")) {
+//            bAge = true;
+//        } else if (qName.equalsIgnoreCase("gender")) {
+//            bGender = true;
+//        } else if (qName.equalsIgnoreCase("role")) {
+//            bRole = true;
+//        }
+//        // create the data container
+//        data = new StringBuilder();
+//    }
 
 //    @Override
 //    public void endElement(String uri, String localName, String qName) throws SAXException {
@@ -73,9 +73,9 @@ public class SaxHandler extends DefaultHandler {
 //        }
 //    }
 
-    @Override
-    public void characters(char ch[], int start, int length) throws SAXException {
-        data.append(new String(ch, start, length));
-    }
+//    @Override
+//    public void characters(char ch[], int start, int length) throws SAXException {
+//        data.append(new String(ch, start, length));
+//    }
 
 }

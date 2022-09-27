@@ -1,5 +1,7 @@
 package com.di.app.item;
 
+import com.di.app.contact.Contact;
+import com.di.app.contact.ContactRepository;
 import com.di.app.user.User;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
@@ -19,6 +21,7 @@ import java.util.*;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final ContactRepository contactRepository;
 
 
     public List<Item> GetItems(){
@@ -181,6 +184,7 @@ public class ItemService {
 
 
     public Item SaveItem(Item newItem) {
+        contactRepository.save(new Contact(newItem.getSellerId(),new ArrayList<>()));
 
         return itemRepository.save(newItem);
     }
