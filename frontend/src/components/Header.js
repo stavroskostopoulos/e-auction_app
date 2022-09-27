@@ -9,7 +9,7 @@ import { Tabs } from '@mui/material';
 import Tab from '@mui/material/Tab';
 import StoreIcon from '@mui/icons-material/Store';
 import IconButton from '@mui/material/IconButton';
-
+import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
 import { makeStyles } from '@mui/styles';
 import { withStyles } from "@material-ui/core/styles";
@@ -42,7 +42,7 @@ const useStyles = makeStyles({
         color: '#fff !important'
     },
     menuOptions: {
-        marginLeft: '5%'
+        marginLeft: '5%',
     },
     loginBtn: {
         marginLeft: 'auto!important',
@@ -55,6 +55,7 @@ const useStyles = makeStyles({
         }
     },
     menuOption: {
+        fontWeight: '600!important',
         textTransform: 'unset!important',
         '&:hover': {
             color: '#e4d9ff!important'
@@ -79,7 +80,7 @@ function Header(props) {
     const classes = useStyles();
     let navigate = useNavigate();
 
-
+    const [unreadMsgs, setUnreadMsgs] = React.useState(true);
     const [value, setValue] = React.useState(false);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -123,10 +124,10 @@ function Header(props) {
                         TabIndicatorProps={{ sx: { backgroundColor: "#e4d9ff"} }}
                         className={classes.menuOptions}
                         >
-                        <CustomTab className={classes.menuOption} value="1" label="Auctions" component={Link} to={'/auctions'} disabled={!localStorage.getItem("jwt")}/>
-                        <CustomTab className={classes.menuOption} value="2" label="Sell" component={Link} to={'/sell'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>
-                        <CustomTab className={classes.menuOption} value="3" label="Messages" component={Link} to={'/messages'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>             
-                        <CustomTab className={classes.menuOption} value="5" label="Administration Page" component={Link} to={'/administration'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>
+                        <CustomTab className={classes.menuOption} value="1" label={<p>Auctions</p>} component={Link} to={'/auctions'} disabled={!localStorage.getItem("jwt")}/>
+                        <CustomTab className={classes.menuOption} value="2" label={<p>Sell</p>} component={Link} to={'/sell'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>
+                        <CustomTab className={classes.menuOption} value="3" label={(unreadMsgs) ? <Badge anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="primary" variant="dot">Inbox</Badge> : <p>Inbox</p>} component={Link} to={'/messages'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>             
+                        <CustomTab className={classes.menuOption} value="5" label={<p>Administration Page</p>} component={Link} to={'/administration'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>
                         
                     </Tabs>
 
