@@ -25,6 +25,11 @@ import java.util.List;
 
 @Configuration
 public class UserConfig {
+    private final ItemService itemService;
+
+    public UserConfig(ItemService itemService) {
+        this.itemService = itemService;
+    }
 
     @Bean
     CommandLineRunner run(UserService userService, ItemService itemService){
@@ -170,21 +175,23 @@ public class UserConfig {
 //    }
 
 
-//    @Bean
-//	public void ParseXMLFiles() throws ParserConfigurationException, SAXException, IOException {
-//        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-//        try {
-//            SAXParser saxParser = saxParserFactory.newSAXParser();
-//            SaxHandler handler = new SaxHandler();
-//            saxParser.parse(new File("backend/app/src/main/resources/static/items-0.xml"), handler);
-//
-//            List<Item> empList = handler.getEmpList();
-//            // print employee information
-//            for (Item emp : empList)
-//                System.out.println(emp);
-//        } catch (ParserConfigurationException | SAXException | IOException e) {
-//            e.printStackTrace();
-//        }
-//	}
+    @Bean
+    public void ParseXMLFiles() throws ParserConfigurationException, SAXException, IOException {
+        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+        try {
+            SAXParser saxParser = saxParserFactory.newSAXParser();
+            SaxHandler handler = new SaxHandler();
+            saxParser.parse(new File("backend/app/src/main/resources/static/items-0.xml"), handler);
+
+            List<Item> empList = handler.getEmpList();
+            // print employee information
+            for (Item emp : empList){
+                System.out.println(emp);
+                itemService.SaveItem(emp);
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

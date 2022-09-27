@@ -30,6 +30,13 @@ public class MessageService {
         return messageRepository.getOutbox(senderId);
     }
 
+    public Message SeenMessage(Long id){
+        Message mess = messageRepository.getById(id);
+
+        mess.setSeen(Boolean.TRUE);
+        return mess;
+    }
+
 
     public Message SaveMessage(Message newMess) {
         return messageRepository.save(newMess);

@@ -36,6 +36,11 @@ public class MessageController {
         return ResponseEntity.ok().body(messageService.GetMessage(id));
     }
 
+    @GetMapping(path = "/messages/seen/{messageId}")
+    public ResponseEntity<Message> CheckMessage(@PathVariable("messageId") Long id){
+        return ResponseEntity.ok().body(messageService.SeenMessage(id));
+    }
+
 
 
     // POST
