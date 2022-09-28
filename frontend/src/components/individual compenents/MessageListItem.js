@@ -14,7 +14,8 @@ function MessageListItem(props) {
                 <Avatar sx={{ width: 40 , height: 40 }} alt={`${props.msgusername.charAt(0)}`} src="/static/images/avatar/1.jpg" />
                 
                 <Stack spacing={0} className='msg-list-item-info'>
-                    {!props.seenFlag ? <p className='msg-list-item-name-bold'>{props.msgusername}</p> : <p className='msg-list-item-name'>{props.msgusername}</p>}
+                    {!props.sentFlag && (!props.seenFlag ? <p className='msg-list-item-name-bold'>{props.msgusername}</p> : <p className='msg-list-item-name'>{props.msgusername}</p>)}
+                    {props.sentFlag && <p className='msg-list-item-name'>{props.msgusername}</p>}
                     <div className="msg-list-item-title-container">
                         <p className='msg-list-item-title'>{props.messageTitle}</p>
                     </div>

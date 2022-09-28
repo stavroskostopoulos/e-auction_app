@@ -42,6 +42,10 @@ public class MessageController {
     }
 
 
+    @GetMapping(path = "/messages/unread/{userid}")
+    public ResponseEntity<Boolean> CheckUnreadMessages(@PathVariable("userid") Long id){
+        return ResponseEntity.ok().body(messageService.CheckUnreadMessages(id));
+    }
 
     // POST
 

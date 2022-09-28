@@ -66,7 +66,7 @@ function ProductListItem(props) {
 
 					}}>
 						
-							<span className='current-bidders-text'>{props.numberOfBidders} bidders</span>
+							<span className='current-bidders-text'>{props.numberOfBidders} bids</span>
 							<PersonSharpIcon className='current-bidders-icon'/>
 						
 					</div>

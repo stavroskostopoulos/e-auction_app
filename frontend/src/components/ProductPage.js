@@ -388,7 +388,7 @@ const ProductPage = (props) => {
                                     alignItems: 'center',
                                     flexWrap: 'wrap',
                                 }}>
-                                    <span className='current-bidders-text' >{productInfo.bidCount} bidders</span>
+                                    <span className='current-bidders-text' >{productInfo.bidCount} bids</span>
                                     <PersonSharpIcon className='current-bidders-icon' />
                                 </div>
 

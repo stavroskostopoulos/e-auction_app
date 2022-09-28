@@ -37,6 +37,10 @@ public class MessageService {
         return mess;
     }
 
+    public Boolean CheckUnreadMessages(Long id){
+        Boolean check = messageRepository.checkUnread(id);
+        return check;
+    }
 
     public Message SaveMessage(Message newMess) {
         return messageRepository.save(newMess);

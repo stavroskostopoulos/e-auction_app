@@ -79,6 +79,9 @@ function MessagesPage() {
             getSent();
         }
 
+        //check for unread messages(so we remove or keep the badge)
+        checkUnread();
+
     }, [tab, newMessage]);
 
     const getInbox = async () => {
@@ -110,6 +113,13 @@ function MessagesPage() {
         
     };
     
+    const checkUnread = async () => {
+        const unreadmessages = await axios.get(`https://localhost:8443/api/messages/unread/${localStorage.getItem("loggedUserId")}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+        if(!unreadmessages){
+            localStorage.setItem('unreadMessages', false);
+        }
+    };
+
     //newMail
     const [newMailTitle, setNewMailTitle] = React.useState("");
     const [showEmptyTitle, setShowEmptyTitle] = React.useState(false);
@@ -257,7 +267,7 @@ function MessagesPage() {
                                 
                             <Tab 
                                 value="1" 
-                                label={(unreadMsgs) ? <Badge anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="primary" variant="dot">Inbox</Badge> : <p>Inbox</p>}
+                                label={(localStorage.getItem("unreadMessages")) ? <Badge anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="primary" variant="dot">Inbox</Badge> : <p>Inbox</p>}
                                 onClick={() => setRequest(false)} 
                                 className='admin-menu-option' 
                             />
@@ -283,7 +293,7 @@ function MessagesPage() {
                                         {inboxMessages.map((msg, index) => (
                                             
                                             <>
-                                                <MessageListItem msgusername={msg.username} messageTitle={msg.title} seenFlag={msg.seen} onClick={e => handleCurrentMessageInbox(e, index) } />
+                                                <MessageListItem msgusername={msg.username} messageTitle={msg.title} seenFlag={msg.seen} onClick={e => handleCurrentMessageInbox(e, index) }  sentFlag={false} />
                                                 <Divider/>
                                             </>    
 
@@ -315,7 +325,7 @@ function MessagesPage() {
                                     {sentMessages.map((msg, index) => (
                                         
                                         <>
-                                            <MessageListItem msgusername={msg.username} messageTitle={msg.title} seenFlag={false} onClick={e => {handleCurrentMessageSent(e, index)} }/>
+                                            <MessageListItem msgusername={msg.username} messageTitle={msg.title} seenFlag={false} onClick={e => {handleCurrentMessageSent(e, index)} } sentFlag={true}/>
                                             <Divider/>
                                         </>    
 

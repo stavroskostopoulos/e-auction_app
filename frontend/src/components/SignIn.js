@@ -126,12 +126,21 @@ function Login(props) {
 
             localStorage.setItem("jwt", res.data.split(' ').pop());
 
+            localStorage.setItem('unreadMessages', false);
+
+
             const result = await axios.get(`https://localhost:8443/api/users/accepted/${localStorage.getItem("loggedUserId")}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
             if(result.data === 1){
                 localStorage.setItem("guest", true);
             }
 
+            
+            // const unreadmessages = await axios.get(`https://localhost:8443/api/messages/unread/${localStorage.getItem("loggedUserId")}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            // if(unreadmessages){
+            //     localStorage.setItem('unreadMessages', true);
+            // }
+            
             setCredentialsError(false);
             navigate("/auctions");
 
