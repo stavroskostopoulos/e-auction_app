@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.di.app.bid.Bid;
 import com.di.app.bid.BidService;
+import com.di.app.bid.Bidder;
 import com.di.app.item.Item;
 import com.di.app.item.ItemService;
 import com.di.app.user.User;
@@ -24,7 +26,10 @@ public class SaxHandler extends DefaultHandler {
     // List to hold Items
     private List<Item> itemList = null;
     private List<String> catList = new ArrayList<>();
+    private List<Bid> bidList = new ArrayList<>();
     private Item item = null;
+    private Bidder bidder = null;
+    private Bid bid = null;
     private StringBuilder data = null;
 
 
@@ -41,7 +46,9 @@ public class SaxHandler extends DefaultHandler {
     boolean isBids = false;
     boolean isBid = false;
     boolean isBidder = false;
-    boolean isBidLoc = false;
+    boolean intoBid = false;
+    boolean isTime = false;
+    boolean isAmount = false;
 
 
     public SaxHandler(UserService userService, ItemService itemService, BidService bidService) {
@@ -81,6 +88,8 @@ public class SaxHandler extends DefaultHandler {
                 newUser.setUsername(username);
                 newUser.setPass("pass");
                 newUser.setEmail(username + "@gmail.com");
+                newUser.setRealname("XmlUser");
+                newUser.setSurname("Seller");
 
                 userService.SaveUser(newUser);
                 userService.GiveRole(username, "SELLER");
@@ -95,47 +104,51 @@ public class SaxHandler extends DefaultHandler {
             item.setLongitude(longitude);
             isLocation=true;
         }
-        else if (qName.equalsIgnoreCase("Bids")){
-//            String latitude = attributes.getLength("Bid");
-//            System.out.println(latitude);
-//            System.out.println("bids");
-//            for(int i = 0; i < attributes.getLength(); i++) {
-//                System.out.println(attributes.getQName(i)+" "+attributes.getValue(i)+" "+i);
-//            }
-            isBids = true;
 
-        }
-        else if (qName.equalsIgnoreCase("Bid")){
-//            String latitude = attributes.getLength("Bid");
-//            System.out.println(latitude);
-//            System.out.println("mphka");
-//            for(int i = 0; i < attributes.getLength(); i++) {
-//                System.out.println(attributes.getQName(i)+" "+attributes.getValue(i)+" "+i);
-//            }
-            isBid = true;
-
-        }
         else if (qName.equalsIgnoreCase("Bidder")){
             String rating = attributes.getValue("Rating");
-            String bidderId = attributes.getValue("UserID");
-            attributes.getQName(1);
-            System.out.println(rating+" "+bidderId+ " "+attributes.getQName(2));
-            if (qName.equalsIgnoreCase("Location")){
-//                String loc = attributes.getValue("Location");
-//                System.out.println(loc);
-                isBidLoc = true;
+            String bidderUsername = attributes.getValue("UserID");
+
+            // Create fake bidder
+            boolean flag = userService.UsernameExists(bidderUsername);
+            Long id;
+
+            if (flag == Boolean.FALSE) {
+                User newUser = new User();
+                newUser.setUsername(bidderUsername);
+                newUser.setPass("pass");
+                newUser.setEmail(bidderUsername + "@gmail.com");
+                newUser.setRealname("XmlUser");
+                newUser.setSurname("Bidder");
+
+                userService.SaveUser(newUser);
+                userService.GiveRole(bidderUsername, "BIDDER");
+
+                id = newUser.getId();
             }
-//            for(int i = 0; i < attributes.getLength(); i++) {
-//                System.out.println(attributes.getQName(i)+" "+attributes.getValue(i)+" "+i);
-//            }
+            else{
+                id = userService.GetUserByUsername(bidderUsername).getId();
+            }
+
+            bidder = new Bidder();
+            bidder.setRating(rating);
+            bidder.setUserId(id);
+            bidder.setUsername(bidderUsername);
+            bidder.setRealname("Bidder");
+            bidder.setSurname("Xml");
+
+
+            // Create bid
+            bid = new Bid();
+
+            intoBid = true;
             isBidder = true;
 
-        } else if (qName.equalsIgnoreCase("Location")){
-//                String loc = attributes.getValue("Location");
-//                System.out.println(loc);
-            isBidLoc = true;
-        }
-        else if (qName.equalsIgnoreCase("Category")){
+        } else if (qName.equalsIgnoreCase("Time")){
+            isTime = true;
+        } else if (qName.equalsIgnoreCase("Amount")){
+            isAmount = true;
+        } else if (qName.equalsIgnoreCase("Category")){
             isCategory = true;
         } else if (qName.equalsIgnoreCase("Name")) {
             isName = true;
@@ -184,7 +197,13 @@ public class SaxHandler extends DefaultHandler {
             isNumber_of_Bids = false;
         }
         else if(isCountry){
-            item.setCountry(data.toString());
+            if(intoBid){
+//                System.out.println("Country "+data.toString());
+                bidder.setCountry(data.toString());
+            }
+            else{
+                item.setCountry(data.toString());
+            }
             isCountry = false;
         }
         else if(isStarted){
@@ -218,27 +237,34 @@ public class SaxHandler extends DefaultHandler {
             catList.add(data.toString());
             isCategory = false;
 
-        } else if (isBids){
-//            System.out.println(data.toString());
-
-            isBids = false;
-        }
-        else if (isBid){
-//            System.out.println(data.toString());
-
-            isBid = false;
         }
         else if (isBidder){
-//            System.out.println(data.toString());
-            if(isBidLoc){
-
-                System.out.println("bidloc "+data.toString());
-            }
+            bidder.setLocation(data.toString());
 
             isBidder = false;
-        }else if(isLocation){
-            System.out.println("Location:"+data.toString());
-            isLocation = false;
+        }else if(isTime){
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM-dd-yy hh:mm:ss");
+            Date date = null;
+            try {
+                date = formatter.parse(data.toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            bid.setTime(date);
+            isTime = false;
+        }
+        else if(isAmount){
+            String amount = data.toString();
+            Integer res = (int)Double.parseDouble(amount.substring(1));
+            bid.setAmount(res);
+
+            intoBid = false;
+            isAmount = false;
+
+            bid.setBidder(bidder);
+            // update bids
+            bidList.add(bid);
         }
 
 
@@ -257,6 +283,16 @@ public class SaxHandler extends DefaultHandler {
                 catList.clear();
             }
 
+            if(bid != null) {
+                for (Bid i : bidList) {
+                    i.setItemId(id);
+                    bidService.SaveXmlBid(i);
+//                    System.out.println("Bid: " + i);
+                }
+                bidList.clear();
+            }
+
+//            bid = null;
         }
     }
 
