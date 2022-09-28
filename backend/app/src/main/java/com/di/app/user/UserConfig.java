@@ -1,5 +1,6 @@
 package com.di.app.user;
 
+import com.di.app.bid.BidService;
 import com.di.app.item.Item;
 import com.di.app.item.ItemService;
 import com.di.app.role.Role;
@@ -19,11 +20,13 @@ import java.util.List;
 public class UserConfig {
     private final ItemService itemService;
     private final UserService userService;
+    private final BidService bidService;
 
 
-    public UserConfig(ItemService itemService, UserService userService) {
+    public UserConfig(ItemService itemService, UserService userService, BidService bidService) {
         this.itemService = itemService;
         this.userService = userService;
+        this.bidService = bidService;
     }
 
     @Bean
@@ -121,65 +124,16 @@ public class UserConfig {
         };
     }
 
-//    @Bean
-//    public void xmlparser() throws ParserConfigurationException, IOException, SAXException {
-//        //Get Document Builder
-//        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-//        DocumentBuilder builder = factory.newDocumentBuilder();
-//
-//        // Load the input XML document, parse it and return an instance of the
-//        // Document class.
-//        File file = new File("backend/app/src/main/resources/static/items-0.xml");
-//        Document document = builder.parse(file);
-//
-//        List<Item> employees = new ArrayList<Item>();
-//        NodeList nodeList = document.getDocumentElement().getChildNodes();
-//        System.out.println(file);
-//        for (int i = 0; i < nodeList.getLength(); i++) {
-//            Node node = nodeList.item(i);
-//            System.out.println(node);
-////
-//            if (node.getNodeType() == Node.ELEMENT_NODE) {
-//                Element elem = (Element) node;
-//
-//                // Get the value of the ID attribute.
-//                String name = node.getAttributes().getNamedItem("Name").getNodeValue();
-//
-//                System.out.println(name);
-//
-//                // Get the value of all sub-elements.
-//                String firstname = elem.getElementsByTagName("Firstname")
-//                        .item(0).getChildNodes().item(0).getNodeValue();
-//
-//                String lastname = elem.getElementsByTagName("Lastname").item(0)
-//                        .getChildNodes().item(0).getNodeValue();
-//
-//                Integer age = Integer.parseInt(elem.getElementsByTagName("Age")
-//                        .item(0).getChildNodes().item(0).getNodeValue());
-//
-//                Double salary = Double.parseDouble(elem.getElementsByTagName("Salary")
-//                        .item(0).getChildNodes().item(0).getNodeValue());
-//
-//                employees.add(new Item(ID, firstname, lastname, age, salary));
-//            }
-//        }
-//
-//        // Print all employees.
-////        for (Item empl: employees)
-////            System.out.println(empl.toString());
-//    }
-
-
     @Bean
     public void ParseXMLFiles() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         try {
             SAXParser saxParser = saxParserFactory.newSAXParser();
-            SaxHandler handler = new SaxHandler(userService,itemService);
+            SaxHandler handler = new SaxHandler(userService,itemService,bidService);
             saxParser.parse(new File("backend/app/src/main/resources/static/items-0.xml"), handler);
 
             List<Item> empList = handler.getEmpList();
-            // print employee information
+            // print items
             for (Item emp : empList){
                 System.out.println(emp);
 //                itemService.SaveItem(emp);

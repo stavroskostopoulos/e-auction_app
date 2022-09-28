@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.di.app.bid.BidService;
 import com.di.app.item.Item;
 import com.di.app.item.ItemService;
 import com.di.app.user.User;
@@ -18,6 +19,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class SaxHandler extends DefaultHandler {
     private final UserService userService;
     private final ItemService itemService;
+    private final BidService bidService;
 
     // List to hold Items
     private List<Item> itemList = null;
@@ -36,11 +38,16 @@ public class SaxHandler extends DefaultHandler {
     boolean isDescription = false;
     boolean isCountry = false;
     boolean isCategory = false;
+    boolean isBids = false;
+    boolean isBid = false;
+    boolean isBidder = false;
+    boolean isBidLoc = false;
 
 
-    public SaxHandler(UserService userService, ItemService itemService) {
+    public SaxHandler(UserService userService, ItemService itemService, BidService bidService) {
         this.itemService = itemService;
         this.userService = userService;
+        this.bidService = bidService;
     }
 
     public List<Item> getEmpList() {
@@ -86,8 +93,49 @@ public class SaxHandler extends DefaultHandler {
 
             item.setLatitude(latitude);
             item.setLongitude(longitude);
+            isLocation=true;
+        }
+        else if (qName.equalsIgnoreCase("Bids")){
+//            String latitude = attributes.getLength("Bid");
+//            System.out.println(latitude);
+//            System.out.println("bids");
+//            for(int i = 0; i < attributes.getLength(); i++) {
+//                System.out.println(attributes.getQName(i)+" "+attributes.getValue(i)+" "+i);
+//            }
+            isBids = true;
 
-        } else if (qName.equalsIgnoreCase("Category")){
+        }
+        else if (qName.equalsIgnoreCase("Bid")){
+//            String latitude = attributes.getLength("Bid");
+//            System.out.println(latitude);
+//            System.out.println("mphka");
+//            for(int i = 0; i < attributes.getLength(); i++) {
+//                System.out.println(attributes.getQName(i)+" "+attributes.getValue(i)+" "+i);
+//            }
+            isBid = true;
+
+        }
+        else if (qName.equalsIgnoreCase("Bidder")){
+            String rating = attributes.getValue("Rating");
+            String bidderId = attributes.getValue("UserID");
+            attributes.getQName(1);
+            System.out.println(rating+" "+bidderId+ " "+attributes.getQName(2));
+            if (qName.equalsIgnoreCase("Location")){
+//                String loc = attributes.getValue("Location");
+//                System.out.println(loc);
+                isBidLoc = true;
+            }
+//            for(int i = 0; i < attributes.getLength(); i++) {
+//                System.out.println(attributes.getQName(i)+" "+attributes.getValue(i)+" "+i);
+//            }
+            isBidder = true;
+
+        } else if (qName.equalsIgnoreCase("Location")){
+//                String loc = attributes.getValue("Location");
+//                System.out.println(loc);
+            isBidLoc = true;
+        }
+        else if (qName.equalsIgnoreCase("Category")){
             isCategory = true;
         } else if (qName.equalsIgnoreCase("Name")) {
             isName = true;
@@ -170,6 +218,27 @@ public class SaxHandler extends DefaultHandler {
             catList.add(data.toString());
             isCategory = false;
 
+        } else if (isBids){
+//            System.out.println(data.toString());
+
+            isBids = false;
+        }
+        else if (isBid){
+//            System.out.println(data.toString());
+
+            isBid = false;
+        }
+        else if (isBidder){
+//            System.out.println(data.toString());
+            if(isBidLoc){
+
+                System.out.println("bidloc "+data.toString());
+            }
+
+            isBidder = false;
+        }else if(isLocation){
+            System.out.println("Location:"+data.toString());
+            isLocation = false;
         }
 
 

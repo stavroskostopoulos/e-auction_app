@@ -38,8 +38,12 @@ public class MessageService {
     }
 
     public Boolean CheckUnreadMessages(Long id){
-        Boolean check = messageRepository.checkUnread(id);
-        return check;
+        Message check = messageRepository.checkUnread(id);
+
+        if(check == null){
+            return false;
+        }
+        return true;
     }
 
     public Message SaveMessage(Message newMess) {
