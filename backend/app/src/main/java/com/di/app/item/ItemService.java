@@ -197,6 +197,17 @@ public class ItemService {
         return itemRepository.save(item);
     }
 
+    public Item AddCategory(Long itemId, String category) {
+        Item item = itemRepository.getById(itemId);
+
+        List<String> newcats = item.getCategory();
+        newcats.add(category);
+
+        item.setCategory(newcats);
+
+        return itemRepository.save(item);
+    }
+
     public void DeleteItem(Long id) {
         Item item = itemRepository.getById(id);
         itemRepository.delete(item);

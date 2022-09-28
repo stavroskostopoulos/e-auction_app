@@ -162,6 +162,14 @@ public class UserService {
         return 0;
     }
 
+    public boolean UsernameExists(String username) {
+        //search if username already exists
+        Collection<User> userByUsername = userRepository.checkUsername(username);
+        if(userByUsername.isEmpty()){
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
+    }
 
 
 }

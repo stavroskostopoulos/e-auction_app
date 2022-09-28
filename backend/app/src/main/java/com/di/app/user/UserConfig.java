@@ -7,18 +7,10 @@ import com.di.app.xml.SaxHandler;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.*;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +18,12 @@ import java.util.List;
 @Configuration
 public class UserConfig {
     private final ItemService itemService;
+    private final UserService userService;
 
-    public UserConfig(ItemService itemService) {
+
+    public UserConfig(ItemService itemService, UserService userService) {
         this.itemService = itemService;
+        this.userService = userService;
     }
 
     @Bean
@@ -180,14 +175,14 @@ public class UserConfig {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         try {
             SAXParser saxParser = saxParserFactory.newSAXParser();
-            SaxHandler handler = new SaxHandler();
+            SaxHandler handler = new SaxHandler(userService,itemService);
             saxParser.parse(new File("backend/app/src/main/resources/static/items-0.xml"), handler);
 
             List<Item> empList = handler.getEmpList();
             // print employee information
             for (Item emp : empList){
                 System.out.println(emp);
-                itemService.SaveItem(emp);
+//                itemService.SaveItem(emp);
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
