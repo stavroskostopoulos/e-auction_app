@@ -119,7 +119,7 @@ function MessagesPage() {
 
 
     const [contacts, setContacts] = React.useState([]);
-    const [chosenReceiver, setChosenReceiver] = React.useState(false)
+    const [chosenReceiver, setChosenReceiver] = React.useState('');
     const [showEmptyReceiver, setShowEmptyReceiver] = React.useState(false);
     const [currentMessage, setCurrentMessage] = React.useState();
     
@@ -176,8 +176,15 @@ function MessagesPage() {
 
         // http request
         try{
-            const res = await axios.get(`https://localhost:8443/api/users/username/${chosenReceiver}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
-            let receiverId = res.data.id;
+            const receiverInfo = await axios.get(`https://localhost:8443/api/users/username/${chosenReceiver}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            let receiverId = receiverInfo.data.id;
+            let receiverRealname = receiverInfo.data.realname;
+            let receiverSurname = receiverInfo.data.surname;
+
+            const senderInfo = await axios.get(`https://localhost:8443/api/users/id/${localStorage.getItem('loggedUserId')}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+
+            let senderRealname = senderInfo.data.realname;
+            let senderSurname = senderInfo.data.surname;
             
             let currentDate = new Date();
 
@@ -191,7 +198,12 @@ function MessagesPage() {
                 title: newMailTitle,
                 content: newMailText,
                 username: chosenReceiver,
-                msgDate: currentDate
+                receiverRealname: receiverRealname,
+                receiverSurname: receiverSurname,
+                senderRealname: senderRealname,
+                senderSurname: senderSurname,
+                msgDate: currentDate,
+                seen: false,
             }
             ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
@@ -207,15 +219,20 @@ function MessagesPage() {
 
     const handleCurrentMessageInbox = (e, index) => {
         setCurrentMessage(inboxMessages[index]);
+        markAsSeen(inboxMessages[index].messageId);
         console.log("otidhpote"+index);
     };
 
     const handleCurrentMessageSent = (e, index) => {
         setCurrentMessage(sentMessages[index]);
+        markAsSeen(sentMessages[index].messageId);
         console.log("otidhpote2"+index);
     };
 
-
+    const markAsSeen = async (msgId) => {
+        // await http request
+        await axios.get(`https://localhost:8443/api/messages/seen/${msgId}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+    }
 
 
     return (
@@ -266,7 +283,7 @@ function MessagesPage() {
                                         {inboxMessages.map((msg, index) => (
                                             
                                             <>
-                                                <MessageListItem msgusername={msg.username} messageTitle={msg.title} unreadFlag={true} onClick={e => handleCurrentMessageInbox(e, index) } />
+                                                <MessageListItem msgusername={msg.username} messageTitle={msg.title} seenFlag={msg.seen} onClick={e => handleCurrentMessageInbox(e, index) } />
                                                 <Divider/>
                                             </>    
 
@@ -278,7 +295,7 @@ function MessagesPage() {
                                 <div className='msg-text-container'>
                                     {/* <MessageBody msgId={msg.senderId} msgusername={msg.username} date="12/5/2022"/> */}
 
-                                    <MessageBody msgId={currentMessage.senderId} msgContent={currentMessage.content} msgUsername={currentMessage.username} msgTitle={currentMessage.title} date={new Date(currentMessage.msgDate).toDateString()}/>
+                                    <MessageBody msgId={currentMessage.messageId} msgRealname={currentMessage.senderRealname} msgSurname={currentMessage.senderSurname} msgSenderReceiverId={currentMessage.senderId} msgContent={currentMessage.content} msgUsername={currentMessage.username} msgTitle={currentMessage.title} date={new Date(currentMessage.msgDate).toDateString()} sentFlag={false}/>
                                 </div>
                                 
                             </div>
@@ -298,7 +315,7 @@ function MessagesPage() {
                                     {sentMessages.map((msg, index) => (
                                         
                                         <>
-                                            <MessageListItem msgusername={msg.username} messageTitle={msg.title} unreadFlag={false} onClick={e => {handleCurrentMessageSent(e, index)} }/>
+                                            <MessageListItem msgusername={msg.username} messageTitle={msg.title} seenFlag={false} onClick={e => {handleCurrentMessageSent(e, index)} }/>
                                             <Divider/>
                                         </>    
 
@@ -309,7 +326,7 @@ function MessagesPage() {
                             </div>
                             <div className='msg-text-container'>
                                 {/* <MessageBody msgiId={msg.receiverId} msgusername={msg.username} date="6/7/2021"/> */}
-                                <MessageBody msgId={currentMessage.receiverId} msgContent={currentMessage.content} msgUsername={currentMessage.username} msgTitle={currentMessage.title} date={new Date(currentMessage.msgDate).toDateString()}/>
+                                <MessageBody msgId={currentMessage.messageId} msgRealname={currentMessage.receiverRealname} msgSurname={currentMessage.receiverSurname} msgSenderReceiverId={currentMessage.receiverId} msgContent={currentMessage.content} msgUsername={currentMessage.username} msgTitle={currentMessage.title} date={new Date(currentMessage.msgDate).toDateString()} sentFlag={true}/>
 
                             </div>
                         
