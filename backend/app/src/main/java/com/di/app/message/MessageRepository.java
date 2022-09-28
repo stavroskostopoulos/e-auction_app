@@ -17,7 +17,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     @Query( value = "SELECT * FROM message WHERE sender_id = :senderId", nativeQuery = true)
     List<Message> getOutbox(@Param("senderId") Long senderId);
 
-    @Query( value = "SELECT * FROM message m WHERE m.receiver_id = :userId AND seen=true", nativeQuery = true)
+    @Query( value = "SELECT * FROM message m WHERE m.receiver_id = :userId AND seen=false", nativeQuery = true)
     Message checkUnread(@Param("userId") Long userId);
 
 }

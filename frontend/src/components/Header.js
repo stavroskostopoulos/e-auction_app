@@ -41,6 +41,13 @@ const useStyles = makeStyles({
         },
         color: '#fff !important'
     },
+    logodisabled: {
+        transform: 'scale(1.5)',
+        '&:hover': {
+            cursor: 'default',
+        },
+        color: '#fff !important'
+    },
     menuOptions: {
         marginLeft: '5%',
     },
@@ -114,9 +121,17 @@ function Header(props) {
                 <Toolbar>
 
                     {/* Logo */}
-                    <IconButton component={Link} to={'/auctions'}>
-                        <StoreIcon className={classes.logo}/>
-                    </IconButton>
+                    {!localStorage.getItem("jwt") ? 
+                        <IconButton className="disabled-icn-button">
+                            <StoreIcon className={classes.logodisabled}/>
+                        </IconButton>
+                    :
+
+                        <IconButton component={Link} to={'/auctions'}>
+                            <StoreIcon className={classes.logo}/>
+                        </IconButton>
+
+                    }
 
                     {/* Menu options */}
                     <Tabs 
@@ -128,7 +143,7 @@ function Header(props) {
                         >
                         <CustomTab className={classes.menuOption} value="1" label={<p>Auctions</p>} component={Link} to={'/auctions'} disabled={!localStorage.getItem("jwt")}/>
                         <CustomTab className={classes.menuOption} value="2" label={<p>Sell</p>} component={Link} to={'/sell'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>
-                        <CustomTab className={classes.menuOption} value="3" label={(localStorage.getItem("unreadMessages")) ? <Badge anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="primary" variant="dot">Inbox</Badge> : <p>Inbox</p>} component={Link} to={'/messages'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>             
+                        <CustomTab className={classes.menuOption} value="3" label={(localStorage.getItem("unreadMessages")===true) ? <Badge anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="primary" variant="dot">Inbox</Badge> : <p>Inbox</p>} component={Link} to={'/messages'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>             
                         <CustomTab className={classes.menuOption} value="5" label={<p>Administration Page</p>} component={Link} to={'/administration'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>
                         
                     </Tabs>

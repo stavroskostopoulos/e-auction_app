@@ -267,7 +267,7 @@ function MessagesPage() {
                                 
                             <Tab 
                                 value="1" 
-                                label={(localStorage.getItem("unreadMessages")) ? <Badge anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="primary" variant="dot">Inbox</Badge> : <p>Inbox</p>}
+                                label={(localStorage.getItem("unreadMessages")===true) ? <Badge anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="primary" variant="dot">Inbox</Badge> : <p>Inbox</p>}
                                 onClick={() => setRequest(false)} 
                                 className='admin-menu-option' 
                             />
