@@ -46,6 +46,12 @@
     font-weight: 600;
 }
 
+.msg-title{
+    font-weight: 500;
+    color: rgb(19, 19, 19);
+    font-size: 1.1rem !important;
+}
+
 .tooltip-text{
     font-size: 0.9rem !important;
 }
@@ -104,6 +110,8 @@
     grid-area: msgtext;
     /* background-color: aqua; */
 }
+
+
 
 .send-button {
     background-color: #4E944F !important;
@@ -200,7 +208,14 @@
 }
 
 .msg-sender-text {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.msg-sender-text-sent{
+    font-size: 1.1rem;
+
+    color: #9c9c9c;
 }
 
 .msg-date-container{

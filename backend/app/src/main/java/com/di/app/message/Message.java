@@ -20,6 +20,10 @@ public class Message {
     private String content;
     private String title;
     private String username;
+    private String receiverRealname;
+    private String receiverSurname;
+    private String senderRealname;
+    private String senderSurname;
     private Date msgDate;
     private Boolean seen=Boolean.FALSE;
 
