@@ -1,8 +1,10 @@
 package com.di.app.user;
 
 import com.di.app.bid.BidService;
+import com.di.app.contact.ContactService;
 import com.di.app.item.Item;
 import com.di.app.item.ItemService;
+import com.di.app.item.RecommendationsService;
 import com.di.app.role.Role;
 import com.di.app.xml.SaxHandler;
 import org.springframework.boot.CommandLineRunner;
@@ -21,12 +23,15 @@ public class UserConfig {
     private final ItemService itemService;
     private final UserService userService;
     private final BidService bidService;
+    private final RecommendationsService recommendationsService;
 
 
-    public UserConfig(ItemService itemService, UserService userService, BidService bidService) {
+
+    public UserConfig(ItemService itemService, UserService userService, BidService bidService, RecommendationsService recommendationsService) {
         this.itemService = itemService;
         this.userService = userService;
         this.bidService = bidService;
+        this.recommendationsService = recommendationsService;
     }
 
     @Bean
@@ -157,7 +162,9 @@ public class UserConfig {
         if (i.isEmpty()){
             System.out.println("Sss");
         }
-
+        recommendationsService.getRecommendations(9L);
+//        List<String> l = contactService.GetContacts(9L);
+//        System.out.println(l);
 
 
     }
