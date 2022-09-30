@@ -1,5 +1,6 @@
 package com.di.app.bid;
 
+import com.di.app.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,5 +26,9 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
 
     @Query(value = "SELECT COUNT(DISTINCT user_id) FROM bid JOIN bidder ON bid.bidder_id = bidder.id WHERE item_id=:itemid", nativeQuery = true)
     Integer getDistinctBiddersNumber(@Param("itemid")Long itemid);
+
+    @Query(value = "SELECT * FROM bid WHERE bidder_id IN( " +
+            "SELECT id FROM bidder WHERE user_id=:searchId )", nativeQuery = true)
+    List<Bid> getBidsOfBidder(@Param("searchId")Long searchId);
 
 }

@@ -153,6 +153,10 @@ public class UserConfig {
                 }
             }
         }
+        List<Item> i = bidService.GetBidsOfBidder(5L);
+        if (i.isEmpty()){
+            System.out.println("Sss");
+        }
 
 
 

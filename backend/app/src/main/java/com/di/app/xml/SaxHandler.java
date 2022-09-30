@@ -295,7 +295,7 @@ public class SaxHandler extends DefaultHandler {
             if(bid != null) {
                 for (Bid i : bidList) {
                     i.setItemId(id);
-                    bidService.SaveXmlBid(i);
+                    bidService.SaveBid(i);
 //                    System.out.println("Bid: " + i);
                 }
                 bidList.clear();

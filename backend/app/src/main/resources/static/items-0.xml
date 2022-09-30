@@ -62,6 +62,14 @@
         <Time>Dec-17-01 16:44:19</Time>
         <Amount>$22.50</Amount>
       </Bid>
+      <Bid>
+        <Bidder Rating="262" UserID="pschne8010@yahoo.com">
+          <Location>AL BUNDYS WINTER HOME TUCSON</Location>
+          <Country>USA</Country>
+        </Bidder>
+        <Time>Dec-18-01 03:45:39</Time>
+        <Amount>$12.00</Amount>
+      </Bid>
     </Bids>
     <Location Latitude="28.099485" Longitude="-82.69532">PALM HARBOR</Location>
     <Country>USA</Country>
