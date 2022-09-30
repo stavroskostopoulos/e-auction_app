@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import com.di.app.bid.Bid;
 import com.di.app.bid.BidService;
@@ -43,8 +42,6 @@ public class SaxHandler extends DefaultHandler {
     boolean isDescription = false;
     boolean isCountry = false;
     boolean isCategory = false;
-    boolean isBids = false;
-    boolean isBid = false;
     boolean isBidder = false;
     boolean intoBid = false;
     boolean isTime = false;
@@ -79,6 +76,7 @@ public class SaxHandler extends DefaultHandler {
             String username = attributes.getValue("UserID");
 
             item.setSellerRating(Integer.parseInt(rating));
+//            System.out.println(username);
 
             // Create fake user
             boolean flag = userService.UsernameExists(username);
@@ -94,6 +92,10 @@ public class SaxHandler extends DefaultHandler {
                 userService.SaveUser(newUser);
                 userService.GiveRole(username, "SELLER");
 
+                item.setSellerId(newUser.getId());
+            }
+            else {
+                item.setSellerId(userService.GetUserByUsername(username).getId());
             }
         }
         else if (qName.equalsIgnoreCase("Location")) {
@@ -181,13 +183,18 @@ public class SaxHandler extends DefaultHandler {
         }
         else if(isCurrently){
             String currentBid = data.toString();
+            currentBid = currentBid.replace(",", "");
+
             Integer res = (int)Double.parseDouble(currentBid.substring(1));
+//            System.out.println(res);
             item.setCurrentBid(res);
             isCurrently = false;
         }
         else if(isFirst_Bid){
             // Get rid of $
             String firstBid = data.toString();
+            firstBid = firstBid.replace(",", "");
+
             Integer res = (int)Double.parseDouble(firstBid.substring(1));
             item.setFirstBid(String.valueOf(res));
             isFirst_Bid = false;
@@ -256,6 +263,8 @@ public class SaxHandler extends DefaultHandler {
         }
         else if(isAmount){
             String amount = data.toString();
+            amount = amount.replace(",", "");
+
             Integer res = (int)Double.parseDouble(amount.substring(1));
             bid.setAmount(res);
 
@@ -286,7 +295,7 @@ public class SaxHandler extends DefaultHandler {
             if(bid != null) {
                 for (Bid i : bidList) {
                     i.setItemId(id);
-                    bidService.SaveXmlBid(i);
+                    bidService.SaveBid(i);
 //                    System.out.println("Bid: " + i);
                 }
                 bidList.clear();

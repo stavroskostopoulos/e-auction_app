@@ -5,8 +5,8 @@
     <Category>Decorative &amp; Holiday</Category>
     <Category>Decorative by Brand</Category>
     <Category>Christopher Radko</Category>
-    <Currently>$30.00</Currently>
-    <First_Bid>$30.00</First_Bid>
+    <Currently>$4,330.00</Currently>
+    <First_Bid>$4,330.00</First_Bid>
     <Number_of_Bids>0</Number_of_Bids>
     <Bids />
     <Location>its a dry heat</Location>
@@ -61,6 +61,14 @@
         </Bidder>
         <Time>Dec-17-01 16:44:19</Time>
         <Amount>$22.50</Amount>
+      </Bid>
+      <Bid>
+        <Bidder Rating="262" UserID="pschne8010@yahoo.com">
+          <Location>AL BUNDYS WINTER HOME TUCSON</Location>
+          <Country>USA</Country>
+        </Bidder>
+        <Time>Dec-18-01 03:45:39</Time>
+        <Amount>$12.00</Amount>
       </Bid>
     </Bids>
     <Location Latitude="28.099485" Longitude="-82.69532">PALM HARBOR</Location>

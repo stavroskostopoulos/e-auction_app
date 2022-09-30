@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,20 @@ public class BidService {
     public List<Bid> GetBidsOfAuction(Long id) {
        return bidRepository.getBidsAuction(id);
     }
+
+    public List<Item> GetBidsOfBidder(Long id) {
+        List<Bid> bidList = bidRepository.getBidsOfBidder(id);
+
+        List<Item> itemList = new ArrayList<>();
+
+        for (Bid bid : bidList) {
+            // keep the items that the user bid on
+            itemList.add(itemRepository.getById(bid.getItemId()));
+        }
+
+        return itemList;
+    }
+
 
     public Bid SaveBid(Bid newBid) {
 
