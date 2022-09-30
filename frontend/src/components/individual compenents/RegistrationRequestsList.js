@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
 import axios from 'axios';
 
+import { ToastContainer, toast } from 'react-toastify';
+
 
 import "../../css/Administration.css"
 
@@ -56,6 +58,7 @@ function RegistrationRequestsList(props){
         }catch(err){
             console.log(err);
         }
+        notifyAcccept();
         props.setRefreshStringFunction("accept" + userid);
     }
 
@@ -66,50 +69,79 @@ function RegistrationRequestsList(props){
         }catch(err){
             console.log(err);
         }
+        notifyDecline();
         props.setRefreshStringFunction("decline" + userid);
     }
+
+    const notifyDecline = () => toast.error('User registration declined!', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
+
+    const notifyAcccept = () => toast.success('User registration accepted!', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
 
     const renderUsers = () => {
 
         //if there are users
         if(props.requests.length!==0){
+
             return (
-                <List sx={{ width: '100%' }}>
-                    {(props.requests.map((user) => (
+                <>
+                
+                    <List sx={{ width: '100%' }} className='admin-list'>
+                            {(props.requests.map((user) => (
 
-                        <>
-                            <Link to={ `/profile/${user.id}`} state={{id: user.id }} style={{ textDecoration: 'none' }} className="linkcomponent">
+                                <>
+                                    <Link to={ `/profile/${user.id}`} state={{id: user.id }} style={{ textDecoration: 'none' }} className="linkcomponent">
 
 
-                            
-                                <CssListItem>
-                                    <CssListItemButton className='list-item-button'>
-                                        <ListItemAvatar>
-                                            <Avatar sx={{ width: 34 , height: 34 }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                                        </ListItemAvatar>
-                                        <ListItemText primary={user.realname + " " + user.surname} className='list-item-admin'/>
-                                        <ListItemSecondaryAction>
-                                            <Tooltip title={<p>Reject</p>} arrow>
-                                                <IconButton edge="end" aria-label="cancel" sx={{mr: 1}} onClick={() => {handleDecline(user.id)}} component={Link} to={'/administration'} className='cancel-icon-admin'>
-                                                    <CloseOutlinedIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                            <Tooltip title={<p>Approve</p>} arrow>	
-                                                <IconButton edge="end" aria-label="confirm" onClick={() => {handleAccept(user.id)}} component={Link} to={'/administration'} className='check-icon-admin'>
-                                                    <CheckIcon />
-                                                </IconButton>
-                                            </Tooltip>	
-                                        </ListItemSecondaryAction>
-                                    </CssListItemButton>
-                                </CssListItem>
+                                    
+                                        <CssListItem>
+                                            <CssListItemButton className='list-item-button'>
+                                                <ListItemAvatar>
+                                                    <Avatar sx={{ width: 34 , height: 34 }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                                </ListItemAvatar>
+                                                <ListItemText primary={user.realname + " " + user.surname} className='list-item-admin'/>
+                                                <ListItemSecondaryAction>
+                                                    <Tooltip title={<p>Reject</p>} arrow>
+                                                        <IconButton edge="end" aria-label="cancel" sx={{mr: 1}} onClick={() => {handleDecline(user.id)}} component={Link} to={'/administration'} className='cancel-icon-admin'>
+                                                            <CloseOutlinedIcon />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                    <Tooltip title={<p>Approve</p>} arrow>	
+                                                        <IconButton edge="end" aria-label="confirm" onClick={() => {handleAccept(user.id)}} component={Link} to={'/administration'} className='check-icon-admin'>
+                                                            <CheckIcon />
+                                                        </IconButton>
+                                                    </Tooltip>	
+                                                </ListItemSecondaryAction>
+                                            </CssListItemButton>
+                                        </CssListItem>
 
-                            </Link>
+                                    <Divider variant="middle"  component="li" className='admin-list-divider'/>
+                                    </Link>
 
-                            <Divider variant="middle"  component="li" className='admin-list-divider'/>
-                        </>
 
-                    )))}
-                </List>
+                                </>
+
+                            )))}
+                        </List>
+                        <div className='pagination-container'>
+                            <Pagination variant="outlined" className='pagination-admin' count={10} color="secondary" onChange={(event, pageNumber) => props.handlePendingPageChange(event, pageNumber)}/>
+                        </div>
+                </>
             );
         }
 

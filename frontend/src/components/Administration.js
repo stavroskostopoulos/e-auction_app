@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "../css/Administration.css"
 
@@ -67,6 +69,7 @@ function Administration(props) {
 
     const allUsers = async () => {
         try{
+            console.log(totalUsersPagination);
             const res = await axios.get(`https://localhost:8443/api/users/${totalUsersPagination-1}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
             setTotalUsersList(res.data.content)
@@ -116,11 +119,13 @@ function Administration(props) {
         }
     }
 
-    const handlePendingPageChange = (pageNumber) => {
+    const handlePendingPageChange = (event, pageNumber) => {
+        setRefreshString("paginationpendinglist"+pageNumber);
         setPendingPagination(pageNumber);
     }
 
-    const handleTotalUsersPageChange = (pageNumber) => {
+    const handleTotalUsersPageChange = (event, pageNumber) => {
+        setRefreshString("paginationuserslist"+pageNumber);
         setTotalUsersPagination(pageNumber);
     }
 
@@ -130,9 +135,20 @@ function Administration(props) {
   
             
             <div className='main-container'>
-              <div className="column-left" />
-              <div className="column-right"/>
-              <div className="column-middle" style={{backgroundColor: "#fff"}}>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+                <div className="column-left" />
+                <div className="column-right"/>
+                <div className="column-middle" style={{backgroundColor: "#fff"}}>
                 <div className='admin-container'>
 
 
@@ -179,29 +195,19 @@ function Administration(props) {
 
 
 						{!forbiddenFlag && !isLoading && !request &&
-							<UsersList totalUsersList={totalUsersList} setRefreshStringFunction={setRefreshString}/>
+							<UsersList totalUsersList={totalUsersList} setRefreshStringFunction={setRefreshString} handleTotalUsersPageChange={handleTotalUsersPageChange}/>
 						}
 						
-						{/* pagination */}
-						{!forbiddenFlag && !isLoading && !request && (totalUsersList.length > 6) &&
-							<div className='pagination-container'>
-								<Pagination variant="outlined" className='pagination-admin' count={10} color="secondary" onChange={(pageNumber) => handleTotalUsersPageChange(pageNumber)}/>
-							</div>
-						}
+						
 						
 
 
 
 						{/* if we are on the "REGISTRATIONS REQUESTS" tab */}
 						{!forbiddenFlag && !isLoading && request && 
-							<RegistrationRequestsList requests={usersRegisterList} setRefreshStringFunction={setRefreshString}/>
+							<RegistrationRequestsList requests={usersRegisterList} setRefreshStringFunction={setRefreshString} handlePendingPageChange={handlePendingPageChange} />
 						}
-						{/* pagination */}
-						{!forbiddenFlag && !isLoading && request && (usersRegisterList.length > 6) &&
-							<div className='pagination-container'>
-								<Pagination variant="outlined" className='pagination-admin' count={10} color="secondary" onChange={(pageNumber) => handlePendingPageChange(pageNumber)}/>
-							</div>
-						}
+						
 						
                     </div>
 					

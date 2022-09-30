@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 //import custom components
 import BidsFilters from './individual compenents/BidsFilters';
 import ProductsList from './individual compenents/ProductsList';
@@ -114,7 +117,7 @@ function priceRangetext(value) {
 
 
 
-function Bids() {
+function Bids(props) {
 	
 
 	
@@ -181,6 +184,8 @@ function Bids() {
 
 		// }
 		getProducts();
+
+		props.setHeaderChoice("1");
 
 
 		// setIsLoading(false);
@@ -326,6 +331,17 @@ function Bids() {
   
             
             <div className="main-container">
+				<ToastContainer
+					position="bottom-right"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
             	<div className="column-left" />
               	<div className="column-right"/>
               	<div className="column-middle" style={{backgroundColor: "#fff"}}>

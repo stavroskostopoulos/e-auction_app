@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { ToastContainer, toast } from 'react-toastify';
+
 //import styling
 import '../css/MessagesPage.css'
 import { withStyles } from "@material-ui/core/styles";
@@ -7,6 +9,7 @@ import { withStyles } from "@material-ui/core/styles";
 //import custom components
 import MessageListItem from './individual compenents/MessageListItem';
 import MessageBody from './individual compenents/MessageBody';
+import MessagesList from './individual compenents/MessagesList';
 
 //import material UI components
 import Tab from '@mui/material/Tab';
@@ -224,8 +227,19 @@ function MessagesPage() {
         }
 
 
+        notify();
         handleClose();
     };
+
+    const notify = () => toast.success('Message sent!',     { 
+                                                                    position: "bottom-right",
+                                                                    autoClose: 5000,
+                                                                    hideProgressBar: false,
+                                                                    closeOnClick: true,
+                                                                    pauseOnHover: true,
+                                                                    draggable: true,
+                                                                    progress: undefined,
+                                                                });
 
     const handleCurrentMessageInbox = (e, index) => {
         setCurrentMessage(inboxMessages[index]);
@@ -247,6 +261,17 @@ function MessagesPage() {
 
     return (
         <div className="main-container">
+            <ToastContainer
+					position="bottom-right"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+            />
             <div className="column-left" />
             <div className="column-right"/>
             <div className="column-middle" style={{backgroundColor: "#fff"}}>
@@ -280,67 +305,12 @@ function MessagesPage() {
 
                     {   (tab==="1") ? 
                     
-                        (!inboxMessages.length) ? 
-                            <div className='empty-msg-content'>
-                                <div className='empty-auctions'>
-                                    <p>Looks like your inbox is empty!</p>
-                                </div>
-                            </div>
-                            :
-                            <div className='msg-content'>
-                                <div className='msg-list-container'>
-                                    <Stack spacing={1}>
-                                        {inboxMessages.map((msg, index) => (
-                                            
-                                            <>
-                                                <MessageListItem msgusername={msg.username} messageTitle={msg.title} seenFlag={msg.seen} onClick={e => handleCurrentMessageInbox(e, index) }  sentFlag={false} />
-                                                <Divider/>
-                                            </>    
-
-
-                                        ))}
-
-                                    </Stack>
-                                </div>
-                                <div className='msg-text-container'>
-                                    {/* <MessageBody msgId={msg.senderId} msgusername={msg.username} date="12/5/2022"/> */}
-
-                                    <MessageBody msgId={currentMessage.messageId} msgRealname={currentMessage.senderRealname} msgSurname={currentMessage.senderSurname} msgSenderReceiverId={currentMessage.senderId} msgContent={currentMessage.content} msgUsername={currentMessage.username} msgTitle={currentMessage.title} date={new Date(currentMessage.msgDate).toDateString()} sentFlag={false}/>
-                                </div>
-                                
-                            </div>
+                        <MessagesList messages={inboxMessages} currentMessage={currentMessage} handleCurrentMessage={handleCurrentMessageInbox} sentFlag={false}/>
                     
                     :
 
-                        (!sentMessages.length) ? 
-                        <div className='empty-msg-content'>
-                            <div className='empty-auctions'>
-                                <p>Looks like you haven't sent any messages yet!</p>
-                            </div>
-                        </div>
-                        :
-                        <div className='msg-content'>
-                            <div className='msg-list-container'>
-                                <Stack spacing={1}>
-                                    {sentMessages.map((msg, index) => (
-                                        
-                                        <>
-                                            <MessageListItem msgusername={msg.username} messageTitle={msg.title} seenFlag={false} onClick={e => {handleCurrentMessageSent(e, index)} } sentFlag={true}/>
-                                            <Divider/>
-                                        </>    
-
-
-                                    ))}
-
-                                </Stack>
-                            </div>
-                            <div className='msg-text-container'>
-                                {/* <MessageBody msgiId={msg.receiverId} msgusername={msg.username} date="6/7/2021"/> */}
-                                <MessageBody msgId={currentMessage.messageId} msgRealname={currentMessage.receiverRealname} msgSurname={currentMessage.receiverSurname} msgSenderReceiverId={currentMessage.receiverId} msgContent={currentMessage.content} msgUsername={currentMessage.username} msgTitle={currentMessage.title} date={new Date(currentMessage.msgDate).toDateString()} sentFlag={true}/>
-
-                            </div>
+                        <MessagesList messages={sentMessages} currentMessage={currentMessage} handleCurrentMessage={handleCurrentMessageSent} sentFlag={true}/>
                         
-                        </div>
 
                     }
 

@@ -18,6 +18,8 @@ import electronicImages from '../images/image exports/ElectronicImages'
 import fashionImages from '../images/image exports/FashionImages';
 import healthImages from '../images/image exports/HealthImages';
 import usedImages from '../images/image exports/UsedImages';
+import unavailableImages from '../images/image exports/unavailableImages';
+
 
 //import material UI components
 import Tab from '@mui/material/Tab';
@@ -142,7 +144,7 @@ const ProductPage = (props) => {
             setCurrentPrice(result.data.currentBid);
             setLocation([Number(result.data.longitude), Number(result.data.latitude)]);
             setIsLoading(false);
-            // console.log(result.data);
+            console.log(result.data);
 
         }catch(err){
 
@@ -321,10 +323,11 @@ const ProductPage = (props) => {
                                 {productInfo.category[0]==='Fashion' && <img draggable="false" src={fashionImages[productInfo.photoId]}></img>}
                                 {productInfo.category[0]==='Health&Beauty' && <img draggable="false" src={healthImages[productInfo.photoId]}></img>}
                                 {productInfo.category[0]==='Used' && <img draggable="false" src={usedImages[productInfo.photoId]}></img>}
-                            
+                                {(props.category!=='Electronics' && props.category!=='Fashion' && props.category!=='Health&Beauty' && props.category!=='Used') && <img draggable="false" src={unavailableImages[Math.floor((Math.random()*unavailableImages.length))]} alt="This should be sth" className='product-list-image'/>}
+
                             </div>
 
-                            <div className='product-title'>
+                            <div className={(productInfo.buyPrice!=="0" && productInfo.buyPrice!==null) ? 'product-title' : 'product-title-max'}>
                                 <div className='product-title-container'>
                                     <h3>{productInfo.name}</h3>
                                 </div>
@@ -333,7 +336,7 @@ const ProductPage = (props) => {
                                     <p className='product-description'>{productInfo.description}</p>
 
                                 </div>
-                                { (productInfo.buyPrice!=="0") &&
+                                { (productInfo.buyPrice!=="0" && productInfo.buyPrice!==null) &&
                                     <div className='product-buynow-container'>
                                         <Button endIcon={<LocalMallIcon/>} className='buy-now-button' onClick={handleClickOpenDialogBuyNow} disabled={localStorage.getItem("guest")}>Buy now {productInfo.buyPrice}€</Button>
                                     </div>

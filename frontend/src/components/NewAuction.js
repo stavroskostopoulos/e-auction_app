@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 //import styling
 import '../css/NewAuction.css';
 import { withStyles } from "@material-ui/core/styles";
@@ -185,12 +188,21 @@ function NewBidPage(props) {
         }
 
         // console.log(result.data);
+        notify();
         props.setHeaderChoice("1");
         navigate("/auctions")
     }
 
 
-
+    const notify = () => toast.success('Your auction is up!', {
+                                                                position: "bottom-right",
+                                                                autoClose: 5000,
+                                                                hideProgressBar: false,
+                                                                closeOnClick: true,
+                                                                pauseOnHover: true,
+                                                                draggable: true,
+                                                                progress: undefined,
+                                                            });
     
 
     return (

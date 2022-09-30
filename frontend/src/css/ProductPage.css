@@ -119,6 +119,17 @@
     /* background-color: blueviolet; */
 }
 
+.product-title-max {
+    grid-area: producttitle;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: min-content();
+    grid-template-areas:    "auctiontitle auctiontitle"
+                            "auctiondescription auctiondescription";
+    /* background-color: blueviolet; */
+}
+
 .product-description-container{
     grid-area: auctiondescription;
 }
@@ -249,6 +260,9 @@
     /* background-color: aquamarine; */
 }
 
+.bidders-number-container, .time-left-container{
+    padding-top: 20px;
+}
 
 
 .new-bid-product-stack {
