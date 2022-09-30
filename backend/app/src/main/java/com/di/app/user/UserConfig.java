@@ -127,20 +127,35 @@ public class UserConfig {
     @Bean
     public void ParseXMLFiles() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-        try {
-            SAXParser saxParser = saxParserFactory.newSAXParser();
-            SaxHandler handler = new SaxHandler(userService,itemService,bidService);
-            saxParser.parse(new File("backend/app/src/main/resources/static/items-0.xml"), handler);
 
-            List<Item> empList = handler.getEmpList();
-            // print items
-            for (Item emp : empList){
-                System.out.println(emp);
-//                itemService.SaveItem(emp);
+        // Sample test
+        File dir = new File("backend/app/src/main/resources/static");
+
+        // Load all xml
+//        File dir = new File("backend/app/src/main/resources/xml");
+
+        File [] files = dir.listFiles((d, name) -> name.endsWith(".xml"));
+        if (files != null) {
+            for (File file: files) {
+                try {
+                    SAXParser saxParser = saxParserFactory.newSAXParser();
+                    SaxHandler handler = new SaxHandler(userService,itemService,bidService);
+                    System.out.println("handling: " +file.getName());
+                    saxParser.parse(file, handler);
+
+                    List<Item> itemList = handler.getEmpList();
+                    // print items
+                    for (Item i : itemList){
+                        System.out.println(i);
+                    }
+                } catch (ParserConfigurationException | SAXException | IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
         }
+
+
+
     }
 
 }
