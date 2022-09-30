@@ -56,7 +56,9 @@ function Profile(props) {
     const profiletypes = userTypes;
 
     const [edit, setEdit] = React.useState(false);
+    const [refreshFlag, setRefreshFlag] = React.useState(false)
     
+
     const [location, setLocation] = React.useState([37.96867087793514, 23.76662747322076]);
     const [locationStr, setLocationStr] = React.useState([37.96867087793514, 23.76662747322076]);
     const [showEmptyLocationStr, setShowEmptyLocationStr] = React.useState(false);
@@ -159,7 +161,7 @@ function Profile(props) {
         .catch(err => console.log(err));
 
 
-    }, [state])
+    }, [state, refreshFlag])
 
 
     const handleCancel = () => {
@@ -214,7 +216,7 @@ function Profile(props) {
         }
 
 
-
+        setRefreshFlag(!refreshFlag);
         setEdit(false);
         
     }

@@ -91,7 +91,9 @@ function Header(props) {
     const [value, setValue] = React.useState(false);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-
+    const handleLogoClick = () => {
+        props.setHeaderChoice("1");
+    };
 
     const handleOpenUserMenu = (e) => {
         setAnchorElUser(e.currentTarget);
@@ -127,7 +129,7 @@ function Header(props) {
                         </IconButton>
                     :
 
-                        <IconButton component={Link} to={'/auctions'}>
+                        <IconButton component={Link} to={'/auctions'} onClick={handleLogoClick}>
                             <StoreIcon className={classes.logo}/>
                         </IconButton>
 

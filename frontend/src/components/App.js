@@ -41,7 +41,7 @@ function App() {
 
             <Route exact path="/" element={<HomePage/>}/>
             <Route exact path="/login" element={<Signin setHeaderChoice={setHeaderValue}/>}/>
-            <Route exact path="/auctions" element={<Bids/>}/>
+            <Route exact path="/auctions" element={<Bids setHeaderChoice={setHeaderValue}/>}/>
             <Route exact path="/register" element={<Signup/>}/>
             <Route exact path="/profile/:userid" element={<Profile setHeaderChoice={setHeaderValue}/>}/>
             <Route exact path="/administration" element={<Administration setHeaderChoice={setHeaderValue}/>}/>

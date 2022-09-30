@@ -9,11 +9,12 @@ import Typography from '@mui/material/Typography';
 import AlarmIcon from '@mui/icons-material/Alarm';
 import Divider from '@mui/material/Divider';
 
-//Electronics images
+//Import images (for thsi project we wil luse a gallery of static images)
 import electronicImages from '../../images/image exports/ElectronicImages';
 import fashionImages from '../../images/image exports/FashionImages';
 import healthImages from '../../images/image exports/HealthImages';
 import usedImages from '../../images/image exports/UsedImages';
+import unavailableImages from '../../images/image exports/unavailableImages';
 
 function ProductListItem(props) {
 	
@@ -40,6 +41,7 @@ function ProductListItem(props) {
 				{props.category==='Fashion' && <img draggable="false" src={fashionImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
 				{props.category==='Health&Beauty' && <img draggable="false" src={healthImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
 				{props.category==='Used' && <img draggable="false" src={usedImages[props.photoId]} alt="This should be sth" className='product-list-image'/>}
+				{(props.category!=='Electronics' && props.category!=='Fashion' && props.category!=='Health&Beauty' && props.category!=='Used') && <img draggable="false" src={unavailableImages[Math.floor((Math.random()*unavailableImages.length))]} alt="This should be sth" className='product-list-image'/>}
 			
 			</div>
 			

@@ -136,6 +136,10 @@
     margin-top: 60px;
 }
 
+.admin-list{
+    min-height: 540px !important;
+}
+
 .admin-list-divider{
     margin-top: 5px !important;
     margin-bottom: 5px !important;

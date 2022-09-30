@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
 import axios from 'axios';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "../../css/Administration.css"
 
@@ -51,44 +53,61 @@ function UsersList(props) {
         }catch(err){
             console.log(err);
         }
+        notifyDelete();
         props.setRefreshStringFunction("delete" + userid);
 
     }
+
+    const notifyDelete = () => toast.error('User deleted!', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
 
     const renderUsers = () => {
 
         //if there are users
         if(props.totalUsersList.length!==0){
             return (
-                <List sx={{ width: '100%' }}>
-                    {(props.totalUsersList.map((user) => (
-                        <>
-                            <Link to={ `/profile/${user.id}`} state={{id: user.id }} style={{ textDecoration: 'none' }} className="linkcomponent">
+                <>
+                
+                    <List sx={{ width: '100%' }} className='admin-list'>
+                        {(props.totalUsersList.map((user) => (
+                            
+                                <Link to={ `/profile/${user.id}`} state={{id: user.id }} style={{ textDecoration: 'none' }} className="linkcomponent">
 
-                                <CssListItem >
-                                    <CssListItemButton className='list-item-button'>
-                                        <ListItemAvatar>
-                                            <Avatar sx={{ width: 34 , height: 34 }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                                        </ListItemAvatar>
-                                        <ListItemText primary={user.realname + " " + user.surname} className='list-item-admin'/>
-                                        <ListItemSecondaryAction>
-                                            <Tooltip title={<p>Delete user</p>} arrow>
-                                                <IconButton edge="end" aria-label="delete" onClick={() => {handleDelete(user.id)}} component={Link} to={'/administration'} className='delete-icon-admin'>
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                        </ListItemSecondaryAction>
-                                    </CssListItemButton>
-                                </CssListItem>
+                                    <CssListItem >
+                                        <CssListItemButton className='list-item-button'>
+                                            <ListItemAvatar>
+                                                <Avatar sx={{ width: 34 , height: 34 }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                            </ListItemAvatar>
+                                            <ListItemText primary={user.realname + " " + user.surname} className='list-item-admin'/>
+                                            <ListItemSecondaryAction>
+                                                <Tooltip title={<p>Delete user</p>} arrow>
+                                                    <IconButton edge="end" aria-label="delete" onClick={() => {handleDelete(user.id)}} component={Link} to={'/administration'} className='delete-icon-admin'>
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </ListItemSecondaryAction>
+                                        </CssListItemButton>
+                                    </CssListItem>
 
 
-                                <Divider variant="middle"  component="li" className='admin-list-divider'/>
-                            </Link>
-                        
-                        </>
+                                    <Divider variant="middle"  component="li" className='admin-list-divider'/>
+                                </Link>
+        
 
-                    )))}
-                </List>
+                        )))}
+                    </List>
+                    <div className='pagination-container'>
+                        <Pagination variant="outlined" className='pagination-admin' count={10} color="secondary" onChange={(event, pageNumber) => props.handleTotalUsersPageChange(event, pageNumber)}/>
+                    </div>
+                </>
+
             );
         }
 
@@ -98,6 +117,7 @@ function UsersList(props) {
             <div className='empty-msg-container'>
                 <p className='empty-list-msg'>There are no registered users yet</p>
             </div>
+            
         );
 
     }
