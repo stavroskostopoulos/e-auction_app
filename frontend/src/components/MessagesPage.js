@@ -35,8 +35,8 @@ import axios from 'axios';
 
 const fabStyle = {
     position: 'fixed',
-    top: 84,
-    right: 24,
+    top: 80,
+    right: 16,
 };
 
 const CssTextField = withStyles({

@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
+import axios from 'axios';
+import { useEffect } from 'react';
+
+import downloadAsXML from '../services/AdministrationServices';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,30 +13,16 @@ import "../css/Administration.css"
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import ListItemButton from '@mui/material/ListItemButton';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Tooltip from '@mui/material/Tooltip';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import Pagination from '@mui/material/Pagination';
-import PersonSharpIcon from '@mui/icons-material/PersonSharp';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Stack } from '@mui/material';
-
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
+import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
+import DataObjectOutlinedIcon from '@mui/icons-material/DataObjectOutlined';
 
 import UsersList from './individual compenents/UsersList';
 import RegistrationRequestsList from './individual compenents/RegistrationRequestsList';
-import { useEffect } from 'react';
-import axios from 'axios';
 
 
 function Administration(props) {
@@ -55,6 +45,17 @@ function Administration(props) {
     const [refreshString, setRefreshString] = React.useState("refresh")
 
 
+
+    const actions = [
+        { icon: <DataObjectOutlinedIcon />, name: 'Download as JSON', operation: "jsondownload" },
+        { icon: <CodeOutlinedIcon />, name: 'Download as XML', operation: "xmldownload" },
+        
+    ];
+      
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);   
+
     React.useEffect(() => {
 
         
@@ -69,7 +70,7 @@ function Administration(props) {
 
     const allUsers = async () => {
         try{
-            console.log(totalUsersPagination);
+            // console.log(totalUsersPagination);
             const res = await axios.get(`https://localhost:8443/api/users/${totalUsersPagination-1}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
             setTotalUsersList(res.data.content)
@@ -128,6 +129,21 @@ function Administration(props) {
         setRefreshString("paginationuserslist"+pageNumber);
         setTotalUsersPagination(pageNumber);
     }
+
+
+    //handler function
+    function handleClick (e,operation){
+        e.preventDefault();
+
+
+        if(operation=="xmldownload"){
+            downloadAsXML();
+        }else if(operation=="jsondownload"){
+            console.log("json");
+
+        }
+    };
+
 
     return (
       
@@ -213,6 +229,34 @@ function Administration(props) {
 					
                 </div>
               </div>
+              <SpeedDial
+                    ariaLabel="SpeedDial basic example"
+                    sx={{ position: 'absolute', top: 80, right: 16 }}
+                    icon={<ArchiveOutlinedIcon />}
+                    direction='down'
+                    FabProps={{
+                        sx: {
+                          bgcolor: 'secondary.main',
+                          '&:hover': {
+                            bgcolor: 'secondary.main',
+                          }
+                        }
+                      }}
+                    onClose={handleClose}
+                    onOpen={handleOpen}
+                    open={open}
+                >
+                    {actions.map((action) => (
+                    <SpeedDialAction
+                        key={action.name}
+                        icon={action.icon}
+                        tooltipTitle={action.name}
+                        onClick={(e) => {
+                            handleClick(e, action.operation)
+                       }}
+                    />
+                    ))}
+                </SpeedDial>
             </div> 
           
   

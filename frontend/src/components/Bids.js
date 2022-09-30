@@ -164,31 +164,11 @@ function Bids(props) {
 	React.useEffect(() => {
 
 		
-		// ⬇ This calls my get request from the server
-		
-		//if price range has been modified
-        // if( (priceRange[0].toString() !=="0" ) || (priceRange[1].toString() !=="1000") ) {
-			
-		// 	getProductsbyPrice();
-			
-        // }else{
-			
-		// 	if(!checkedCateg.length){
-				
-		// 		getProducts();
-			
-		// 	}else{
-		// 		getProductsCategories();
-		// 	}
-
-
-		// }
 		getProducts();
 
 		props.setHeaderChoice("1");
 
 
-		// setIsLoading(false);
 	}, [currentPages, priceRangeToggle]);
 
     const pageChangeHandler = (event, pageNumber = 1) => {
@@ -370,14 +350,14 @@ function Bids(props) {
 						</div>
 
 						<div className='bids-searchbar'>
-							<SearchTextField 	label={searchLabel}
+							<SearchTextField label={searchLabel}
 										InputProps={{
 											endAdornment: (
 											  <InputAdornment position="start">
 												<SearchIcon />
 											  </InputAdornment>
 											)
-										  }}
+										}}
 										InputLabelProps={{
 											shrink: false
 										}} 
