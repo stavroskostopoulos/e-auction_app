@@ -200,7 +200,7 @@ public class SaxHandler extends DefaultHandler {
             isFirst_Bid = false;
         }
         else if(isNumber_of_Bids) {
-            item.setBidCount(Integer.parseInt(data.toString()));
+//            item.setBidCount(Integer.parseInt(data.toString()));
             isNumber_of_Bids = false;
         }
         else if(isCountry){
