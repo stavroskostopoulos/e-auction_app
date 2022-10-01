@@ -168,7 +168,7 @@ const ProductPage = (props) => {
             const result = await axios.get(`https://localhost:8443/api/bids/item/${state.id}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
             setPreviousBids(result.data);
-            // console.log(result.data);
+            console.log(result.data);
 
             let rows = [];
 

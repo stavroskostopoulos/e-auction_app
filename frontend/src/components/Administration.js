@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 import downloadAsXML from '../services/AdministrationServices';
+import { downloadAsJSON } from '../services/AdministrationServices';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -139,8 +140,7 @@ function Administration(props) {
         if(operation=="xmldownload"){
             downloadAsXML();
         }else if(operation=="jsondownload"){
-            console.log("json");
-
+            downloadAsJSON();
         }
     };
 
