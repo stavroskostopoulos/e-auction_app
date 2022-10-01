@@ -323,7 +323,7 @@ const ProductPage = (props) => {
                                 {productInfo.category[0]==='Fashion' && <img draggable="false" src={fashionImages[productInfo.photoId]}></img>}
                                 {productInfo.category[0]==='Health&Beauty' && <img draggable="false" src={healthImages[productInfo.photoId]}></img>}
                                 {productInfo.category[0]==='Used' && <img draggable="false" src={usedImages[productInfo.photoId]}></img>}
-                                {(props.category!=='Electronics' && props.category!=='Fashion' && props.category!=='Health&Beauty' && props.category!=='Used') && <img draggable="false" src={unavailableImages[Math.floor((Math.random()*unavailableImages.length))]} alt="This should be sth" className='product-list-image'/>}
+                                {(productInfo.category[0]!=='Electronics' && productInfo.category[0]!=='Fashion' && productInfo.category[0]!=='Health&Beauty' && productInfo.category[0]!=='Used') && <img draggable="false" src={unavailableImages[Math.floor((Math.random()*unavailableImages.length))]} alt="This should be sth" className='product-list-image'/>}
 
                             </div>
 

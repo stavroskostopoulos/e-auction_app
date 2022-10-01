@@ -156,7 +156,7 @@ function Profile(props) {
             setLocationStr([res.data.longitude.toString(), res.data.latitude.toString()]);
             setLocation([Number(res.data.longitude), Number(res.data.latitude)]);
 
-            // console.log(res.data);
+            console.log(res);
         })
         .catch(err => console.log(err));
 

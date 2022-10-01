@@ -2,6 +2,7 @@ package com.di.app.user;
 
 import com.di.app.bid.BidService;
 import com.di.app.contact.ContactService;
+import com.di.app.item.Category;
 import com.di.app.item.Item;
 import com.di.app.item.ItemService;
 import com.di.app.item.RecommendationsService;
@@ -15,7 +16,10 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Configuration
@@ -45,7 +49,7 @@ public class UserConfig {
 
             userService.SaveUser(new User(null,
                     "kapphs",
-                    "kwdikos",
+                    "1234",
                     "sss@gmail.com",
                     "Kwstas",
                     "Kopos",
@@ -58,11 +62,39 @@ public class UserConfig {
             ));
 
             userService.SaveUser(new User(null,
+                    "kostopez",
+                    "1234",
+                    "kostopez@gmail.com",
+                    "Stavros",
+                    "Kostopoulos",
+                    "6988772829",
+                    "23323",
+                    "25",
+                    "17",
+                    new ArrayList<>()
+
+            ));
+
+            userService.SaveUser(new User(null,
+                    "vaspio",
+                    "1234",
+                    "vaspio@gmail.com",
+                    "Vasilis",
+                    "Pasios",
+                    "6988772829",
+                    "23323",
+                    "4",
+                    "54",
+                    new ArrayList<>()
+
+            ));
+
+            userService.SaveUser(new User(null,
                     "nota",
-                    "kk",
+                    "1234",
                     "nota@gmail.com",
                     "Noths",
-                    "Stam",
+                    "Stamatopoulos",
                     "6952252",
                     "222222",
                     "35",
@@ -85,51 +117,181 @@ public class UserConfig {
 
             userService.GiveRole("kapphs", "SELLER");
             userService.GiveRole("kapphs", "BIDDER");
+
+            userService.GiveRole("kostopez", "BIDDER");
+            userService.GiveRole("vaspio", "SELLER");
+
             userService.GiveRole("nota", "ADMIN");
             userService.GiveRole("guest", "GUEST");
 
 
 
-            itemService.SaveItem(new Item(null,
-                    2L,
+            itemService.SaveItem(new Item(1L,
+                    1L,
                     3,
-                    "Geforce 1080 Ti",
+                    "Product 1",
                     "400",
-                    "Κάρτα γραφικών",
-                    null,
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "20",
                     20,
-                    0,
+                    1,
                     3,
-                    null,
-                    null,
-                    "lat",
-                    "long",
+                    new Date(2022-9-14),
+                    new Date(2022-9-28),
+                    "12",
+                    "3",
                     "Greece",
                     new ArrayList<>()
             ));
 
-            itemService.SaveItem(new Item(null,
+            itemService.AddCategory(1L, "Electronics");
+
+            itemService.SaveItem(new Item(2L,
                     3L,
                     4,
-                    "Roar R100WD",
+                    "Product 2",
                     "400",
-                    "Ενσύρματο Gamepad για Android/PC/PS3 Μαύρο",
-                    null,
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "5",
                     5,
-                    0,
-                    2,
-                    null,
-                    null,
-                    "lat",
-                    "long",
+                    1,
+                    3,
+                    new Date(2022-9-23),
+                    new Date(2022-9-28),
+                    "56",
+                    "10",
                     "Greece",
                     new ArrayList<>()
             ));
+
+            itemService.AddCategory(2L, "Fashion");
+
+            itemService.SaveItem(new Item(3L,
+                    4L,
+                    4,
+                    "Product 3",
+                    "400",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "200",
+                    200,
+                    1,
+                    0,
+                    new Date(2022-9-10),
+                    new Date(2022-10-1),
+                    "20",
+                    "14",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(3L, "Used");
+
+            itemService.SaveItem(new Item(4L,
+                    3L,
+                    4,
+                    "Product 4",
+                    "400",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "100",
+                    100,
+                    1,
+                    2,
+                    new Date(2022-9-10),
+                    new Date(2022-10-1),
+                    "22",
+                    "34",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(4L, "Used");
+
+            itemService.SaveItem(new Item(5L,
+                    3L,
+                    4,
+                    "Product 5",
+                    "400",
+                    "Barcelona Sporting Club was founded on 1 May 1925 by Eutimio Pérez, a Spanish immigrant who decided to name the club after his home city of Barcelona, Spain. The team was named after Pérez's return to Ecuador, and BSC's Barça-like crest was adopted later on.",
+                    "40",
+                    40,
+                    1,
+                    2,
+                    new Date(2022-9-16),
+                    new Date(2022-10-1),
+                    "12",
+                    "13",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(5L, "Fashion");
+
+            itemService.SaveItem(new Item(6L,
+                    4L,
+                    4,
+                    "Product 6",
+                    "400",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "1",
+                    1,
+                    1,
+                    0,
+                    new Date(2022-9-10),
+                    new Date(2022-10-1),
+                    "39",
+                    "22",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(6L, "Health&Beauty");
+
+            itemService.SaveItem(new Item(7L,
+                    3L,
+                    4,
+                    "Product 7",
+                    "400",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "10",
+                    10,
+                    1,
+                    3,
+                    new Date(2022-9-22),
+                    new Date(2022-10-1),
+                    "56",
+                    "10",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(7L, "Health&Beauty");
+
+            itemService.SaveItem(new Item(8L,
+                    8L,
+                    4,
+                    "Product 8",
+                    "400",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "2",
+                    2,
+                    1,
+                    5,
+                    new Date(2022-9-22),
+                    new Date(2022-10-1),
+                    "40",
+                    "44",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(8L, "Health&Beauty");
+
+            ParseXMLFiles();
 
         };
     }
 
-    @Bean
+
     public void ParseXMLFiles() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 

@@ -229,34 +229,36 @@ function Administration(props) {
 					
                 </div>
               </div>
-              <SpeedDial
-                    ariaLabel="SpeedDial basic example"
-                    sx={{ position: 'absolute', top: 80, right: 16 }}
-                    icon={<ArchiveOutlinedIcon />}
-                    direction='down'
-                    FabProps={{
-                        sx: {
-                          bgcolor: 'secondary.main',
-                          '&:hover': {
+              {!forbiddenFlag && 
+                <SpeedDial
+                        ariaLabel="SpeedDial basic example"
+                        sx={{ position: 'absolute', top: 80, right: 16 }}
+                        icon={<ArchiveOutlinedIcon />}
+                        direction='down'
+                        FabProps={{
+                            sx: {
                             bgcolor: 'secondary.main',
-                          }
-                        }
-                      }}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    open={open}
-                >
-                    {actions.map((action) => (
-                    <SpeedDialAction
-                        key={action.name}
-                        icon={action.icon}
-                        tooltipTitle={action.name}
-                        onClick={(e) => {
-                            handleClick(e, action.operation)
-                       }}
-                    />
-                    ))}
-                </SpeedDial>
+                            '&:hover': {
+                                bgcolor: 'secondary.main',
+                            }
+                            }
+                        }}
+                        onClose={handleClose}
+                        onOpen={handleOpen}
+                        open={open}
+                    >
+                        {actions.map((action) => (
+                        <SpeedDialAction
+                            key={action.name}
+                            icon={action.icon}
+                            tooltipTitle={action.name}
+                            onClick={(e) => {
+                                handleClick(e, action.operation)
+                        }}
+                        />
+                        ))}
+                    </SpeedDial>
+                }
             </div> 
           
   

@@ -199,6 +199,7 @@ function Bids(props) {
 		console.log(passCategsParam)
 
 		try{
+			console.log(currentPages);
 			const result = await axios.post(`https://localhost:8443/api/items/filter/kostopez/${currentPages-1}`,
 
 			{
