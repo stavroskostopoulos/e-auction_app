@@ -17,6 +17,8 @@ import javax.xml.parsers.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,6 +48,17 @@ public class UserConfig {
             userService.SaveRole(new Role(null, "BIDDER"));
             userService.SaveRole(new Role(null, "GUEST"));
             userService.SaveRole(new Role(null, "NOT_ACCEPTED"));
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date1 = null;
+            Date date2 = null;
+
+            try {
+                date1 = formatter.parse("2022-10-10");
+                date2 = formatter.parse("2022-10-20");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             userService.SaveUser(new User(null,
                     "kapphs",
@@ -136,8 +149,8 @@ public class UserConfig {
                     20,
                     1,
                     3,
-                    new Date(2022-9-14),
-                    new Date(2022-9-28),
+                    formatter.parse("2022-09-23"),
+                    formatter.parse("2022-10-10"),
                     "12",
                     "3",
                     "Greece",
@@ -156,8 +169,8 @@ public class UserConfig {
                     5,
                     1,
                     3,
-                    new Date(2022-9-23),
-                    new Date(2022-9-28),
+                    date1,
+                    date2,
                     "56",
                     "10",
                     "Greece",
@@ -176,8 +189,8 @@ public class UserConfig {
                     200,
                     1,
                     0,
-                    new Date(2022-9-10),
-                    new Date(2022-10-1),
+                    formatter.parse("2022-09-13"),
+                    formatter.parse("2022-10-01"),
                     "20",
                     "14",
                     "Greece",
@@ -196,8 +209,8 @@ public class UserConfig {
                     100,
                     1,
                     2,
-                    new Date(2022-9-10),
-                    new Date(2022-10-1),
+                    formatter.parse("2022-09-20"),
+                    formatter.parse("2022-10-05"),
                     "22",
                     "34",
                     "Greece",
@@ -216,8 +229,8 @@ public class UserConfig {
                     40,
                     1,
                     2,
-                    new Date(2022-9-16),
-                    new Date(2022-10-1),
+                    formatter.parse("2022-04-23"),
+                    formatter.parse("2022-05-15"),
                     "12",
                     "13",
                     "Greece",
@@ -236,8 +249,8 @@ public class UserConfig {
                     1,
                     1,
                     0,
-                    new Date(2022-9-10),
-                    new Date(2022-10-1),
+                    formatter.parse("2022-09-23"),
+                    formatter.parse("2022-09-28"),
                     "39",
                     "22",
                     "Greece",
@@ -256,8 +269,8 @@ public class UserConfig {
                     10,
                     1,
                     3,
-                    new Date(2022-9-22),
-                    new Date(2022-10-1),
+                    formatter.parse("2022-09-14"),
+                    formatter.parse("2022-09-20"),
                     "56",
                     "10",
                     "Greece",
@@ -265,6 +278,11 @@ public class UserConfig {
             ));
 
             itemService.AddCategory(7L, "Health&Beauty");
+
+
+
+
+
 
             itemService.SaveItem(new Item(8L,
                     8L,
@@ -276,8 +294,8 @@ public class UserConfig {
                     2,
                     1,
                     5,
-                    new Date(2022-9-22),
-                    new Date(2022-10-1),
+                    formatter.parse("2022-09-26"),
+                    formatter.parse("2022-10-07"),
                     "40",
                     "44",
                     "Greece",

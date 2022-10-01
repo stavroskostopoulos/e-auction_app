@@ -119,7 +119,7 @@ function MessagesPage() {
     const checkUnread = async () => {
         const unreadmessages = await axios.get(`https://localhost:8443/api/messages/unread/${localStorage.getItem("loggedUserId")}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
         if(!unreadmessages){
-            localStorage.setItem('unreadMessages', false);
+            localStorage.setItem('unreadMessages', "false");
         }
     };
 
@@ -292,7 +292,7 @@ function MessagesPage() {
                                 
                             <Tab 
                                 value="1" 
-                                label={(localStorage.getItem("unreadMessages")===true) ? <Badge anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="primary" variant="dot">Inbox</Badge> : <p>Inbox</p>}
+                                label={(localStorage.getItem("unreadMessages")==="true") ? <Badge anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="primary" variant="dot">Inbox</Badge> : <p>Inbox</p>}
                                 onClick={() => setRequest(false)} 
                                 className='admin-menu-option' 
                             />
