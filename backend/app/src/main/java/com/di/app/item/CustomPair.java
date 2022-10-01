@@ -8,4 +8,12 @@ import lombok.NoArgsConstructor;
 public class CustomPair {
     private double[][] V;
     private double[][] F;
+
+    public double[][] getV() {
+        return V;
+    }
+
+    public double[][] getF() {
+        return F;
+    }
 }

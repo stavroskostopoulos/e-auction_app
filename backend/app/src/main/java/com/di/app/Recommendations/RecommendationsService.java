@@ -1,14 +1,15 @@
-package com.di.app.item;
+package com.di.app.Recommendations;
 
 import com.di.app.bid.BidService;
+import com.di.app.item.CustomPair;
+import com.di.app.item.Item;
+import com.di.app.item.ItemService;
 import com.di.app.user.User;
 import com.di.app.user.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -17,7 +18,15 @@ public class RecommendationsService {
     private final UserService userService;
     private final BidService bidService;
 
+    private final RecommendationsRepo recommendationsRepo;
+
     public List<Item> getRecommendations(Long userId) {
+        // if exists don't compute
+        boolean exists = recommendationsRepo.existsById(userId);
+        if(exists){
+            Recommended s = recommendationsRepo.getById(userId);
+            return s.getItemList();
+        }
 
         User user = userService.GetUserById(userId).get();
 
@@ -51,14 +60,6 @@ public class RecommendationsService {
             itemsBid.clear();
         }
 
-        // print R
-//        for (int i = 0; i < N; i++){
-//            for (int j = 0; j < M; j++){
-//                System.out.print(R[i][j]+" ");
-//            }
-//            System.out.println();
-//        }
-
         int K = 7;
 
         double[][] V = randomArray(N,K);
@@ -67,15 +68,69 @@ public class RecommendationsService {
 
         CustomPair p = matrixFactorization(R,V,F,K);
 
+        V = p.getV();
+        F = Transpose(p.getF());
+
+        // V*F
+        double[][] Xpredicted = dot2D(V,F);
+
+        for (int i = 0; i < N; i++){
+            for (int j = 0; j < M; j++){
+                System.out.print(Xpredicted[i][j]+" ");
+            }
+            System.out.println();
+        }
 
 
+        List<Double> topRatingList = new ArrayList<>();
+        for (int i=0; i<5; i++){
+            topRatingList.add(0.0);
+        }
+        //Map<Double, Map.Entry<Integer, Integer>> topItemList = new HashMap<Double, Map.Entry<Integer, Integer>>();
+        Map<Double,Integer> topItemList = new HashMap<>();
 
+        for (int i = 0; i < N; i++){
+            for (int j = 0; j < M; j++){
 
+                for (int k = 0; k < 5; k++){
+                    double rating = topRatingList.get(k);
+                    // Keep top 5 items
+                    if (Xpredicted[i][j] > rating) {
+                        topRatingList.remove(rating);
+                        topRatingList.add(Xpredicted[i][j]);
 
+                        topItemList.remove(rating);
+                        topItemList.put(Xpredicted[i][j], j);
+                        //topItemList.put(Xpredicted[i][j], new AbstractMap.SimpleEntry(i, j));
 
+                        break;
+                    }
+                }
+            }
+        }
+        System.out.println(topRatingList);
+        System.out.println(topItemList);
 
+        List<Item> top5Items = new ArrayList<>();
 
-        return null;
+        for (Double i : topItemList.keySet()) {
+            Item curItem = itemList.get(topItemList.get(i));
+            if(!top5Items.contains(curItem)){
+                top5Items.add(itemList.get(topItemList.get(i)));
+            }
+            else{
+                top5Items.add(itemList.get(topItemList.get(i)-1));
+            }
+        }
+
+        for (Item i : top5Items){
+            System.out.println(i);
+        }
+
+        Recommended s = new Recommended(userId, top5Items);
+        recommendationsRepo.save(s);
+
+        return top5Items;
     }
 
     public CustomPair matrixFactorization(double[][] R, double[][] V, double[][] F, int K){
@@ -130,7 +185,6 @@ public class RecommendationsService {
         }
 
 
-
         CustomPair pair = new CustomPair(V,Transpose(F));
         return pair;
     }
@@ -154,6 +208,19 @@ public class RecommendationsService {
             sum = sum + x[i] * y[i];
         }
         return sum;
+    }
+
+    public double[][] dot2D(double[][] x, double[][] y) {
+        double[][] dot = new double[x.length][y[0].length];
+
+        for(int i = 0; i < x.length; i++) {
+            for (int j = 0; j < y[0].length; j++) {
+                for (int k = 0; k < y.length; k++) {
+                    dot[i][j] = dot[i][j] + x[i][k] * y[k][j];
+                }
+            }
+        }
+        return dot;
     }
 
     public double[] getColumn(double[][] array, int j){

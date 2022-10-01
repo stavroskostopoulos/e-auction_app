@@ -1,11 +1,9 @@
 package com.di.app.user;
 
 import com.di.app.bid.BidService;
-import com.di.app.contact.ContactService;
-import com.di.app.item.Category;
 import com.di.app.item.Item;
 import com.di.app.item.ItemService;
-import com.di.app.item.RecommendationsService;
+import com.di.app.Recommendations.RecommendationsService;
 import com.di.app.role.Role;
 import com.di.app.xml.SaxHandler;
 import org.springframework.boot.CommandLineRunner;
@@ -16,12 +14,8 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.*;
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Configuration
@@ -30,7 +24,6 @@ public class UserConfig {
     private final UserService userService;
     private final BidService bidService;
     private final RecommendationsService recommendationsService;
-
 
 
     public UserConfig(ItemService itemService, UserService userService, BidService bidService, RecommendationsService recommendationsService) {
@@ -49,16 +42,7 @@ public class UserConfig {
             userService.SaveRole(new Role(null, "GUEST"));
             userService.SaveRole(new Role(null, "NOT_ACCEPTED"));
 
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date date1 = null;
-            Date date2 = null;
 
-            try {
-                date1 = formatter.parse("2022-10-10");
-                date2 = formatter.parse("2022-10-20");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
 
             userService.SaveUser(new User(null,
                     "kapphs",
@@ -138,6 +122,7 @@ public class UserConfig {
             userService.GiveRole("guest", "GUEST");
 
 
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
             itemService.SaveItem(new Item(1L,
                     1L,
@@ -169,8 +154,8 @@ public class UserConfig {
                     5,
                     1,
                     3,
-                    date1,
-                    date2,
+                    formatter.parse("2022-10-10"),
+                    formatter.parse("2022-10-20"),
                     "56",
                     "10",
                     "Greece",
@@ -278,9 +263,6 @@ public class UserConfig {
             ));
 
             itemService.AddCategory(7L, "Health&Beauty");
-
-
-
 
 
 
