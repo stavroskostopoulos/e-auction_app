@@ -112,6 +112,45 @@ public class UserConfig {
                     new ArrayList<>()
             ));
 
+            userService.SaveUser(new User(null,
+                    "bderos",
+                    "1234",
+                    "gerorge7@gmail.com",
+                    "George",
+                    "Lazaridis",
+                    "6952252",
+                    "222222",
+                    "35",
+                    "8",
+                    new ArrayList<>()
+            ));
+
+            userService.SaveUser(new User(null,
+                    "dberos",
+                    "1234",
+                    "nota231@gmail.com",
+                    "Noths",
+                    "Stamatopoulos",
+                    "6952252",
+                    "222222",
+                    "35",
+                    "8",
+                    new ArrayList<>()
+            ));
+
+            userService.SaveUser(new User(null,
+                    "epikalesths",
+                    "1234",
+                    "epiaklesths@gmail.com",
+                    "Xristos",
+                    "Draminos",
+                    "695223252",
+                    "22122312",
+                    "35",
+                    "8",
+                    new ArrayList<>()
+            ));
+
             userService.GiveRole("kapphs", "SELLER");
             userService.GiveRole("kapphs", "BIDDER");
 
@@ -121,6 +160,14 @@ public class UserConfig {
             userService.GiveRole("nota", "ADMIN");
             userService.GiveRole("guest", "GUEST");
 
+            userService.GiveRole("epikalesths", "BIDDER");
+            userService.GiveRole("epikalesths", "NOT_ACCEPTED");
+
+            userService.GiveRole("bderos", "SELLER");
+            userService.GiveRole("bderos", "NOT_ACCEPTED");
+
+            userService.GiveRole("dberos", "SELLER");
+            userService.GiveRole("dberos", "NOT_ACCEPTED");
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -286,6 +333,146 @@ public class UserConfig {
 
             itemService.AddCategory(8L, "Health&Beauty");
 
+            itemService.SaveItem(new Item(9L,
+                    3L,
+                    3,
+                    "Product 9",
+                    "40",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "20",
+                    20,
+                    1,
+                    1,
+                    formatter.parse("2022-09-28"),
+                    formatter.parse("2022-10-05"),
+                    "27",
+                    "23",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(9L, "Electronics");
+
+            itemService.SaveItem(new Item(10L,
+                    3L,
+                    3,
+                    "Product 10",
+                    "80",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "0",
+                    0,
+                    0,
+                    6,
+                    formatter.parse("2022-09-28"),
+                    formatter.parse("2022-10-05"),
+                    "11",
+                    "33",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(10L, "Electronics");
+
+            itemService.SaveItem(new Item(11L,
+                    2L,
+                    3,
+                    "Product 11",
+                    "150",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "0",
+                    0,
+                    0,
+                    2,
+                    formatter.parse("2022-09-24"),
+                    formatter.parse("2022-10-01"),
+                    "16",
+                    "32",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(11L, "Electronics");
+
+            itemService.SaveItem(new Item(12L,
+                    2L,
+                    3,
+                    "Product 12",
+                    "20",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "0",
+                    0,
+                    0,
+                    4,
+                    formatter.parse("2022-09-03"),
+                    formatter.parse("2022-10-01"),
+                    "12",
+                    "12",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(12L, "Fashion");
+
+            itemService.SaveItem(new Item(13L,
+                    2L,
+                    3,
+                    "Product 13",
+                    "10",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "0",
+                    0,
+                    0,
+                    1,
+                    formatter.parse("2022-09-03"),
+                    formatter.parse("2022-10-01"),
+                    "12",
+                    "12",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(13L, "Health&Beauty");
+
+            itemService.SaveItem(new Item(14L,
+                    2L,
+                    3,
+                    "Product 14",
+                    "5",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "5",
+                    5,
+                    1,
+                    1,
+                    formatter.parse("2022-09-06"),
+                    formatter.parse("2022-09-14"),
+                    "12",
+                    "12",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(14L, "Used");
+
+            itemService.SaveItem(new Item(15L,
+                    2L,
+                    3,
+                    "Product 15",
+                    "5",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "70",
+                    70,
+                    1,
+                    2,
+                    formatter.parse("2022-09-06"),
+                    formatter.parse("2022-09-14"),
+                    "12",
+                    "12",
+                    "Greece",
+                    new ArrayList<>()
+            ));
+
+            itemService.AddCategory(15L, "Used");
+
             ParseXMLFiles();
 
         };
@@ -296,10 +483,10 @@ public class UserConfig {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 
         // Sample test
-//        File dir = new File("backend/app/src/main/resources/static");
+        File dir = new File("backend/app/src/main/resources/static");
 
         // Load all xml
-        File dir = new File("backend/app/src/main/resources/xml");
+//        File dir = new File("backend/app/src/main/resources/xml");
 
         File [] files = dir.listFiles((d, name) -> name.endsWith(".xml"));
         if (files != null) {
@@ -313,9 +500,9 @@ public class UserConfig {
                     List<Item> itemList = handler.getEmpList();
                     // print items
                     System.out.println("done");
-                    for (Item i : itemList){
-//                        System.out.println(i);
-                    }
+                    //for (Item i : itemList){
+                    //System.out.println(i);
+                    //}
                 } catch (ParserConfigurationException | SAXException | IOException e) {
                     e.printStackTrace();
                 }

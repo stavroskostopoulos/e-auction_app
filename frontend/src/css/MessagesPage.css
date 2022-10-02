@@ -259,11 +259,32 @@
         padding-top: 60px;
     
         display: grid;
-        grid-template-columns: 40% 60%;
+        grid-template-columns: 35% 65%;
         grid-template-areas: "msglist msgtext";
     
     }
 
+    .msg-body-container{
+        display: grid;
+    
+        padding: 4px 40px;
+        
+        grid-template-columns: 85% 15%;
+        grid-template-areas:    "msg-sender-info"
+                                "msg-date"
+                                "msg-contains";
+    
+    }   
+
+    .msg-date-container{
+        grid-area: msg-date;
+        padding: 30px 20px 0px;
+
+        /* background-color: red; */
+        display: flex;
+        align-items: center;
+    
+    }
     
 
 }

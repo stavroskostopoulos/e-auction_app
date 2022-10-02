@@ -30,7 +30,7 @@ function MessagesList(props) {
                                                 <MessageListItem msgusername={msg.username} messageTitle={msg.title} seenFlag={msg.seen} onClick={e => props.handleCurrentMessage(e, index) }  sentFlag={props.sentFlag} />
                                                 <Divider/>
                                             </>    
-
+                                            
 
                                         ))}
 

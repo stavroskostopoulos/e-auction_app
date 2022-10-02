@@ -118,8 +118,12 @@ function MessagesPage() {
     
     const checkUnread = async () => {
         const unreadmessages = await axios.get(`https://localhost:8443/api/messages/unread/${localStorage.getItem("loggedUserId")}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
-        if(!unreadmessages){
+        
+        if(unreadmessages.data===true){
+            localStorage.setItem('unreadMessages', "true");
+        }else{
             localStorage.setItem('unreadMessages', "false");
+
         }
     };
 
@@ -315,7 +319,7 @@ function MessagesPage() {
                     }
 
                     <Tooltip title={<p className='tooltip-text'>Write a new mail</p>} placement="left" arrow>
-                        <Fab size="large" TransitionComponent={Zoom} sx={fabStyle} color="secondary" aria-label="add" onClick={handleClickOpen}>
+                        <Fab size="large" sx={fabStyle} color="secondary" aria-label="add" onClick={handleClickOpen}>
                             <AddIcon />
                         </Fab>
                     </Tooltip>

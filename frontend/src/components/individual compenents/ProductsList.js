@@ -40,7 +40,7 @@ function ProductsList(props) {
             {/* {console.log(props.productsList.length)} */}
             {(!props.isLoading) && (props.productsList.length!==0) &&
                 props.productsList.map((product) =>	(
-                    <ProductListItem productKey={product.itemId} productname={product.name} category={product.category[0]} photoId={product.photoId} daysLeft={getDaysLeft(product)} owner='kostopez' numberOfBidders={product.bidCount} price={product.currentBid}/>
+                    <ProductListItem key={product.itemId} productKey={product.itemId} productname={product.name} category={product.category[0]} photoId={product.photoId} daysLeft={getDaysLeft(product)} owner='kostopez' numberOfBidders={product.bidCount} price={product.currentBid}/>
                     
                     ))
                     

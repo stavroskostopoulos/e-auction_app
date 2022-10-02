@@ -48,8 +48,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 const fabStyle = {
     position: 'fixed',
-    top: 84,
-    right: 24,
+    top: 80,
+    right: 16,
 };
 
 function createData(rowid, id, name, username, bidDate, amount) {
@@ -520,7 +520,7 @@ const ProductPage = (props) => {
 
                 {(localStorage.getItem("loggedUserId")==productInfo.sellerId) &&
                     <Tooltip title={<p className='tooltip-text'>Delete auction</p>} placement="left" arrow>
-                        <Fab size="large" TransitionComponent={Zoom} sx={fabStyle} color="error" aria-label="add" onClick={handleDeleteAuction} >
+                        <Fab size="large" sx={fabStyle} color="error" aria-label="add" onClick={handleDeleteAuction} >
                             <DeleteIcon/>
                         </Fab>
                     </Tooltip>
