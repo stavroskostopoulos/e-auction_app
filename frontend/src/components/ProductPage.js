@@ -144,7 +144,7 @@ const ProductPage = (props) => {
             setCurrentPrice(result.data.currentBid);
             setLocation([Number(result.data.longitude), Number(result.data.latitude)]);
             setIsLoading(false);
-            console.log(result.data);
+            // console.log(result.data);
 
         }catch(err){
 
@@ -168,7 +168,7 @@ const ProductPage = (props) => {
             const result = await axios.get(`https://localhost:8443/api/bids/item/${state.id}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
             setPreviousBids(result.data);
-            console.log(result.data);
+            // console.log(result.data);
 
             let rows = [];
 
@@ -222,19 +222,19 @@ const ProductPage = (props) => {
         let endDate = new Date(productInfo.end);
         let startDate = new Date(productInfo.start);
 
-        console.log(productInfo.end)
-        console.log(productInfo.start)
+        // console.log(productInfo.end)
+        // console.log(productInfo.start)
         
 
         let Difference_In_Time = endDate.getTime() - startDate.getTime();
   
-        console.log(Difference_In_Time)
+        // console.log(Difference_In_Time)
 
 
         // To calculate the no. of days between two dates
         let daysLeftNumber = Math.round( Difference_In_Time / (1000 * 3600 * 24));
 
-        console.log(daysLeftNumber)
+        // console.log(daysLeftNumber)
 
 
         return daysLeftNumber.toString();

@@ -137,9 +137,9 @@ function Login(props) {
 
             
             const unreadmessages = await axios.get(`https://localhost:8443/api/messages/unread/${localStorage.getItem("loggedUserId")}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
-            console.log(unreadmessages);
+            // console.log(unreadmessages);
             if(unreadmessages.data===true){
-                console.log("FDSFASDFSDFASD")
+                
                 localStorage.setItem('unreadMessages', "true");
             }
             // console.log(localStorage.getItem('unreadMessages'))

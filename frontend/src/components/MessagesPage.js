@@ -92,7 +92,7 @@ function MessagesPage() {
             const result = await axios.get(`https://localhost:8443/api/messages/inbox/${localStorage.getItem('loggedUserId')}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
 
             setInboxMessages(result.data);
-            console.log(result);
+            // console.log(result);
             if(result.data.length){setCurrentMessage(result.data[0])}
         }catch(err){
             console.log(err);
@@ -107,7 +107,7 @@ function MessagesPage() {
                                     ,{ headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
             
             setSentMessages(result.data);
-            console.log(result);
+            // console.log(result);
             if(result.data.length){setCurrentMessage(result.data[0])}
             
         }catch(err){
@@ -150,7 +150,7 @@ function MessagesPage() {
         try{
             const res = await axios.get(`https://localhost:8443/api/contacts/${localStorage.getItem('loggedUserId')}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} })
             setContacts(res.data);
-            console.log(res);
+            // console.log(res);
         }catch(err){
             console.log(err);
         }
@@ -244,13 +244,13 @@ function MessagesPage() {
     const handleCurrentMessageInbox = (e, index) => {
         setCurrentMessage(inboxMessages[index]);
         markAsSeen(inboxMessages[index].messageId);
-        console.log("otidhpote"+index);
+        // console.log("otidhpote"+index);
     };
 
     const handleCurrentMessageSent = (e, index) => {
         setCurrentMessage(sentMessages[index]);
         markAsSeen(sentMessages[index].messageId);
-        console.log("otidhpote2"+index);
+        // console.log("otidhpote2"+index);
     };
 
     const markAsSeen = async (msgId) => {
