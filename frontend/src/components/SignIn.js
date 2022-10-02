@@ -142,8 +142,10 @@ function Login(props) {
                 console.log("FDSFASDFSDFASD")
                 localStorage.setItem('unreadMessages', "true");
             }
-            console.log(localStorage.getItem('unreadMessages'))
+            // console.log(localStorage.getItem('unreadMessages'))
             
+
+
             setCredentialsError(false);
             navigate("/auctions");
 

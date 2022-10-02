@@ -21,8 +21,9 @@ function Recommended(props) {
 
     const getRecommendedItems = async () => {
         try{
-            const res = await axios.get(`https://localhost:8443/api/items/all`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
-            // setItems(res.data);
+            const loadrecommended = await axios.get(`https://localhost:8443/api/items/loadrec/${localStorage.getItem("loggedUserId")}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            const res = await axios.get(`https://localhost:8443/api/items/recommended/${localStorage.getItem("loggedUserId")}`, { headers: {  Access_token: 'Bearer ' + localStorage.getItem('jwt')} });
+            setItems(res.data);
             setIsLoading(false);
         }catch(err){
             console.log(err);
