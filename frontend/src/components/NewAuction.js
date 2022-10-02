@@ -116,6 +116,9 @@ function NewBidPage(props) {
         return /^-?\d+$/.test(val) && val>=0;
     }
 
+    React.useEffect(() => {
+        props.setHeaderChoice("2")
+    },[]);
 
     const postProduct = async (e) => {
         
