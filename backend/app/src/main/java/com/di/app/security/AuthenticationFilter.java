@@ -1,7 +1,6 @@
 package com.di.app.security;
 
 import com.auth0.jwt.JWT;
-import com.di.app.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -66,6 +66,18 @@ GET product by id
 
 ________________
 
+`[GET] api/items/recommended/{userid}`
+
+GET recommended results with matrix factorization(load first)
+
+________________
+
+`[GET] api/items/loadrec/{userid}`
+
+load recommended results with matrix factorization
+
+________________
+
 `[POST] api/items/save`
 
 POST save product
@@ -195,13 +207,9 @@ update user fields(username cannot change)
 ________________
 
 
-Shmeiwseis:
+Tasks:
 
-[done]-update profile
-
-[done]-bids(history+delete)
-messages(contacts)
-[done]-delete auction
+[done]
 
  
 

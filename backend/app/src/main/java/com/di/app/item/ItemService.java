@@ -1,8 +1,6 @@
 package com.di.app.item;
 
-import com.di.app.contact.Contact;
 import com.di.app.contact.ContactRepository;
-import com.di.app.user.User;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
 import org.springframework.data.domain.Page;
@@ -10,7 +8,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
-import org.springframework.data.domain.PageRequest;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -81,7 +78,6 @@ public class ItemService {
         items.clear();
         items.addAll(set);
 
-//        System.out.println("return "+items);
 
         Page<Item> page = new PageImpl<>(items);
 
@@ -184,7 +180,6 @@ public class ItemService {
 
 
     public Item SaveItem(Item newItem) {
-//        contactRepository.save(new Contact(newItem.getSellerId(),new ArrayList<>()));
 
         return itemRepository.save(newItem);
     }

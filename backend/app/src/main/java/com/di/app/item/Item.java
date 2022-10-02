@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 

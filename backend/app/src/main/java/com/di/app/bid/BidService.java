@@ -72,18 +72,6 @@ public class BidService {
         return bidRepository.save(newBid);
     }
 
-    public Bid SaveXmlBid(Bid newBid) {
-
-        // Increment bid count
-        Item item = itemRepository.getById(newBid.getItemId());
-
-        item.setCurrentBid(newBid.getAmount());
-
-        Integer bidCount = item.getBidCount() + 1;
-        item.setBidCount(bidCount);
-
-        return bidRepository.save(newBid);
-    }
 
     public void DeleteBid(Long id) {
         Bid bid = bidRepository.getById(id);

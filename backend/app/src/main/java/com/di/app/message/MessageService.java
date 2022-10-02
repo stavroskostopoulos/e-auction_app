@@ -1,6 +1,5 @@
 package com.di.app.message;
 
-import com.di.app.item.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

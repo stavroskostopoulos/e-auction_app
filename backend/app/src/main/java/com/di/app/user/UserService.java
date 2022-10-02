@@ -102,8 +102,6 @@ public class UserService {
             userToUpdate.setPass(passwordEncoder.encode(user.getPass()));
         }
 
-
-
         return userRepository.save(userToUpdate);
 
     }

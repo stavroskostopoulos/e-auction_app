@@ -103,8 +103,8 @@ public class UserConfig {
                     "guest",
                     "null",
                     null,
-                    null,
-                    null,
+                    "Guest",
+                    "Guest",
                     null,
                     null,
                     null,
@@ -296,10 +296,10 @@ public class UserConfig {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 
         // Sample test
-        File dir = new File("backend/app/src/main/resources/static");
+//        File dir = new File("backend/app/src/main/resources/static");
 
         // Load all xml
-//        File dir = new File("backend/app/src/main/resources/xml");
+        File dir = new File("backend/app/src/main/resources/xml");
 
         File [] files = dir.listFiles((d, name) -> name.endsWith(".xml"));
         if (files != null) {
@@ -321,7 +321,6 @@ public class UserConfig {
                 }
             }
         }
-       // recommendationsService.loadRecommendations(5L);
 
     }
 
