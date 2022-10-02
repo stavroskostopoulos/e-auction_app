@@ -92,7 +92,7 @@
     
     
     display: grid;
-    grid-template-columns: 140px 180px;
+    grid-template-columns: 108px 180px;
     grid-template-areas: "bidders currentprice";
     
     /* background-color: #131313; */

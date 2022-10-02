@@ -222,8 +222,8 @@ function NewBidPage(props) {
                             </Alert>
                             <div className='forbidden-container'>
                                 <Stack spacing={2} className="forbidden-stack">
-                                    <img className="forbidden-img" src="/forbidden.png"></img>
-                                    <p className='forbidden-msg'>You are not authorized to be here!</p>
+                                    <img className="forbidden-img" src="/forbidden2.png"></img>
+                                    <p className='forbidden-msg'>Are you lost? You are not authorized to be here!</p>
                                 
                                 </Stack>
                             </div>
@@ -234,8 +234,8 @@ function NewBidPage(props) {
                     {!localStorage.getItem("jwt") && 
                         <div className='forbidden-container'>
                             <Stack spacing={2} className="forbidden-stack">
-                                <img className="forbidden-img" src="/forbidden.png"></img>
-                                <p className='forbidden-msg'>You are not authorized to be here!</p>
+                                <img className="forbidden-img" src="/forbidden2.png"></img>
+                                <p className='forbidden-msg'>Are you lost? You are not authorized to be here!</p>
                             
                             </Stack>
                         </div>
@@ -250,8 +250,8 @@ function NewBidPage(props) {
                             </Alert>
                             <div className='forbidden-container'>
                                 <Stack spacing={2} className="forbidden-stack">
-                                    <img className="forbidden-img" src="/forbidden.png"></img>
-                                    <p className='forbidden-msg'>You are not authorized to be here!</p>
+                                    <img className="forbidden-img" src="/forbidden2.png"></img>
+                                    <p className='forbidden-msg'>Are you lost? You are not authorized to be here!</p>
                                 
                                 </Stack>
                             </div>

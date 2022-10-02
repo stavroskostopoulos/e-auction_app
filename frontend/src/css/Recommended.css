@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.recom-container {
+    font-family: 'Poppins', sans-serif;
+
+    padding: 45px 80px 80px 80px;
+
+    display: grid;
+    
+    grid-template-rows:  min-content();
+    grid-template-areas:    "recomtitle"
+                            "cards";
+                            
+} 
+
+.recom-title-container{
+    grid-area: recomtitle;
+    padding-top: 4px;
+    /* background-color: brown; */
+
+}
+
+.recom-items-container{
+    grid-area: cards;
+    /* background-color: brown; */
+}
+
+.recom-products-stack{
+    padding-right: 80px;
+    padding-left: 80px;
+    padding-bottom: 100px;
+}
+
+.nothing-img{
+    width: 400px;
+    height: 400px;
+    margin-top: 20px;
+}

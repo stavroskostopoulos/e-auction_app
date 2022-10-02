@@ -146,6 +146,7 @@ function Header(props) {
                         <CustomTab className={classes.menuOption} value="1" label={<p>Auctions</p>} component={Link} to={'/auctions'} disabled={!localStorage.getItem("jwt")}/>
                         <CustomTab className={classes.menuOption} value="2" label={<p>Sell</p>} component={Link} to={'/sell'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>
                         <CustomTab className={classes.menuOption} value="3" label={(localStorage.getItem("unreadMessages")==="true") ? <Badge anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="primary" variant="dot">Inbox</Badge> : <p>Inbox</p>} component={Link} to={'/messages'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>             
+                        <CustomTab className={classes.menuOption} value="4" label={<p>Recommended</p>} component={Link} to={'/recommended'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>
                         <CustomTab className={classes.menuOption} value="5" label={<p>Administration Page</p>} component={Link} to={'/administration'} disabled={localStorage.getItem("guest") || !localStorage.getItem("jwt")}/>
                         
                     </Tabs>

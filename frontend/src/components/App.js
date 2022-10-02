@@ -14,6 +14,7 @@ import NewBidPage from './NewAuction';
 import NotAccepted from './NotAccepted';
 import MessagesPage from './MessagesPage';
 import HomePage from './individual compenents/HomePage';
+import Recommended from './Recommended';
 
 import "../css/App.css"
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -42,6 +43,7 @@ function App() {
             <Route exact path="/" element={<HomePage/>}/>
             <Route exact path="/login" element={<Signin setHeaderChoice={setHeaderValue}/>}/>
             <Route exact path="/auctions" element={<Bids setHeaderChoice={setHeaderValue}/>}/>
+            <Route exact path="/recommended" element={<Recommended setHeaderChoice={setHeaderValue}/>}/>
             <Route exact path="/register" element={<Signup/>}/>
             <Route exact path="/profile/:userid" element={<Profile setHeaderChoice={setHeaderValue}/>}/>
             <Route exact path="/administration" element={<Administration setHeaderChoice={setHeaderValue}/>}/>

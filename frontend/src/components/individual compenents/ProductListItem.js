@@ -64,8 +64,8 @@ function ProductListItem(props) {
 						display: 'flex',
 						alignItems: 'center',
 						flexWrap: 'wrap',
-						paddingLeft: '20px'
-
+						paddingLeft: '20px',
+						// backgroundColor: 'red'
 					}}>
 						
 							<span className='current-bidders-text'>{props.numberOfBidders} bids</span>
