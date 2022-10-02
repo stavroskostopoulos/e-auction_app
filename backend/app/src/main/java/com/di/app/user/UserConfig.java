@@ -312,22 +312,16 @@ public class UserConfig {
 
                     List<Item> itemList = handler.getEmpList();
                     // print items
+                    System.out.println("done");
                     for (Item i : itemList){
-                        System.out.println(i);
+//                        System.out.println(i);
                     }
                 } catch (ParserConfigurationException | SAXException | IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-        List<Item> i = bidService.GetBidsOfBidder(5L);
-        if (i.isEmpty()){
-            System.out.println("Sss");
-        }
-        recommendationsService.getRecommendations(9L);
-//        List<String> l = contactService.GetContacts(9L);
-//        System.out.println(l);
-
+       // recommendationsService.loadRecommendations(5L);
 
     }
 

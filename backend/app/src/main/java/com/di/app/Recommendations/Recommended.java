@@ -17,7 +17,7 @@ public class Recommended {
     private Long userId;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private List<Item> itemList;
 
 }

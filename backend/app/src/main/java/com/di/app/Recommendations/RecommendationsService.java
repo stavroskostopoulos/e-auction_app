@@ -21,14 +21,16 @@ public class RecommendationsService {
     private final RecommendationsRepo recommendationsRepo;
 
     public List<Item> getRecommendations(Long userId) {
+        return recommendationsRepo.getById(userId).getItemList();
+    }
+
+    public boolean loadRecommendations(Long userId) {
         // if exists don't compute
         boolean exists = recommendationsRepo.existsById(userId);
         if(exists){
             Recommended s = recommendationsRepo.getById(userId);
-            return s.getItemList();
+            return true;
         }
-
-        User user = userService.GetUserById(userId).get();
 
         List<User> userList = userService.GetUsers();
         List<Item> itemList = itemService.GetItems();
@@ -54,7 +56,7 @@ public class RecommendationsService {
                 int itemId = item.getItemId().intValue();
 
                 // Add for every bid in an auction
-                R[i][itemId] += 2.0;
+                R[i][itemId-1] += 2.0;
             }
 
             itemsBid.clear();
@@ -74,12 +76,12 @@ public class RecommendationsService {
         // V*F
         double[][] Xpredicted = dot2D(V,F);
 
-        for (int i = 0; i < N; i++){
-            for (int j = 0; j < M; j++){
-                System.out.print(Xpredicted[i][j]+" ");
-            }
-            System.out.println();
-        }
+//        for (int i = 0; i < N; i++){
+//            for (int j = 0; j < M; j++){
+//                System.out.print(Xpredicted[i][j]+" ");
+//            }
+//            System.out.println();
+//        }
 
 
         List<Double> topRatingList = new ArrayList<>();
@@ -108,7 +110,7 @@ public class RecommendationsService {
                 }
             }
         }
-        System.out.println(topRatingList);
+        //System.out.println(topRatingList);
         System.out.println(topItemList);
 
         List<Item> top5Items = new ArrayList<>();
@@ -119,9 +121,18 @@ public class RecommendationsService {
                 top5Items.add(itemList.get(topItemList.get(i)));
             }
             else{
-                top5Items.add(itemList.get(topItemList.get(i)-1));
+                if(!top5Items.contains(itemList.get(topItemList.get(i)-1))) {
+                    top5Items.add(itemList.get(topItemList.get(i)-1));
+                }
+                else {
+                    top5Items.add(itemList.get(topItemList.get(i)-2));
+                }
             }
         }
+
+        Set<Item> set = new HashSet<>(top5Items);
+        top5Items.clear();
+        top5Items.addAll(set);
 
         for (Item i : top5Items){
             System.out.println(i);
@@ -130,7 +141,7 @@ public class RecommendationsService {
         Recommended s = new Recommended(userId, top5Items);
         recommendationsRepo.save(s);
 
-        return top5Items;
+        return true;
     }
 
     public CustomPair matrixFactorization(double[][] R, double[][] V, double[][] F, int K){
