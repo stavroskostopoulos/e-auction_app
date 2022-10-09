@@ -1,6 +1,6 @@
 
 # e-Auction application
-
+<br>
 This web application was developed as a project of Internet Application Technologies course in 2022 spring semester. It was implemented by a team consisted of 2 members:
 
 - Stavros Kostopoulos (sdi1700068)
