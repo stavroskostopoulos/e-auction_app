@@ -26,9 +26,9 @@ Vasilios implemented the backend of the application and Stavros the frontend, bu
 
 ## UI Screenshots
 
-![Login](/UIscreenshots/Signin.png "Login Page")
-![Signup](/UIscreenshots/Signup.png "Signup Page")
-![Signup](/UIscreenshots/Signup2.png "Signup Page 2")
+![Login](/UIscreenshots/SignIn.png "Login Page")
+![Signup](/UIscreenshots/SignUp.png "Signup Page")
+![Signup](/UIscreenshots/SignUp2.png "Signup Page 2")
 ![Homepage](/UIscreenshots/Bids.png "Homepage")
 ![Product page](/UIscreenshots/ProductPage.png "Product page")
 ![Product page disabled](/UIscreenshots/ProductPageFail.png "Product page invalid bid")
