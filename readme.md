@@ -29,6 +29,7 @@ Vasilios implemented the backend of the application and Stavros the frontend, bu
 ## UI Screenshots
 
 <br>
+<br>
 
 ![Login](/UIscreenshots/SignIn.png "Login page")
 ![Signup](/UIscreenshots/SignUp.png "Signup page")
