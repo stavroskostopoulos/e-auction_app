@@ -6,7 +6,7 @@ This web application was developed as a project of Web Application Technologies 
 - Stavros Kostopoulos (sdi1700068)
 - Vasilios Pasios (sdi1700121)
 
-Vasilios implemented the backend of the application and Stavros the frontend, but we both stayed in touch with both ends and important decisions were taken unanimously.
+Vasilios implemented the backend of the application and Stavros the frontend, but we both stayed in touch with both ends and important decisions were taken unanimously. The project also includes a "Recommended auctions" section as a bonus part, implementing the Matrix Factorization recommendation algorithm.
 
 <br>
 
