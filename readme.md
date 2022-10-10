@@ -45,9 +45,10 @@ Vasilios implemented the backend of the application and Stavros the frontend, bu
 ![Recommended](/UIscreenshots/Recommended.png "Recommended items page (Matrix Factorization)")
 ![Recommended empty](/UIscreenshots/RecommendedEmpty.png "Recommended items page empty")
 <br>
+<br>
 
 
-### Responsive UI Screenshots
+## Responsive UI Screenshots
 <br>
 
 
