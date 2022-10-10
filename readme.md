@@ -2,6 +2,8 @@
 # e-Auction application
 <br>
 This web application was developed as a project of Web Application Technologies course in 2022 spring semester. It was implemented by a team consisted of 2 members:
+<br>
+<br>
 
 - Stavros Kostopoulos (sdi1700068)
 - Vasilios Pasios (sdi1700121)
@@ -25,6 +27,8 @@ Vasilios implemented the backend of the application and Stavros the frontend, bu
 <br>
 
 ## UI Screenshots
+
+<br>
 
 ![Login](/UIscreenshots/SignIn.png "Login page")
 ![Signup](/UIscreenshots/SignUp.png "Signup page")
