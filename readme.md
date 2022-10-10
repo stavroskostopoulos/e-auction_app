@@ -26,9 +26,44 @@ Vasilios implemented the backend of the application and Stavros the frontend, bu
 
 ## UI Screenshots
 
-![Login](/UIscreenshots/SignIn.png "Login Page")
-![Signup](/UIscreenshots/SignUp.png "Signup Page")
-![Signup](/UIscreenshots/SignUp2.png "Signup Page 2")
+![Login](/UIscreenshots/SignIn.png "Login page")
+![Signup](/UIscreenshots/SignUp.png "Signup page")
+![Signup](/UIscreenshots/SignUp2.png "Signup page 2")
 ![Homepage](/UIscreenshots/Bids.png "Homepage")
+![Guest](/UIscreenshots/Guest.png "Guest browsing")
 ![Product page](/UIscreenshots/ProductPage.png "Product page")
 ![Product page disabled](/UIscreenshots/ProductPageFail.png "Product page invalid bid")
+![Sell](/UIscreenshots/Sell2.png "Sell page country autocomplete")
+![Profile](/UIscreenshots/Profile.png "Profile page")
+![Profile editing](/UIscreenshots/ProfileEdit.png "Profile editing page")
+![Message send](/UIscreenshots/MessageSending.png "Message sending")
+![Messages sent](/UIscreenshots/MessagesSent.png "Messages sent")
+![Messages inbox](/UIscreenshots/MessagesInbox.png "Messages inbox")
+![Administration page](/UIscreenshots/Admin1.png "Administration registration request page")
+![Administration page](/UIscreenshots/Admin4.png "Administration delete user page")
+![Unauthorized](/UIscreenshots/Unauthorized.png "Unauthorized")
+![Recommended](/UIscreenshots/Recommended.png "Recommended items page (Matrix Factorization)")
+![Recommended empty](/UIscreenshots/RecommendedEmpty.png "Recommended items page empty")
+<br>
+
+
+### Responsive UI Screenshots
+<br>
+
+
+![Login](/UIscreenshots/responsive/SignIn.png "Login page")
+![Signup](/UIscreenshots/responsive/SignUp.png "Signup page")
+![Signup](/UIscreenshots/responsive/SignUp2.png "Signup page")
+![Homepage](/UIscreenshots/responsive/Bids.png "Homepage")
+![Homepage filters](/UIscreenshots/responsive/Bids2.png "Homepage filters shown")
+![Product page](/UIscreenshots/responsive/ProductPage.png "Product page")
+![Sell](/UIscreenshots/responsive/Sell.png "Sell page country autocomplete")
+![Profile](/UIscreenshots/responsive/Profile.png "Profile page")
+![Messages](/UIscreenshots/responsive/Messages.png "Messages")
+![Recommended](/UIscreenshots/responsive/Recommended.png "Recommended items page (Matrix Factorization)")
+
+
+
+
+
+
